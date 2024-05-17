@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:developer';
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+// import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:badmiton_app/pages/addcoach/addcoachpage.dart';
 import 'package:badmiton_app/pages/screens/DashFees/screens/dashfees.dart';
 import 'package:badmiton_app/pages/screens/DashHome/screens/dashhome.dart';
@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 
 class DashboardProvider extends ChangeNotifier {
   static int selectedIndex = 0;
-  final NotchBottomBarController notchController =
-      NotchBottomBarController(index: 0);
+  // final NotchBottomBarController notchController =
+  //     NotchBottomBarController(index: 0);
   PageController bottomSelectedIndex = PageController(initialPage: 0);
   List<Widget> widgetOptions = <Widget>[
     DashHome(),
@@ -50,9 +50,9 @@ class DashboardProvider extends ChangeNotifier {
   //   }
   // }
 
-  @override
-  void dispose() {
-    notchController.dispose(); // Dispose this if needed
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   notchController.dispose(); // Dispose this if needed
+  //   super.dispose();
+  // }
 }

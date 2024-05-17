@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Badmiton App</string>
+	<string>Sparklers</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,6 +28,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your photo library is used to upload and share photos in the app.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You Camera is Used to Updating your profile picture in the app</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We are not access or use microphone we access camera for change profile picture in our app</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

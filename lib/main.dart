@@ -6,7 +6,6 @@ import 'package:badmiton_app/pages/screens/ConfigurationPage/screens/Configurati
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'Themes/theme_manager.dart';
@@ -62,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green.shade800,
             useMaterial3: true,
-            textTheme: GoogleFonts.nunitoSansTextTheme(),
+            // textTheme: GoogleFonts.nunitoSansTextTheme(),
             colorScheme:
                 ColorScheme.fromSeed(seedColor: const Color(0xFF0A1172))
                     .copyWith(),
