@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
-import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
+// import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -78,7 +78,7 @@ class _AddStudentFormState extends State<AddStudentForm> {
   Widget build(BuildContext context) {
     // AddStudentProvider addStudentProvider =
     //     Provider.of<AddStudentProvider>(context, listen: false);
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 6.0,
