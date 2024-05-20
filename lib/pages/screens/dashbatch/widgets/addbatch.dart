@@ -1,6 +1,6 @@
-import 'package:badmiton_app/Models/batchcontainer.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
+import 'package:badmiton_app/dbmodel/batchmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class _AddBatchState extends State<AddBatch> {
   //   super.dispose();
   // }
 
-  void addBatch(BuildContext context, Batch batch) {
+  void addBatch(BuildContext context, Batchs batch) {
     final batchListProvider =
         Provider.of<BatchListProvider>(context, listen: false);
     batchListProvider.addBatch(batch);
@@ -242,10 +242,7 @@ class _AddBatchState extends State<AddBatch> {
                   children: [
                     const Text('Time : '),
                     Text(
-                      context
-                          .read<BatchListProvider>()
-                          .currenttime
-                          .format(context),
+                      context.read<BatchListProvider>().currenttime.toString(),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Colors.green,
                           ),
@@ -323,7 +320,7 @@ class _AddBatchState extends State<AddBatch> {
                                   width: Screens.width(context) *
                                       0.0001), // Add spacing between checkbox and text
                               const Text('Mon'),
-                              Formdategap(context),
+                              formdategap(context),
                               Checkbox(
                                 activeColor: Colors.blue,
                                 value: context
@@ -341,7 +338,7 @@ class _AddBatchState extends State<AddBatch> {
                                   width: Screens.width(context) *
                                       0.001), // Add spacing between checkbox and text
                               const Text('Tue'),
-                              Formdategap(context),
+                              formdategap(context),
 
                               Checkbox(
                                 activeColor: Colors.blue,
@@ -360,7 +357,7 @@ class _AddBatchState extends State<AddBatch> {
                                   width: Screens.width(context) *
                                       0.001), // Add spacing between checkbox and text
                               const Text('wed'),
-                              Formdategap(context),
+                              formdategap(context),
                               Checkbox(
                                 activeColor: Colors.blue,
                                 value: context
@@ -378,7 +375,7 @@ class _AddBatchState extends State<AddBatch> {
                                   width: Screens.width(context) *
                                       0.001), // Add spacing between checkbox and text
                               const Text('Thu'),
-                              Formdategap(context),
+                              formdategap(context),
                             ],
                           ),
                           Row(
@@ -548,5 +545,5 @@ class _AddBatchState extends State<AddBatch> {
   }
 }
 
-SizedBox Formdategap(BuildContext context) =>
+SizedBox formdategap(BuildContext context) =>
     SizedBox(width: Screens.width(context) * 0.001);

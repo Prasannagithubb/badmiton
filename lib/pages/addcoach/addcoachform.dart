@@ -325,17 +325,11 @@ class _AddCouchState extends State<AddCouch> {
                                 isBankPassbookSelected:
                                     _bankPassbookImage != null,
                               )) {
-                            setState(() {
-                              context.read<DashCoachProvider>().couchupdate(
-                                  context,
-                                  _idCardImage!.path,
-                                  _bankPassbookImage!.path);
-                            });
-                            // context.read<DashCoachProvider>().saveForm(
-                            //       idCardPath: _idCardImage?.path ?? '',
-                            //       bankPassbookPath:
-                            //           _bankPassbookImage?.path ?? '',
-                            //     );
+                            context.read<DashCoachProvider>().couchupdate(
+                                context,
+                                _idCardImage!.path,
+                                _bankPassbookImage!.path);
+
                             Get.back();
                           }
                         },

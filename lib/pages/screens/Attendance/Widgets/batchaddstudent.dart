@@ -501,7 +501,6 @@ class _AddStudentFormState extends State<AddStudentForm> {
                       ),
                       keyboardType: TextInputType.number,
                     ),
-
                     const SizedBox(height: 15),
                   ],
                 ),

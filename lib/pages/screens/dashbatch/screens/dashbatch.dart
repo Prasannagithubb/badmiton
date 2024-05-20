@@ -153,7 +153,8 @@ class DashBatchState extends State<DashBatch> {
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  '${context.watch<BatchListProvider>().batches[index].time.hour}.${context.watch<BatchListProvider>().batches[index].time.minute} ${context.watch<BatchListProvider>().batches[index].time.period == DayPeriod.am ? 'AM' : 'PM'}',
+                                  context.watch<BatchListProvider>().batches[index].time
+                                  // .${context.watch<BatchListProvider>().batches[index].time} ${context.watch<BatchListProvider>().batches[index].time.period == DayPeriod.am ? 'AM' : 'PM'}',
                                 ),
                               ],
                             ),

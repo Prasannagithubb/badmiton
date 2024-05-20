@@ -1,6 +1,8 @@
+import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:flutter/material.dart';
 
 class Addstudent {
+  int? id;
   String batchname;
   String studentname;
   int studentmobilenumber;
@@ -14,6 +16,7 @@ class Addstudent {
   bool isActive; // Moved to the beginning of the constructor
 
   Addstudent({
+    this.id,
     required this.batchname,
     required this.dateOfBirth,
     required this.studentname,
@@ -26,4 +29,17 @@ class Addstudent {
     required this.fees,
     this.isActive = true,
   });
+  Map<String, Object?> toMap() => {
+        AddstudentColumns.batchname: batchname,
+        AddstudentColumns.dateOfBirth: dateOfBirth,
+        AddstudentColumns.studentname: studentname,
+        AddstudentColumns.studentmobilenumber: studentmobilenumber,
+        AddstudentColumns.fathername: fathername,
+        AddstudentColumns.fathermobilenumber: fathermobilenumber,
+        AddstudentColumns.mothername: mothername,
+        AddstudentColumns.mothermobilenumber: mothermobilenumber,
+        AddstudentColumns.currenttime: currenttime,
+        AddstudentColumns.fees: fees,
+        AddstudentColumns.isActive: isActive,
+      };
 }

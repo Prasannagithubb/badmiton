@@ -48,7 +48,7 @@ class AddStudentProvider with ChangeNotifier {
       addstudentlist(context);
       notifyListeners();
     } else {
-      log('mmmmmmmmmmmmmmmmm');
+      log('mm...');
 
       updatedstudent(context);
       notifyListeners();

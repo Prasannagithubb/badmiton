@@ -12,13 +12,13 @@ class DashCoachProvider extends ChangeNotifier {
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
 
-  XFile? _image; // This will hold the profile image file
+  // XFile? _image; // This will hold the profile image file
   XFile? _idCardImage; // This will hold the ID card image file
   XFile? _bankPassbookImage; // This will hold the bank passbook image file
-  final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
+  // final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
 
-  String? _idCardError;
-  String? _bankPassbookError;
+  // String? _idCardError;
+  // String? _bankPassbookError;
   bool couchswitch = false;
 
   List<Coach> coaches = [];
@@ -30,6 +30,7 @@ class DashCoachProvider extends ChangeNotifier {
   clearAll() {
     coachcontroller = List.generate(50, (i) => TextEditingController());
     couchswitch = false;
+    notifyListeners();
   }
 
   bool validateForm(
@@ -67,8 +68,8 @@ class DashCoachProvider extends ChangeNotifier {
   }
 
   editCouch(Coach addcouch, int i) {
-    // log(studentcondition.toString());
-    // studentcondition = false;
+    log(couchswitch.toString());
+    couchswitch = false;
     log(addcouch.name);
     indexstudent = i;
     coachcontroller[0].text = addcouch.name;
@@ -91,7 +92,7 @@ class DashCoachProvider extends ChangeNotifier {
       saveForm(idCardPath, bankPassbookPath);
       notifyListeners();
     } else {
-      updatedcouch(context);
+      updatedcouch(context );
     }
     notifyListeners();
   }

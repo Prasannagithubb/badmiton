@@ -301,8 +301,7 @@ class _DashStuddentState extends State<DashStuddent> {
                                                               AddStudentProvider>()
                                                           .addstudents[index],
                                                       index);
-                                              Get.toNamed(
-                                                  ConstantRoutes.addstudent1);
+                                              Get.toNamed(ConstantRoutes.addstudent1);
                                             },
                                             splashColor: Colors
                                                 .greenAccent, // Splash color on press
