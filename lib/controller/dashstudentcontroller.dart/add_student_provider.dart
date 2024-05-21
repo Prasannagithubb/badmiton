@@ -1,7 +1,11 @@
 import 'dart:developer';
-import 'package:badmiton_app/Models/addstudet.dart';
+
+import 'package:badmiton_app/dbhelper/dbhelper.dart';
+import 'package:badmiton_app/dbhelper/dboperation.dart';
+import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:flutter/material.dart';
-import '../dashboardcontroller.dart/dash_board_provider.dart';
+import 'package:sqflite/sqflite.dart';
+// import '../dashboardcontroller.dart/dash_board_provider.dart';
 
 class AddStudentProvider with ChangeNotifier {
   List<TextEditingController> studentcontroller =
@@ -12,6 +16,12 @@ class AddStudentProvider with ChangeNotifier {
   TimeOfDay studentcurrentTime = TimeOfDay.now();
   String? selectedBatch;
   int? indexstudent;
+
+  TextEditingController batchController = TextEditingController();
+  List<String> selectedWeekdays = []; // List to store selected weekdays
+  List<String> selectedWeekends = [];
+  bool isChecked = false;
+  List<bool> checkboxValues = List.generate(8, (index) => false);
 
   clearAll() {
     studentcondition = false;
@@ -45,7 +55,7 @@ class AddStudentProvider with ChangeNotifier {
   void toggleStudentCondition(BuildContext context) {
     if (studentcondition == true) {
       log('kkkkkkkkkkkkk');
-      addstudentlist(context);
+      addStudentList(context);
       notifyListeners();
     } else {
       log('mm...');
@@ -53,6 +63,12 @@ class AddStudentProvider with ChangeNotifier {
       updatedstudent(context);
       notifyListeners();
     }
+    notifyListeners();
+  }
+
+  Future<void> fetchStudents() async {
+    final Database db = (await DBHelper.getInstance())!;
+    addstudents = await DBOperation.fetchStudents(db);
     notifyListeners();
   }
 
@@ -65,9 +81,12 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
       addstudents[i].mothername = studentcontroller[4].text;
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime = studentcurrentTime;
+      addstudents[i].currenttime =
+          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+
+      // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = int.parse(studentcontroller[6].text);
-      addstudents[i].dateOfBirth = DateTime.parse(studentcontroller[7].text);
+      addstudents[i].dateOfBirth = studentcontroller[7].text;
       addstudents[i].batchname = selectedBatch.toString();
       Navigator.pop(context);
       // addstudents[i] = addstdn;
@@ -92,34 +111,50 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller[7].text = addstdn.dateOfBirth.toString();
   }
 
-  addstudentlist(BuildContext context) {
-    if (addstuentkey1.currentState!.validate()) {
-      addstudents.add(Addstudent(
-        studentname: studentcontroller[0].text,
-        studentmobilenumber: int.parse(studentcontroller[1].text),
-        fathername: studentcontroller[2].text,
-        fathermobilenumber: int.parse(studentcontroller[3].text),
-        mothername: studentcontroller[4].text,
-        mothermobilenumber: int.parse(studentcontroller[5].text),
-        currenttime: studentcurrentTime,
-        fees: int.parse(studentcontroller[6].text),
-        dateOfBirth: DateTime.parse(studentcontroller[7].text),
-        batchname: selectedBatch.toString(),
-      ));
-      notifyListeners();
-      Navigator.pop(context);
-      // DashboardProvider.selectedIndex = 2;
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => DashBoard()));
-      log('SSSSSSSSSSSSSS::${DashboardProvider.selectedIndex}');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Student added!'),
-        ),
-      );
-      notifyListeners();
+  void addStudentList(BuildContext context) async {
+    final Database? db = await DBHelper.getInstance();
+
+    if (db != null && addstuentkey1.currentState!.validate()) {
+      try {
+        Addstudent newStudent = Addstudent(
+          studentname: studentcontroller[0].text,
+          studentmobilenumber: int.tryParse(studentcontroller[1].text) ?? 0,
+          fathername: studentcontroller[2].text,
+          fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
+          mothername: studentcontroller[4].text,
+          mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
+          currenttime:
+              '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+          fees: int.tryParse(studentcontroller[6].text) ?? 0,
+          dateOfBirth: studentcontroller[7].text,
+          batchname: selectedBatch.toString(),
+        );
+
+        // Insert the new student into the database
+        await DBOperation.insertStudentTable(db, newStudent);
+        notifyListeners();
+
+        // Fetch the updated list of students
+        await fetchStudents();
+        notifyListeners();
+
+        // Show a success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Student added successfully!'),
+          ),
+        );
+
+        // Navigate back to the previous page
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to add student. Please try again.'),
+          ),
+        );
+        print('Error adding student: $e');
+      }
     }
-    // Get.to(() => const DashStuddent());
-    notifyListeners();
   }
 }

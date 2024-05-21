@@ -5,13 +5,14 @@ import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/controller/dashboardcontroller.dart/dash_board_provider.dart';
 import 'package:badmiton_app/dbhelper/dbhelper.dart';
 import 'package:badmiton_app/dbhelper/dboperation.dart';
+import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:badmiton_app/dbmodel/batchmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../Models/addstudet.dart';
+
 import '../dashstudentcontroller.dart/add_student_provider.dart';
 
 class BatchListProvider extends ChangeNotifier {
@@ -43,6 +44,7 @@ class BatchListProvider extends ChangeNotifier {
   init() {
     clearAll();
     batchCount();
+    fetchBatches();
     notifyListeners();
   }
 
@@ -98,7 +100,7 @@ class BatchListProvider extends ChangeNotifier {
         mothername: batchstudentctrlr[4].text,
         mothermobilenumber: int.parse(batchstudentctrlr[5].text),
         fees: int.parse(batchstudentctrlr[6].text),
-        dateOfBirth: dob,
+        dateOfBirth: dob.toString(),
         batchname: selectedBatch.toString(),
       ));
 
@@ -107,7 +109,6 @@ class BatchListProvider extends ChangeNotifier {
       notifyListeners();
       DashboardProvider.selectedIndex = 2;
       Get.offAllNamed(ConstantRoutes.dashboard);
-
       log('SSSSSSSSSSSSSS::${DashboardProvider.selectedIndex}');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -120,37 +121,64 @@ class BatchListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addBatchList(BuildContext context) async {
+  Future<void> fetchBatches() async {
     final Database db = (await DBHelper.getInstance())!;
+    batches = await DBOperation.fetchBatches(db);
 
-    if (batchformKey.currentState!.validate()) {
-      batches.add(
-        Batchs(
+    notifyListeners();
+  }
+
+   Future<void> deleteBatch(int index) async {
+    final Database? db = await DBHelper.getInstance();
+    if (db != null) {
+      final batchToDelete = batches[index];
+      await DBOperation.deleteBatch(db, batchToDelete.name);
+      await fetchBatches();
+    }
+  }
+
+  void addBatchList(BuildContext context) async {
+    final Database? db = await DBHelper.getInstance();
+
+    if (db != null && batchformKey.currentState!.validate()) {
+      try {
+        Batchs newBatch = Batchs(
           name: mycontroller[0].text,
           description: mycontroller[1].text,
-          fees: double.parse(mycontroller[2].text),
+          fees: double.tryParse(mycontroller[2].text) ?? 0.0,
           batchDays: checkboxValues,
-          studentIntake: int.parse(mycontroller[3].text),
+          studentIntake: int.tryParse(mycontroller[3].text) ?? 0,
           time:
               '${currenttime.hour}:${currenttime.minute}:${currenttime.second}',
           isActive: false,
-        ),
-      );
-      await DBOperation.insertBatchTable(
-        db,
-        batches,
-      );
+        );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Batch added successfully!'),
-        ),
-      );
-      notifyListeners();
+        // Insert the new batch into the database
+        await DBOperation.insertBatchTable(db, newBatch);
+        notifyListeners();
+
+        // Fetch the updated list of batches
+        await fetchBatches();
+        notifyListeners();
+
+        // Show a success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Batch added successfully!'),
+          ),
+        );
+
+        // Navigate back to the previous page
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to add batch. Please try again.'),
+          ),
+        );
+        print('Error adding batch: $e');
+      }
     }
-    // Navigate back to the previous page
-    Get.back();
-    notifyListeners();
   }
 
   void removeBatch(Batchs batch) {
@@ -158,10 +186,7 @@ class BatchListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteBatch(int i) {
-    batches.removeAt(i);
-    notifyListeners();
-  }
+
 
   // void selectTime(BuildContext context) async {
   //   final DateTime? selectedTime = await showTimePicker(

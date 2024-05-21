@@ -34,7 +34,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Couch', style: TextStyle(color: Colors.white)),
+        title: const Text('Coach', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(
@@ -65,7 +65,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                 Row(
                   children: [
                     Text(
-                      'All Batches',
+                      'All Coaches',
                       style: theme.textTheme.bodyMedium?.copyWith(),
                     ),
                   ],

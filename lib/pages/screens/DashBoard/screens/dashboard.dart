@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../controller/dashboardcontroller.dart/dash_board_provider.dart';
 
 class DashBoard extends StatefulWidget {
@@ -18,6 +19,22 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.end,
+        //     children: [
+        //       FloatingActionButton(
+        //         foregroundColor: Colors.white,
+        //         backgroundColor: Colors.green,
+        //         onPressed: () {
+        //           print('add batch pressed');
+        //         },
+        //         child: const Icon(Icons.add),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         // appBar: AppBar(
         //   elevation: 6.0,
         //   shadowColor: Colors.black,

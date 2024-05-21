@@ -31,12 +31,35 @@ class DashBatchState extends State<DashBatch> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.green,
+              onPressed: () {
+                setState(() {
+                  log('select index::${DashboardProvider.selectedIndex}');
+                });
+                Get.toNamed(ConstantRoutes.addbatch);
+
+                print('add batch pressed');
+              },
+              child: const Icon(Icons.add),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Batch', style: TextStyle(color: Colors.white)),
+        title: const Text('Batch',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: [
           Padding(
             padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
@@ -66,45 +89,45 @@ class DashBatchState extends State<DashBatch> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // context.read<BatchListProvider>().clearAdd();
-                        setState(() {
-                          log('select index::${DashboardProvider.selectedIndex}');
-                        });
-                        Get.toNamed(ConstantRoutes.addbatch);
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => DashBoard()));
-                        print('add batch pressed');
-                      },
-                      child: Container(
-                        height: Screens.bodyheight(context) * 0.04,
-                        width: Screens.width(context) * 0.20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green.shade400,
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'NEW',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () {
+                //         // context.read<BatchListProvider>().clearAdd();
+                //         setState(() {
+                //           log('select index::${DashboardProvider.selectedIndex}');
+                //         });
+                //         Get.toNamed(ConstantRoutes.addbatch);
+                //         // Navigator.push(
+                //         //     context,
+                //         //     MaterialPageRoute(
+                //         //         builder: (context) => DashBoard()));
+                //         print('add batch pressed');
+                //       },
+                //       child: Container(
+                //         height: Screens.bodyheight(context) * 0.04,
+                //         width: Screens.width(context) * 0.20,
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(10),
+                //           color: Colors.green.shade400,
+                //         ),
+                //         child: const Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //           children: [
+                //             Icon(
+                //               Icons.add,
+                //               color: Colors.white,
+                //             ),
+                //             Text(
+                //               'NEW',
+                //               style: TextStyle(color: Colors.white),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
             SizedBox(
@@ -114,6 +137,8 @@ class DashBatchState extends State<DashBatch> {
               child: ListView.builder(
                 itemCount: context.watch<BatchListProvider>().batches.length,
                 itemBuilder: (context, index) {
+                  final batch =
+                      context.watch<BatchListProvider>().batches[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -143,19 +168,13 @@ class DashBatchState extends State<DashBatch> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  context
-                                      .watch<BatchListProvider>()
-                                      .batches[index]
-                                      .name,
+                                  batch.name,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  context.watch<BatchListProvider>().batches[index].time
-                                  // .${context.watch<BatchListProvider>().batches[index].time} ${context.watch<BatchListProvider>().batches[index].time.period == DayPeriod.am ? 'AM' : 'PM'}',
-                                ),
+                                Text(batch.time),
                               ],
                             ),
                             Row(
@@ -165,22 +184,13 @@ class DashBatchState extends State<DashBatch> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      'Description',
-                                      style: TextStyle(color: Colors.black26),
-                                    ),
+                                    const Text('Description',
+                                        style:
+                                            TextStyle(color: Colors.black26)),
+                                    Text(batch.description),
                                     Text(context
                                         .watch<BatchListProvider>()
-                                        .batches[index]
-                                        .description),
-                                    Text(
-                                      context
-                                          .watch<BatchListProvider>()
-                                          .getSelectedDays(context
-                                              .watch<BatchListProvider>()
-                                              .batches[index]
-                                              .batchDays),
-                                    ),
+                                        .getSelectedDays(batch.batchDays)),
                                   ],
                                 ),
                                 Column(
@@ -190,20 +200,16 @@ class DashBatchState extends State<DashBatch> {
                                         context
                                             .read<BatchListProvider>()
                                             .deleteBatch(index);
-                                        // deleteBatch(context, batch);
                                       },
-                                      child: const Icon(
-                                        Icons.delete,
-                                        color: Colors.black,
-                                      ),
+                                      child: const Icon(Icons.delete,
+                                          color: Colors.black),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                             SizedBox(
-                              height: Screens.bodyheight(context) * 0.014,
-                            ),
+                                height: Screens.bodyheight(context) * 0.014),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -225,18 +231,15 @@ class DashBatchState extends State<DashBatch> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      context
-                                          .read<BatchListProvider>()
-                                          .clearAdd();
-                                    });
+                                    context
+                                        .read<BatchListProvider>()
+                                        .clearAdd();
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const AddStudentForm()));
-
-                                    // Get.toNamed(ConstantRoutes.);
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AddStudentForm()),
+                                    );
                                   },
                                   child: const Text(
                                     'Add student',
@@ -251,16 +254,12 @@ class DashBatchState extends State<DashBatch> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
                   );
-                  // BatchContainer(
-                  //   batch: context.watch<BatchListProvider>().batches[index],
-                  //   i: index,
-                  // );
                 },
               ),
             ),

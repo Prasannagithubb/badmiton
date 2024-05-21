@@ -25,6 +25,7 @@ class _DashHomeState extends State<DashHome> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,

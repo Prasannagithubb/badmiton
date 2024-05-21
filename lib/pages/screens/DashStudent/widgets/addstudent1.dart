@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
@@ -41,7 +42,7 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
   }
 
   void updateTextController() {
-    batchController.text =
+    context.read<AddStudentProvider>().batchController.text =
         context.read<AddStudentProvider>().selectedBatch ?? "";
   }
 
@@ -61,16 +62,10 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
     }
   }
 
-  TextEditingController batchController = TextEditingController();
-  List<String> selectedWeekdays = []; // List to store selected weekdays
-  List<String> selectedWeekends = [];
-  bool isChecked = false;
-  List<bool> checkboxValues = List.generate(8, (index) => false);
-
   @override
   Widget build(BuildContext context) {
     final studentcurrentTime = TimeOfDay.now();
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 6.0,
@@ -82,7 +77,7 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
         ),
         title: const Text(
           'Add student',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
           Padding(
@@ -151,7 +146,8 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     setState(() {
                       context.read<AddStudentProvider>().selectedBatch =
                           newValue;
-                      batchController.text = newValue ?? "";
+                      context.read<AddStudentProvider>().batchController.text =
+                          newValue ?? "";
                     });
                   },
                   items: context.read<BatchListProvider>().batches.map((e) {

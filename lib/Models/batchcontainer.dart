@@ -6,7 +6,7 @@ class Batch {
   final double fees;
   final List<bool> batchDays;
   final int studentIntake;
-  final TimeOfDay time;
+  final String time;
     bool isActive;
 
   Batch({

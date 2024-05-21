@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:badmiton_app/Models/addstudet.dart';
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
+import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -43,12 +43,18 @@ class _DashStuddentState extends State<DashStuddent> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: FloatingActionButton(onPressed: () {}),
+      // ),
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Students', style: TextStyle(color: Colors.white)),
+        title: const Text('Students',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: [
           Padding(
             padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
@@ -301,7 +307,8 @@ class _DashStuddentState extends State<DashStuddent> {
                                                               AddStudentProvider>()
                                                           .addstudents[index],
                                                       index);
-                                              Get.toNamed(ConstantRoutes.addstudent1);
+                                              Get.toNamed(
+                                                  ConstantRoutes.addstudent1);
                                             },
                                             splashColor: Colors
                                                 .greenAccent, // Splash color on press
@@ -533,7 +540,7 @@ class _DashStuddentState extends State<DashStuddent> {
                                 )),
                             const SizedBox(
                               height: 10,
-                            )
+                            ),
                           ],
                         );
                       }),

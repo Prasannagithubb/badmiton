@@ -68,7 +68,7 @@ class BatchContainer extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '${batch.time.hour}.${batch.time.minute} ${batch.time.period == DayPeriod.am ? 'AM' : 'PM'}',
+                    '${batch.time}.${batch.time} ${batch.time == DayPeriod.am ? 'AM' : 'PM'}',
                   ),
                 ],
               ),

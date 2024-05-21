@@ -1,8 +1,6 @@
 const String batchtablename = "BatchTableName";
 
 class AddBatchColumns {
-    static const String tableName = 'batch';
-  static const String id = "id";
   static const String name = "name";
   static const String description = "description";
   static const String fees = "fees";
@@ -34,7 +32,6 @@ class Batchs {
   });
 
   Map<String, Object?> toMap() => {
-        AddBatchColumns.id: id,
         AddBatchColumns.name: name,
         AddBatchColumns.description: description,
         AddBatchColumns.fees: fees,
