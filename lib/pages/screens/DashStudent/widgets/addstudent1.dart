@@ -114,7 +114,7 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                         : const AssetImage(
                             'lib/assets/peopleplaceholder.png'), // Placeholder image
                     backgroundColor:
-                        Colors.grey[200], // Default background color
+                        Colors.blue[200], // Default background color
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -125,20 +125,20 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     // labelText: 'Batch Name',
-                    labelStyle: const TextStyle(color: Colors.grey),
+                    labelStyle: TextStyle(color: Colors.grey),
                     hintText: 'Batch name',
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    prefixIcon: const Icon(
+                    hintStyle: TextStyle(color: Colors.grey),
+                    prefixIcon: Icon(
                       Icons.batch_prediction_outlined,
                       color: Colors.blue,
                     ),
                     // Remove border
-                    border: InputBorder.none,
-                    filled: true,
-                    // fillColor: Colors.white,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    border: UnderlineInputBorder(),
+                    // filled: true,
+                    // // fillColor: Colors.white,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   value: context.read<AddStudentProvider>().selectedBatch,
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
@@ -169,22 +169,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Student name',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon: const Icon(Icons.person, color: Colors.blue),
+                    prefixIcon: Icon(Icons.person, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.text,
                 ),
@@ -199,23 +199,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'mobile number',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.phone_android, color: Colors.blue),
+                    prefixIcon: Icon(Icons.phone_android, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -231,23 +230,23 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Father name',
-                    labelStyle: const TextStyle(color: Colors.grey),
+                    labelStyle: TextStyle(color: Colors.grey),
 
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon: const Icon(Icons.person, color: Colors.blue),
+                    prefixIcon: Icon(Icons.person, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.text,
                 ),
@@ -263,23 +262,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Father mobile number',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.phone_android, color: Colors.blue),
+                    prefixIcon: Icon(Icons.phone_android, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -294,22 +292,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Mother name',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon: const Icon(Icons.person, color: Colors.blue),
+                    prefixIcon: Icon(Icons.person, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.text,
                 ),
@@ -325,23 +323,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Mother mobile number',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.phone_android, color: Colors.blue),
+                    prefixIcon: Icon(Icons.phone_android, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -356,23 +353,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Date of Birth',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.calendar_today, color: Colors.blue),
+                    prefixIcon: Icon(Icons.calendar_today, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   onTap: () async {
                     final DateTime? pickedDate = await showDatePicker(
@@ -463,22 +459,21 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                       text:
                           '${studentcurrentTime.hour}.${studentcurrentTime.minute}'),
                   cursorColor: Colors.blue,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     // labelText: 'Current Time',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.access_time, color: Colors.blue),
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    prefixIcon: Icon(Icons.access_time, color: Colors.blue),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType:
                       TextInputType.datetime, // Specify input type as datetime
@@ -495,23 +490,22 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Fees amount',
-                    labelStyle: const TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5.5),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    prefixIcon:
-                        const Icon(Icons.currency_rupee, color: Colors.blue),
+                    prefixIcon: Icon(Icons.currency_rupee, color: Colors.blue),
                     // hintText: "Enter your Name",
-                    hintStyle: const TextStyle(color: Colors.blue),
-                    filled: true,
-                    fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    hintStyle: TextStyle(color: Colors.blue),
+                    // filled: true,
+                    // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                   ),
                   keyboardType: TextInputType.number,
                 ),

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import 'Themes/theme_manager.dart';
 import 'constant/AllRoutes.dart';
 import 'controller/dashboardcontroller.dart/dash_board_provider.dart';
@@ -23,7 +22,6 @@ void main() {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -32,7 +30,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
     return MultiProvider(
       key: navigatorKey,
       providers: [
@@ -62,9 +59,9 @@ class _MyAppState extends State<MyApp> {
             primaryColor: Colors.green.shade800,
             useMaterial3: true,
             // textTheme: GoogleFonts.nunitoSansTextTheme(),
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: const Color(0xFF0A1172))
-                    .copyWith(),
+            colorScheme: ColorScheme.fromSeed(
+                    secondary: Colors.blue, seedColor: const Color(0xFF0A1172))
+                .copyWith(),
           ),
           // theme: themes.selectedTheme == 'yellow'
           //     ? yellowTheme(context)

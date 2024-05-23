@@ -63,18 +63,18 @@ class _AddCouchState extends State<AddCouch> {
     return InputDecoration(
       labelText: labelText,
       labelStyle: const TextStyle(color: Colors.grey),
-      enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(5.5),
+      enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+        // borderRadius: BorderRadius.circular(5.5),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(5.5),
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+        // borderRadius: BorderRadius.circular(5.5),
       ),
       prefixIcon: Icon(icon, color: Colors.blue),
       hintStyle: const TextStyle(color: Colors.blue),
-      filled: true,
-      fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+      // filled: true,
+      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
     );
   }
 
@@ -102,13 +102,29 @@ class _AddCouchState extends State<AddCouch> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               GestureDetector(
-                onTap: () => _pickImage(_image, (image) => _image = image),
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: _image != null
-                      ? FileImage(File(_image!.path)) as ImageProvider
-                      : const AssetImage('lib/assets/peopleplaceholder.png'),
-                  backgroundColor: Colors.grey[200],
+                onTap: () => _pickImage(
+                    _image, (image) => setState(() => _image = image)),
+                child: Container(
+                  width:
+                      120, // Set width to match the diameter of CircleAvatar (2 * radius)
+                  height:
+                      120, // Set height to match the diameter of CircleAvatar (2 * radius)
+                  decoration: BoxDecoration(
+                    shape:
+                        BoxShape.circle, // Make sure the container is circular
+                    image: DecorationImage(
+                      image: _image != null
+                          ? FileImage(File(_image!.path)) as ImageProvider
+                          : const AssetImage(
+                              'lib/assets/peopleplaceholder.png'),
+                      fit: BoxFit.cover, // Set the desired BoxFit property here
+                    ),
+                  ),
+                  child: const CircleAvatar(
+                    radius: 60,
+                    backgroundColor:
+                        Colors.transparent, // Make background color transparent
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -342,8 +358,7 @@ class _AddCouchState extends State<AddCouch> {
                         child: const Text(
                           'Save',
                           style: TextStyle(
-                              color:
-                                  Colors.green), // Change text color to green
+                              color: Colors.blue), // Change text color to green
                         ),
                       ),
                     ),

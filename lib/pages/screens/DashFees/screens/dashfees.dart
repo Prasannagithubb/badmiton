@@ -38,6 +38,7 @@ class _DashBoardFeesState extends State<DashBoardFees>
     }
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,

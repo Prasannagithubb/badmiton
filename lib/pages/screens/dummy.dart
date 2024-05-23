@@ -538,3 +538,101 @@
                     //       TextInputType.datetime, // Specify input type as datetime
                     // ),
                     // const SizedBox(height: 15),
+
+                    // CircleAvatar(
+                    //             radius: 25,
+                    //             backgroundColor: Colors.white,
+                    //             child:
+                    //                 Image.asset('lib/assets/Badmiton_pure.png'),
+                    //           ),
+
+                    //           column(
+                    //            children :  [
+                    //                 Text(
+                    //             batch.name,
+                    //             style: theme.textTheme.titleMedium?.copyWith(
+                    //               fontWeight: FontWeight.bold,
+                    //               color: Colors.black,
+                    //             ),
+                    //           ),
+                    //           ])
+
+                    //           Column(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               // const SizedBox(height: 4),
+                                  // Text(
+                                  //   batch.description,
+                                  //   style: theme.textTheme.bodyMedium?.copyWith(
+                                  //     color: Colors.black,
+                                  //     fontSize: 12,
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(height: 4),
+                                  // Text(
+                                  //   context
+                                  //       .watch<BatchListProvider>()
+                                  //       .getSelectedDays(batch.batchDays),
+                                  //   style: theme.textTheme.bodyMedium?.copyWith(
+                                  //     color: Colors.black,
+                                  //     fontSize: 12,
+                                  //   ),
+                                  // ),
+                    //             ],
+                    //           ),
+
+                              // Column(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceAround,
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   // mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     // const SizedBox(height: 10),
+                              //     GestureDetector(
+                              //       onTap: () {
+                              //         Get.toNamed(
+                              //             ConstantRoutes.takeattendance);
+                              //       },
+                              //       child: Container(
+                              //         height: 10,
+                              //         child: const Icon(
+                              //           Icons.check_circle,
+                              //           color: Colors.greenAccent,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(height: 10),
+                              //     GestureDetector(
+                              //       onTap: () {
+                              //         context
+                              //             .read<BatchListProvider>()
+                              //             .clearAdd();
+                              //         Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 const AddStudentForm(),
+                              //           ),
+                              //         );
+                              //       },
+                              //       child: Container(
+                              //         height: 10,
+                              //         child: const Icon(Icons.person_add,
+                              //             color: Colors.blueAccent, size: 20),
+                              //       ),
+                              //     ),
+                              //     const SizedBox(height: 10),
+                              //     GestureDetector(
+                              //       onTap: () {
+                              //         context
+                              //             .read<BatchListProvider>()
+                              //             .deleteBatch(index);
+                              //       },
+                              //       child: Container(
+                              //         height: 10,
+                              //         child: const Icon(Icons.delete,
+                              //             color: Colors.redAccent, size: 20),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),

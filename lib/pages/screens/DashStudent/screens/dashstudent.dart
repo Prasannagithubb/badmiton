@@ -43,10 +43,21 @@ class _DashStuddentState extends State<DashStuddent> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: FloatingActionButton(onPressed: () {}),
-      // ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton(
+            backgroundColor: Colors.green,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              context.read<AddStudentProvider>().clearAll();
+              // Navigator.push(
+              context.read<AddStudentProvider>().studentcondition = true;
+              Get.toNamed(ConstantRoutes.addstudent1);
+            }),
+      ),
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         elevation: 6.0,
@@ -82,56 +93,6 @@ class _DashStuddentState extends State<DashStuddent> {
                     'All Students',
                     style: theme.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      context.read<AddStudentProvider>().clearAll();
-                      // Navigator.push(
-                      context.read<AddStudentProvider>().studentcondition =
-                          true;
-                      Get.toNamed(ConstantRoutes.addstudent1);
-                    },
-                    child: Container(
-                      height: Screens.bodyheight(context) * 0.04,
-                      width: Screens.width(context) * 0.20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.green.shade400,
-                            Colors.green.shade600
-                          ], // Two shades of green
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.green.shade800.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: const Offset(
-                                0, 2), // Changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.add,
-                              color: Colors.white,
-                              size: 24), // Increased icon size
-                          Text(
-                            'New',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  16, // Increased font size for better visibility
-                              fontWeight: FontWeight.bold, // Make text bold
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ],
               ),

@@ -15,7 +15,6 @@ class _AddBatchState extends State<AddBatch> {
   @override
   void initState() {
     super.initState();
-    context.read<BatchListProvider>().batchCount();
   }
 
   // void dispose() {
@@ -33,11 +32,34 @@ class _AddBatchState extends State<AddBatch> {
   }
 
   bool hasError = false;
+  String? selectedTime;
+  TextEditingController fromTimeController = TextEditingController();
+  TextEditingController toTimeController = TextEditingController();
+
+  void _showTimePicker(String type) async {
+    TimeOfDay? selectedTimeOfDay = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (selectedTimeOfDay != null) {
+      String formattedTime = selectedTimeOfDay.format(context);
+      setState(() {
+        if (type == 'from') {
+          fromTimeController.text = formattedTime;
+        } else if (type == 'to') {
+          toTimeController.text = formattedTime;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    // final theme = Theme.of(context);
+    final theme = Theme.of(context);
+
+    // final formKey = GlobalKey<FormState>();
+    // final batchListProvider = context.watch<BatchListProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Batch'),
@@ -91,24 +113,24 @@ class _AddBatchState extends State<AddBatch> {
                     controller:
                         context.read<BatchListProvider>().mycontroller[0],
                     cursorColor: Colors.blue,
-                    decoration: InputDecoration(
-                      hintStyle: const TextStyle(color: Colors.grey),
+                    decoration: const InputDecoration(
+                      hintStyle: TextStyle(color: Colors.grey),
                       // hintText: 'Enter the batch name',
                       labelText: 'Batch Name',
-                      labelStyle: const TextStyle(color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      labelStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      prefixIcon: const Icon(Icons.person, color: Colors.blue),
+                      prefixIcon: Icon(Icons.person, color: Colors.blue),
                       // hintText: "Enter your Name",
                       // hintStyle: TextStyle(color: Colors.blue),
-                      filled: true,
-                      fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                      // filled: true,
+                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                   ),
                 ),
@@ -130,25 +152,24 @@ class _AddBatchState extends State<AddBatch> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding:
-                          const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      labelStyle: const TextStyle(color: Colors.grey),
+                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      labelStyle: TextStyle(color: Colors.grey),
                       labelText: 'Description',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      prefixIcon:
-                          const Icon(Icons.description, color: Colors.blue),
+                      prefixIcon: Icon(Icons.description, color: Colors.blue),
                       // hintText: "Enter your Description",
-                      hintStyle: const TextStyle(color: Colors.blue),
-                      filled: true,
-                      fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                      hintStyle: TextStyle(color: Colors.blue),
+                      // filled: true,
+                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                     maxLines: 2,
                   ),
@@ -183,23 +204,25 @@ class _AddBatchState extends State<AddBatch> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
+                      focusColor: Colors.blue,
                       labelText: 'Fees',
-                      labelStyle: const TextStyle(color: Colors.grey),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      labelStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                      // ignore: prefer_const_constructors
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      prefixIcon: const Icon(Icons.currency_rupee_rounded,
+                      prefixIcon: Icon(Icons.currency_rupee_rounded,
                           color: Colors.blue),
                       // hintText: "Enter your Name",
-                      hintStyle: const TextStyle(color: Colors.blue),
-                      filled: true,
-                      fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                      hintStyle: TextStyle(color: Colors.blue),
+                      // filled: true,
+                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                     keyboardType: TextInputType.number,
                   ),
@@ -226,41 +249,180 @@ class _AddBatchState extends State<AddBatch> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.02,
                 ),
-                const Divider(
-                  thickness: 0.4,
+                // const Divider(
+                //   thickness: 0.4,
+                // ),
+                // Center(
+                //     child: Text(
+                //   'ADDTIONAL INFORMATION (OPTIONAL)',
+                //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                //       fontWeight: FontWeight.bold, color: Colors.grey),
+                // )),
+                // SizedBox(
+                //   height: Screens.bodyheight(context) * 0.01,
+                // ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // Text(
+                    //   'Student intake',
+                    //   style: Theme.of(context)
+                    //       .textTheme
+                    //       .labelMedium
+                    //       ?.copyWith(color: Colors.blue),
+                    // ),
+                  ],
                 ),
-                Center(
-                    child: Text(
-                  'ADDTIONAL INFORMATION (OPTIONAL)',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.grey),
-                )),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     Text(
+                //       'set a limit of max intake of student for the batch',
+                //       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //             color: Colors.grey.shade400,
+                //           ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
-                  height: Screens.bodyheight(context) * 0.01,
+                  height: hasError
+                      ? Screens.bodyheight(context) * 0.1
+                      : Screens.bodyheight(context) * 0.08,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter the value';
+                      }
+                      return null;
+                    },
+                    cursorColor: Colors.blue,
+                    controller:
+                        context.watch<BatchListProvider>().mycontroller[3],
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      label: Text('Enter student intake'),
+                      labelStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        // borderRadius: BorderRadius.circular(5.5),
+                      ),
+                      prefixIcon:
+                          Icon(Icons.people_alt_rounded, color: Colors.blue),
+                      // hintText: "Enter Student intake",
+                      // hintStyle: TextStyle(color: Colors.grey),
+                      // filled: true,
+                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Screens.bodyheight(context) * 0.02,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text('Time : '),
                     Text(
-                      context.read<BatchListProvider>().currenttime.toString(),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.green,
+                      'Batch timings',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: Colors.blue),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Screens.bodyheight(context) * 0.02,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              // Radio<String>(
+                              //   value: 'from',
+                              //   groupValue: selectedTime,
+                              //   onChanged: (String? value) {
+                              //     if (value != null) {
+                              //       setState(() {
+                              //         selectedTime = value;
+                              //       });
+                              //     }
+                              //   },
+                              // ),
+                              // const Text('From'),
+                              // const SizedBox(width: 10),
+                              Expanded(
+                                child: TextFormField(
+                                  readOnly: true,
+                                  controller: fromTimeController,
+                                  onTap: () {
+                                    _showTimePicker('from');
+                                  },
+                                  decoration: const InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                    ),
+                                    suffixIcon: Icon(Icons.timer_sharp),
+                                    labelText: 'From Time',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                        const Text('   -- '),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              // Radio<String>(
+                              //   value: 'to',
+                              //   groupValue: selectedTime,
+                              //   onChanged: (String? value) {
+                              //     if (value != null) {
+                              //       setState(() {
+                              //         selectedTime = value;
+                              //       });
+                              //     }
+                              //   },
+                              // ),
+                              // const Text('To'),
+                              // const SizedBox(width: 10),
+                              Expanded(
+                                child: TextFormField(
+                                  readOnly: true,
+                                  controller: toTimeController,
+                                  onTap: () {
+                                    _showTimePicker('to');
+                                  },
+                                  decoration: const InputDecoration(
+                                    suffixIcon: Icon(Icons.timer_sharp),
+                                    labelText: 'To Time',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        context.read<BatchListProvider>().selectTime(context);
-                      },
-                      child: const Text(''),
+                    SizedBox(
+                      height: Screens.bodyheight(context) * 0.01,
                     ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.alarm_sharp,
-                        color: Colors.black38,
-                      ),
-                      onPressed: () {
-                        context.read<BatchListProvider>().selectTime(context);
-                      },
+                    Text(
+                      'Selected time: ${fromTimeController.text} - ${toTimeController.text}',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -440,62 +602,6 @@ class _AddBatchState extends State<AddBatch> {
                 ),
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Student intake',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium
-                          ?.copyWith(color: Colors.blue),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'set a limit of max intake of student for the batch',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey.shade400,
-                          ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: hasError
-                      ? Screens.bodyheight(context) * 0.1
-                      : Screens.bodyheight(context) * 0.08,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the value';
-                      }
-                      return null;
-                    },
-                    cursorColor: Colors.blue,
-                    controller:
-                        context.watch<BatchListProvider>().mycontroller[3],
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      prefixIcon: const Icon(Icons.people_alt_rounded,
-                          color: Colors.blue),
-                      hintText: "Enter Student intake",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      filled: true,
-                      fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
-                    ),
-                  ),
                 ),
 
                 // TextFormField(

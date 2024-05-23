@@ -75,194 +75,186 @@ class DashBatchState extends State<DashBatch> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: Screens.bodyheight(context) * 0.01),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'All Batches',
-                      style: theme.textTheme.bodyMedium?.copyWith(),
+            context.watch<BatchListProvider>().batches.isEmpty
+                ? Center(
+                    child: Text(
+                      'Press + Add a new Batch',
+                      style: theme.textTheme.bodyMedium
+                          ?.copyWith(color: Colors.grey),
                     ),
-                  ],
-                ),
-                // Row(
-                //   children: [
-                //     GestureDetector(
-                //       onTap: () {
-                //         // context.read<BatchListProvider>().clearAdd();
-                //         setState(() {
-                //           log('select index::${DashboardProvider.selectedIndex}');
-                //         });
-                //         Get.toNamed(ConstantRoutes.addbatch);
-                //         // Navigator.push(
-                //         //     context,
-                //         //     MaterialPageRoute(
-                //         //         builder: (context) => DashBoard()));
-                //         print('add batch pressed');
-                //       },
-                //       child: Container(
-                //         height: Screens.bodyheight(context) * 0.04,
-                //         width: Screens.width(context) * 0.20,
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(10),
-                //           color: Colors.green.shade400,
-                //         ),
-                //         child: const Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //           children: [
-                //             Icon(
-                //               Icons.add,
-                //               color: Colors.white,
-                //             ),
-                //             Text(
-                //               'NEW',
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
-            SizedBox(
-              height: Screens.bodyheight(context) * 0.020,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: context.watch<BatchListProvider>().batches.length,
-                itemBuilder: (context, index) {
-                  final batch =
-                      context.watch<BatchListProvider>().batches[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: Screens.bodyheight(context) * 0.18,
-                      width: Screens.width(context),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.09),
-                            blurRadius: 2,
-                            offset: const Offset(0, 2),
-                          )
-                        ],
-                        image: const DecorationImage(
-                          opacity: 0.1,
-                          image: AssetImage("lib/assets/Badmiton_pure.png"),
-                          alignment: Alignment.center,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  batch.name,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(fontWeight: FontWeight.bold),
-                                ),
-                                Text(batch.time),
-                              ],
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                    itemCount:
+                        context.watch<BatchListProvider>().batches.length,
+                    itemBuilder: (context, index) {
+                      final batch =
+                          context.watch<BatchListProvider>().batches[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 6.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.white],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Description',
+                                CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                      'lib/assets/Badmiton_pure.png'),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        batch.name.toUpperCase(),
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        batch.description,
                                         style:
-                                            TextStyle(color: Colors.black26)),
-                                    Text(batch.description),
-                                    Text(context
-                                        .watch<BatchListProvider>()
-                                        .getSelectedDays(batch.batchDays)),
-                                  ],
+                                            theme.textTheme.bodyLarge?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        context
+                                            .watch<BatchListProvider>()
+                                            .getSelectedDays(batch.batchDays),
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(
+                                            ConstantRoutes.takeattendance);
+                                      },
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Colors.greenAccent,
+                                        size: 26,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
                                     GestureDetector(
                                       onTap: () {
                                         context
                                             .read<BatchListProvider>()
-                                            .deleteBatch(index);
+                                            .clearAdd();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AddStudentForm(),
+                                          ),
+                                        );
                                       },
-                                      child: const Icon(Icons.delete,
-                                          color: Colors.black),
+                                      child: const Icon(
+                                        Icons.person_add,
+                                        color: Colors.blueAccent,
+                                        size: 26,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                  "Delete Confirmation"),
+                                              content: const Text(
+                                                  "Are you sure you want to delete this batch?"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Dismiss the dialog
+                                                  },
+                                                  child: const Text("Cancel"),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    context
+                                                        .read<
+                                                            BatchListProvider>()
+                                                        .deleteBatch(index);
+                                                    Navigator.of(context)
+                                                        .pop(); // Dismiss the dialog
+                                                  },
+                                                  child: const Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.redAccent,
+                                        size: 26,
+                                      ),
                                     ),
                                   ],
                                 ),
+                                const Column(
+                                  children: [
+                                    SizedBox(width: 10),
+                                  ],
+                                )
                               ],
                             ),
-                            SizedBox(
-                                height: Screens.bodyheight(context) * 0.014),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(ConstantRoutes.takeattendance);
-                                  },
-                                  child: const Text(
-                                    'Take attendance',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: Colors.green,
-                                      decorationThickness: 2,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    context
-                                        .read<BatchListProvider>()
-                                        .clearAdd();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AddStudentForm()),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Add student',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: Colors.green,
-                                      decorationThickness: 2,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                      );
+                    },
+                  )),
           ],
         ),
       ),

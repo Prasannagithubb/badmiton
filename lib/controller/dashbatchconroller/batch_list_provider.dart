@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-
 import '../dashstudentcontroller.dart/add_student_provider.dart';
 
 class BatchListProvider extends ChangeNotifier {
@@ -26,6 +25,7 @@ class BatchListProvider extends ChangeNotifier {
   List<Batchs> get getbatches => batches;
   final batchstudentformKey = GlobalKey<FormState>();
   final batchformKey = GlobalKey<FormState>();
+  String selectedTiming = '4pm to 5pm';
 
   List<bool> checkboxValues = List.generate(7, (index) => false);
   DateTime currenttime = DateTime.now();
@@ -43,7 +43,6 @@ class BatchListProvider extends ChangeNotifier {
 
   init() {
     clearAll();
-    batchCount();
     fetchBatches();
     notifyListeners();
   }
@@ -61,12 +60,12 @@ class BatchListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  batchCount() {
-    if (mycontroller[3].text.isEmpty) {
-      mycontroller[3].text = '20';
-      notifyListeners();
-    }
-  }
+  // batchCount() {
+  //   if (mycontroller[3].text.isEmpty) {
+  //     mycontroller[3].text = '';
+  //     notifyListeners();
+  //   }
+  // }
 
   String getSelectedDays(List<bool> batchDays) {
     List<String> dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -89,7 +88,7 @@ class BatchListProvider extends ChangeNotifier {
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
   batchaddstudentlist(BuildContext context) async {
-    final db = await DBHelper.getInstance();
+    // final db = await DBHelper.getInstance();
     if (batchstudentformKey.currentState!.validate()) {
       DateTime dob = DateTime.parse(batchstudentctrlr[7].text);
       batchaddstudents.add(Addstudent(
@@ -128,7 +127,7 @@ class BatchListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-   Future<void> deleteBatch(int index) async {
+  Future<void> deleteBatch(int index) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
       final batchToDelete = batches[index];
@@ -185,19 +184,6 @@ class BatchListProvider extends ChangeNotifier {
     batches.remove(batch);
     notifyListeners();
   }
-
-
-
-  // void selectTime(BuildContext context) async {
-  //   final DateTime? selectedTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: currenttime.toString(),
-  //   );
-
-  //   if (selectedTime != null) {
-  //     currenttime = selectedTime;
-  //   }
-  // }
 
   void selectTime(BuildContext context) async {
     final TimeOfDay? selectedTime = await showTimePicker(
