@@ -34,16 +34,16 @@ class DBHelper {
       await db.execute('''
         CREATE TABLE $addstudentName(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          ${AddstudentColumns.batchname} TEXT not null,
-          ${AddstudentColumns.studentname} TEXT not null,
-          ${AddstudentColumns.studentmobilenumber} TEXT not null,
-          ${AddstudentColumns.fathername} TEXT not null,
-          ${AddstudentColumns.fathermobilenumber} TEXT not null,
-          ${AddstudentColumns.mothername} TEXT not null,
-          ${AddstudentColumns.mothermobilenumber} TEXT not null,
-          ${AddstudentColumns.fees} TEXT not null,
-          ${AddstudentColumns.currenttime} TEXT not null,
-          ${AddstudentColumns.dateOfBirth} TEXT not null,
+          ${AddstudentColumns.batchname} TEXT,
+          ${AddstudentColumns.studentname} TEXT,
+          ${AddstudentColumns.studentmobilenumber} TEXT,
+          ${AddstudentColumns.fathername} TEXT,
+          ${AddstudentColumns.fathermobilenumber} TEXT,
+          ${AddstudentColumns.mothername} TEXT,
+          ${AddstudentColumns.mothermobilenumber} TEXT,
+          ${AddstudentColumns.fees} TEXT,
+          ${AddstudentColumns.currenttime} TEXT,
+          ${AddstudentColumns.dateOfBirth} TEXT,
           ${AddstudentColumns.isActive} BOOL
         )
       ''');
@@ -64,14 +64,14 @@ class DBHelper {
       await db.execute('''
         CREATE TABLE ${AddCoachColumns.tableName}(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          ${AddCoachColumns.name} TEXT not null,
-          ${AddCoachColumns.mobile} TEXT not null,
-          ${AddCoachColumns.salary} TEXT not null,
-          ${AddCoachColumns.bankDetails} TEXT not null,
-          ${AddCoachColumns.dateOfJoining} TEXT not null,
-          ${AddCoachColumns.dateOfResignation} TEXT not null,
-          ${AddCoachColumns.idCardPath} TEXT not null,
-          ${AddCoachColumns.bankPassbookPath} TEXT not null
+          ${AddCoachColumns.name} TEXT,
+          ${AddCoachColumns.mobile} TEXT,
+          ${AddCoachColumns.salary} TEXT,
+          ${AddCoachColumns.bankDetails} TEXT,
+          ${AddCoachColumns.dateOfJoining} TEXT,
+          ${AddCoachColumns.dateOfResignation} TEXT,
+          ${AddCoachColumns.idCardPath} TEXT,
+          ${AddCoachColumns.bankPassbookPath} TEXT
         )
       ''');
     } catch (e) {
@@ -79,4 +79,21 @@ class DBHelper {
       throw Exception('Error creating tables');
     }
   }
+
+  Future<void> createTables(Database db) async {
+  await db.execute('''
+    CREATE TABLE ${AddCoachColumns.tableName} (
+      ${AddCoachColumns.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+      ${AddCoachColumns.name} TEXT,
+      ${AddCoachColumns.mobile} TEXT,
+      ${AddCoachColumns.salary} TEXT,
+      ${AddCoachColumns.bankDetails} TEXT,
+      ${AddCoachColumns.dateOfJoining} TEXT,
+      ${AddCoachColumns.dateOfResignation} TEXT,
+      ${AddCoachColumns.idCardPath} TEXT,
+      ${AddCoachColumns.bankPassbookPath} TEXT
+    )
+  ''');
+}
+
 }

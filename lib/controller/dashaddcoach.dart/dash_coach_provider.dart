@@ -1,122 +1,155 @@
 import 'dart:developer';
 
-import 'package:badmiton_app/Models/couchdata.dart';
+import 'package:badmiton_app/dbhelper/dbhelper.dart';
+import 'package:badmiton_app/dbhelper/dboperation.dart';
+import 'package:badmiton_app/dbmodel/coachmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DashCoachProvider extends ChangeNotifier {
-  int? indexstudent;
-  final coachformKey = GlobalKey<FormState>();
-  List<TextEditingController> coachcontroller =
+  int? indexStudent;
+  final coachFormKey = GlobalKey<FormState>();
+  List<TextEditingController> coachController =
       List.generate(10, (i) => TextEditingController());
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
 
-  // XFile? _image; // This will hold the profile image file
-  XFile? _idCardImage; // This will hold the ID card image file
-  XFile? _bankPassbookImage; // This will hold the bank passbook image file
-  // final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
+  XFile? _idCardImage;
+  XFile? _bankPassbookImage;
 
-  // String? _idCardError;
-  // String? _bankPassbookError;
-  bool couchswitch = false;
+  bool couchSwitch = false;
 
   List<Coach> coaches = [];
 
-  init() {
+  void init() {
     clearAll();
+    fetchCoaches();
   }
 
-  clearAll() {
-    coachcontroller = List.generate(50, (i) => TextEditingController());
-    couchswitch = false;
+  void clearAll() {
+    coachController = List.generate(10, (i) => TextEditingController());
+    couchSwitch = false;
     notifyListeners();
   }
 
-  bool validateForm(
-      {required bool isIdCardSelected, required bool isBankPassbookSelected}) {
-    final formValid = coachformKey.currentState?.validate() ?? false;
+  bool validateForm({
+    required bool isIdCardSelected,
+    required bool isBankPassbookSelected,
+  }) {
+    final formValid = coachFormKey.currentState?.validate() ?? false;
     return formValid && isIdCardSelected && isBankPassbookSelected;
   }
 
-  void removeCoach(int index) {
-    coaches.removeAt(index);
-    notifyListeners();
-  }
-
-  void updatedcouch(BuildContext context) {
-    int i = indexstudent!;
-    try {
-      coaches[i].name = coachcontroller[0].text;
-      coaches[i].mobile = coachcontroller[1].text.toString();
-      if (_idCardImage != null) {
-        coaches[i].idCardPath = _idCardImage!.path;
+  void removeCoach(int index) async {
+    if (index >= 0 && index < coaches.length) {
+      final coachToRemove = coaches[index];
+      final Database? db = await DBHelper.getInstance();
+      if (db != null && coachToRemove.id != null) {
+        await DBOperation.deleteCoach(db, coachToRemove.id!);
+        coaches.removeAt(index);
+        notifyListeners();
       }
-      coaches[i].salary = coachcontroller[2].text.toString();
-      coaches[i].bankDetails = coachcontroller[3].text;
-      if (_bankPassbookImage != null) {
-        coaches[i].bankPassbookPath = _bankPassbookImage!.name;
-      }
-      coaches[i].dateOfJoining = coachcontroller[4].text;
-      coaches[i].dateOfResignation = coachcontroller[5].text;
-      // coaches[i].dateOfResignation = DateTime.parse(coachcontroller[7].text);
-      Navigator.pop(context);
-      // coaches[i] = addstdn;
-    } catch (e) {
-      print('Error parsing values: $e');
     }
   }
 
-  editCouch(Coach addcouch, int i) {
-    log(couchswitch.toString());
-    couchswitch = false;
-    log(addcouch.name);
-    indexstudent = i;
-    coachcontroller[0].text = addcouch.name;
-    coachcontroller[1].text = addcouch.mobile.toString();
-    coachcontroller[2].text = addcouch.idCardPath;
-    coachcontroller[2].text = addcouch.salary.toString();
-    coachcontroller[3].text = addcouch.bankDetails;
-    coachcontroller[5].text = addcouch.bankPassbookPath.toString();
-    coachcontroller[4].text = addcouch.dateOfJoining.toString();
-    coachcontroller[5].text = addcouch.dateOfResignation.toString();
+Future<void> updateCoach(BuildContext context, {required String idCardPath, required String bankPassbookPath}) async {
+    int i = indexStudent!;
+    try {
+      final Database? db = await DBHelper.getInstance();
+      if (db != null) {
+        final coach = coaches[i]
+          ..name = coachController[0].text
+          ..mobile = coachController[1].text
+          ..salary = coachController[2].text
+          ..bankDetails = coachController[3].text
+          ..dateOfJoining = coachController[4].text
+          ..dateOfResignation = coachController[5].text
+          ..idCardPath = idCardPath
+          ..bankPassbookPath = bankPassbookPath;
+
+        await DBOperation.updateCoach(db, coach);
+        Navigator.pop(context);
+        fetchCoaches();
+      }
+    } catch (e) {
+      log('Error updating coach: $e');
+    }
+}
+
+
+  void editCoach(Coach coach, int i) {
+    couchSwitch = false;
+    indexStudent = i;
+
+    coachController[0].text = coach.name;
+    coachController[1].text = coach.mobile;
+    coachController[2].text = coach.salary;
+    coachController[3].text = coach.bankDetails;
+    coachController[4].text = coach.dateOfJoining;
+    coachController[5].text = coach.dateOfResignation;
+    _idCardImage = XFile(coach.idCardPath);
+    _bankPassbookImage = XFile(coach.bankPassbookPath);
+
     notifyListeners();
   }
 
-  void couchupdate(
+  void saveOrUpdateCoach(
     BuildContext context,
     String idCardPath,
     String bankPassbookPath,
   ) {
-    if (couchswitch == true) {
+    if (couchSwitch) {
       saveForm(idCardPath, bankPassbookPath);
-      notifyListeners();
     } else {
-      updatedcouch(context );
+      updateCoach(context, idCardPath: '', bankPassbookPath: '');
     }
     notifyListeners();
   }
 
-  void saveForm(
-    String idCardPath,
-    String bankPassbookPath,
-  ) {
+  void saveForm(String idCardPath, String bankPassbookPath) async {
     if (validateForm(
         isIdCardSelected: idCardPath.isNotEmpty,
         isBankPassbookSelected: bankPassbookPath.isNotEmpty)) {
-      coachformKey.currentState?.save();
-      final coach = Coach(
-        name: coachcontroller[0].text,
-        mobile: coachcontroller[1].text,
-        salary: coachcontroller[2].text,
-        bankDetails: coachcontroller[3].text,
-        dateOfJoining: coachcontroller[4].text,
-        dateOfResignation: coachcontroller[5].text,
-        idCardPath: idCardPath,
-        bankPassbookPath: bankPassbookPath,
-      );
-      coaches.add(coach);
+      final Database? db = await DBHelper.getInstance();
+      if (db != null) {
+        final coach = Coach(
+          name: coachController[0].text,
+          mobile: coachController[1].text,
+          salary: coachController[2].text,
+          bankDetails: coachController[3].text,
+          dateOfJoining: coachController[4].text,
+          dateOfResignation: coachController[5].text,
+          idCardPath: idCardPath,
+          bankPassbookPath: bankPassbookPath,
+        );
+        await DBOperation.insertCoach(db, coach);
+        coaches.add(coach);
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<void> fetchCoaches() async {
+    final Database? db = await DBHelper.getInstance();
+    if (db != null) {
+      coaches = await DBOperation.fetchCoaches(db);
       notifyListeners();
     }
+  }
+
+  // Getters for the images
+  XFile? get idCardImage => _idCardImage;
+  XFile? get bankPassbookImage => _bankPassbookImage;
+
+  // Setters for the images
+  set idCardImage(XFile? value) {
+    _idCardImage = value;
+    notifyListeners();
+  }
+
+  set bankPassbookImage(XFile? value) {
+    _bankPassbookImage = value;
+    notifyListeners();
   }
 }

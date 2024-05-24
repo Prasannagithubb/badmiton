@@ -1,10 +1,9 @@
 
-import 'package:flutter/material.dart';
 
 const String addstudentName = "AddstudentName";
 
 class AddstudentColumns {
-  
+  static const String id = "id";
   static const String batchname = "batchname";
   static const String studentname = "studentname";
   static const String studentmobilenumber = "studentmobilenumber";
@@ -17,7 +16,6 @@ class AddstudentColumns {
   static const String dateOfBirth = "dateOfBirth";
   static const String isActive = "isActive";
 }
-
 
 class Addstudent {
   int? id;
@@ -48,6 +46,7 @@ class Addstudent {
     this.isActive = true,
   });
   Map<String, Object?> toMap() => {
+        AddstudentColumns.id: id,
         AddstudentColumns.batchname: batchname,
         AddstudentColumns.dateOfBirth: dateOfBirth,
         AddstudentColumns.studentname: studentname,

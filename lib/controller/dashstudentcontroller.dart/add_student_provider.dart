@@ -66,6 +66,20 @@ class AddStudentProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteStudent(int index) async {
+    final Database? db = await DBHelper.getInstance();
+    if (db != null) {
+      final batchToDelete = addstudents[index];
+      if (batchToDelete.id != null) {
+        await DBOperation.deleteStudent(db, batchToDelete.id!);
+        await fetchStudents();
+      } else {
+        // Handle the case where the batch ID is null, if necessary
+        print("Batch ID is null, cannot delete.");
+      }
+    }
+  }
+
   Future<void> fetchStudents() async {
     final Database db = (await DBHelper.getInstance())!;
     addstudents = await DBOperation.fetchStudents(db);

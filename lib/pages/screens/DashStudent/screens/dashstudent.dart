@@ -486,7 +486,7 @@ class _DashStuddentState extends State<DashStuddent> {
                                                 Provider.of<AddStudentProvider>(
                                                         context,
                                                         listen: false)
-                                                    .removeStudent(globalIndex);
+                                                    .deleteStudent(globalIndex);
                                               },
                                               splashColor: Colors.white.withOpacity(
                                                   0.5), // White splash for contrast

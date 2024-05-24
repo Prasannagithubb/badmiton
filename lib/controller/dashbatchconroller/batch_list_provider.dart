@@ -131,8 +131,13 @@ class BatchListProvider extends ChangeNotifier {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
       final batchToDelete = batches[index];
-      await DBOperation.deleteBatch(db, batchToDelete.name);
-      await fetchBatches();
+      if (batchToDelete.id != null) {
+        await DBOperation.deleteBatch(db, batchToDelete.id!);
+        await fetchBatches();
+      } else {
+        // Handle the case where the batch ID is null, if necessary
+        print("Batch ID is null, cannot delete.");
+      }
     }
   }
 

@@ -38,7 +38,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
             ),
             onPressed: () {
               context.read<DashCoachProvider>().clearAll();
-              context.read<DashCoachProvider>().couchswitch = true;
+              context.read<DashCoachProvider>().couchSwitch = true;
               Get.toNamed(ConstantRoutes.addCoachform);
             }),
       ),
@@ -63,8 +63,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
         ],
         backgroundColor: Theme.of(context).primaryColor,
       ),
-
-
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -150,7 +148,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                     setState(() {
                                       context
                                           .read<DashCoachProvider>()
-                                          .editCouch(
+                                          .editCoach(
                                               context
                                                   .read<DashCoachProvider>()
                                                   .coaches[index],
@@ -158,7 +156,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                     });
                                     context
                                         .read<DashCoachProvider>()
-                                        .couchswitch = false;
+                                        .couchSwitch = false;
                                     Get.toNamed(ConstantRoutes.addCoachform);
                                   },
                                 ),

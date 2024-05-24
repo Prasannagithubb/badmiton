@@ -129,12 +129,12 @@ class _AddCouchState extends State<AddCouch> {
               ),
               const SizedBox(height: 20),
               Form(
-                key: context.watch<DashCoachProvider>().coachformKey,
+                key: context.watch<DashCoachProvider>().coachFormKey,
                 child: Column(
                   children: [
                     TextFormField(
                       controller:
-                          context.watch<DashCoachProvider>().coachcontroller[0],
+                          context.watch<DashCoachProvider>().coachController[0],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -148,7 +148,7 @@ class _AddCouchState extends State<AddCouch> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller:
-                          context.watch<DashCoachProvider>().coachcontroller[1],
+                          context.watch<DashCoachProvider>().coachController[1],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -196,7 +196,7 @@ class _AddCouchState extends State<AddCouch> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller:
-                          context.watch<DashCoachProvider>().coachcontroller[2],
+                          context.watch<DashCoachProvider>().coachController[2],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -210,7 +210,7 @@ class _AddCouchState extends State<AddCouch> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller:
-                          context.watch<DashCoachProvider>().coachcontroller[3],
+                          context.watch<DashCoachProvider>().coachController[3],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -264,7 +264,7 @@ class _AddCouchState extends State<AddCouch> {
                           dateOfJoining = date;
                           context
                                   .read<DashCoachProvider>()
-                                  .coachcontroller[4]
+                                  .coachController[4]
                                   .text =
                               date != null
                                   ? '${date.year}-${date.month}-${date.day}'
@@ -275,7 +275,7 @@ class _AddCouchState extends State<AddCouch> {
                         child: TextFormField(
                           controller: context
                               .watch<DashCoachProvider>()
-                              .coachcontroller[4],
+                              .coachController[4],
                           cursorColor: Colors.blue,
                           decoration: getInputDecoration(
                               'Date of Joining', Icons.calendar_today),
@@ -297,7 +297,7 @@ class _AddCouchState extends State<AddCouch> {
                           dateOfResignation = date;
                           context
                                   .read<DashCoachProvider>()
-                                  .coachcontroller[5]
+                                  .coachController[5]
                                   .text =
                               date != null
                                   ? '${date.year}-${date.month}-${date.day}'
@@ -308,7 +308,7 @@ class _AddCouchState extends State<AddCouch> {
                         child: TextFormField(
                           controller: context
                               .watch<DashCoachProvider>()
-                              .coachcontroller[5],
+                              .coachController[5],
                           cursorColor: Colors.blue,
                           decoration: getInputDecoration(
                               'Date of Resignation', Icons.calendar_today),
@@ -341,10 +341,10 @@ class _AddCouchState extends State<AddCouch> {
                                 isBankPassbookSelected:
                                     _bankPassbookImage != null,
                               )) {
-                            context.read<DashCoachProvider>().couchupdate(
-                                context,
-                                _idCardImage!.path,
-                                _bankPassbookImage!.path);
+                            context.read<DashCoachProvider>().updateCoach(
+                              context,
+                                idCardPath: _idCardImage!.path,
+                                bankPassbookPath: _bankPassbookImage!.path);
 
                             Get.back();
                           }
