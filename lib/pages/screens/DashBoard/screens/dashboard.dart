@@ -56,11 +56,11 @@ class _DashBoardState extends State<DashBoard> {
         body: Center(
           child: context
               .watch<DashboardProvider>()
-              .widgetOptions
+              .pages
               .elementAt(DashboardProvider.selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
+          type: BottomNavigationBarType.shifting,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

@@ -13,7 +13,7 @@ class DashboardProvider extends ChangeNotifier {
   // final NotchBottomBarController notchController =
   //     NotchBottomBarController(index: 0);
   PageController bottomSelectedIndex = PageController(initialPage: 0);
-  List<Widget> widgetOptions = <Widget>[
+  List<Widget> pages = <Widget>[
     DashHome(),
     DashBatch(),
     DashStuddent(),

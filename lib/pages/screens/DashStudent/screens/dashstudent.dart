@@ -26,6 +26,7 @@ class _DashStuddentState extends State<DashStuddent> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<AddStudentProvider>().clearAll;
+      context.read<AddStudentProvider>().fetchStudents();
       log("addstudents.length::${context.read<AddStudentProvider>().addstudents.length}");
     });
   }

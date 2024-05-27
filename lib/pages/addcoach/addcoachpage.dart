@@ -38,7 +38,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
             ),
             onPressed: () {
               context.read<DashCoachProvider>().clearAll();
-              context.read<DashCoachProvider>().couchSwitch = true;
+              context.read<DashCoachProvider>().coachCondition = true;
               Get.toNamed(ConstantRoutes.addCoachform);
             }),
       ),
@@ -48,7 +48,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
         title: const Text('Coach', style: TextStyle(color: Colors.white)),
-        actions: [
+        actions: const [
           // IconButton(
           //   icon: const Icon(
           //     Icons.add,
@@ -156,7 +156,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                     });
                                     context
                                         .read<DashCoachProvider>()
-                                        .couchSwitch = false;
+                                        .coachCondition = false;
                                     Get.toNamed(ConstantRoutes.addCoachform);
                                   },
                                 ),

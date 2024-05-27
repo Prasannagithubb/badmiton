@@ -16,7 +16,6 @@ class AddStudentProvider with ChangeNotifier {
   TimeOfDay studentcurrentTime = TimeOfDay.now();
   String? selectedBatch;
   int? indexstudent;
-
   TextEditingController batchController = TextEditingController();
   List<String> selectedWeekdays = []; // List to store selected weekdays
   List<String> selectedWeekends = [];
@@ -75,7 +74,7 @@ class AddStudentProvider with ChangeNotifier {
         await fetchStudents();
       } else {
         // Handle the case where the batch ID is null, if necessary
-        print("Batch ID is null, cannot delete.");
+        log("Batch ID is null, cannot delete.");
       }
     }
   }
@@ -97,7 +96,6 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
       addstudents[i].currenttime =
           '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
-
       // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = int.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
@@ -125,7 +123,7 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller[7].text = addstdn.dateOfBirth.toString();
   }
 
-  void addStudentList(BuildContext context) async {
+  void addStudentList( context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && addstuentkey1.currentState!.validate()) {
@@ -147,7 +145,6 @@ class AddStudentProvider with ChangeNotifier {
         // Insert the new student into the database
         await DBOperation.insertStudentTable(db, newStudent);
         notifyListeners();
-
         // Fetch the updated list of students
         await fetchStudents();
         notifyListeners();
@@ -167,7 +164,7 @@ class AddStudentProvider with ChangeNotifier {
             content: Text('Failed to add student. Please try again.'),
           ),
         );
-        print('Error adding student: $e');
+        log('Error adding student: $e');
       }
     }
   }

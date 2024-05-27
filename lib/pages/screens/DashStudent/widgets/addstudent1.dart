@@ -360,7 +360,7 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                       borderSide: BorderSide(color: Colors.black),
                       // borderRadius: BorderRadius.circular(5.5),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                       // borderRadius: BorderRadius.circular(5.5),
                     ),

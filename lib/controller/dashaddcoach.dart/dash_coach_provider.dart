@@ -14,12 +14,9 @@ class DashCoachProvider extends ChangeNotifier {
       List.generate(10, (i) => TextEditingController());
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
-
   XFile? _idCardImage;
   XFile? _bankPassbookImage;
-
-  bool couchSwitch = false;
-
+  bool coachCondition = true;
   List<Coach> coaches = [];
 
   void init() {
@@ -29,7 +26,7 @@ class DashCoachProvider extends ChangeNotifier {
 
   void clearAll() {
     coachController = List.generate(10, (i) => TextEditingController());
-    couchSwitch = false;
+    coachCondition = false;
     notifyListeners();
   }
 
@@ -53,33 +50,37 @@ class DashCoachProvider extends ChangeNotifier {
     }
   }
 
-Future<void> updateCoach(BuildContext context, {required String idCardPath, required String bankPassbookPath}) async {
-    int i = indexStudent!;
-    try {
-      final Database? db = await DBHelper.getInstance();
-      if (db != null) {
-        final coach = coaches[i]
-          ..name = coachController[0].text
-          ..mobile = coachController[1].text
-          ..salary = coachController[2].text
-          ..bankDetails = coachController[3].text
-          ..dateOfJoining = coachController[4].text
-          ..dateOfResignation = coachController[5].text
-          ..idCardPath = idCardPath
-          ..bankPassbookPath = bankPassbookPath;
+  Future<void> updateCoach( context,
+      {required String idCardPath, required String bankPassbookPath}) async {
+    if (indexStudent != null) {
+      int i = indexStudent!;
+      try {
+        final Database? db = await DBHelper.getInstance();
+        if (db != null) {
+          final coach = coaches[i]
+            ..name = coachController[0].text
+            ..mobile = coachController[1].text
+            ..salary = coachController[2].text
+            ..bankDetails = coachController[3].text
+            ..dateOfJoining = coachController[4].text
+            ..dateOfResignation = coachController[5].text
+            ..idCardPath = idCardPath
+            ..bankPassbookPath = bankPassbookPath;
 
-        await DBOperation.updateCoach(db, coach);
-        Navigator.pop(context);
-        fetchCoaches();
+          await DBOperation.updateCoach(db, coach);
+          Navigator.pop(context);
+          fetchCoaches();
+        }
+      } catch (e) {
+        log('Error updating coach: $e');
       }
-    } catch (e) {
-      log('Error updating coach: $e');
+    } else {
+      log('Error: indexStudent is null');
     }
-}
-
+  }
 
   void editCoach(Coach coach, int i) {
-    couchSwitch = false;
+    coachCondition = false;
     indexStudent = i;
 
     coachController[0].text = coach.name;
@@ -94,15 +95,15 @@ Future<void> updateCoach(BuildContext context, {required String idCardPath, requ
     notifyListeners();
   }
 
-  void saveOrUpdateCoach(
-    BuildContext context,
-    String idCardPath,
-    String bankPassbookPath,
-  ) {
-    if (couchSwitch) {
-      saveForm(idCardPath, bankPassbookPath);
+  void toggleCoachCondition(BuildContext context) {
+    if (coachCondition) {
+      log('Adding a new coach...');
+      saveForm(_idCardImage!.path, _bankPassbookImage!.path);
     } else {
-      updateCoach(context, idCardPath: '', bankPassbookPath: '');
+      log('Updating an existing coach...');
+      updateCoach(context,
+          idCardPath: _idCardImage!.path,
+          bankPassbookPath: _bankPassbookImage!.path);
     }
     notifyListeners();
   }

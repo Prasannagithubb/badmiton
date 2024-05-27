@@ -1,5 +1,5 @@
 import 'dart:io';
-
+// import 'dart:math';
 import 'package:badmiton_app/controller/dashaddcoach.dart/dash_coach_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,18 +10,16 @@ class AddCouch extends StatefulWidget {
   const AddCouch({super.key});
 
   @override
-  _AddCouchState createState() => _AddCouchState();
+  AddCouchState createState() => AddCouchState();
 }
 
-class _AddCouchState extends State<AddCouch> {
+class AddCouchState extends State<AddCouch> {
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
-
   XFile? _image; // This will hold the profile image file
   XFile? _idCardImage; // This will hold the ID card image file
   XFile? _bankPassbookImage; // This will hold the bank passbook image file
   final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
-
   String? _idCardError;
   String? _bankPassbookError;
 
@@ -160,7 +158,7 @@ class _AddCouchState extends State<AddCouch> {
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 16),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => _pickImage(_idCardImage, (image) {
@@ -223,7 +221,7 @@ class _AddCouchState extends State<AddCouch> {
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 16),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () =>
@@ -323,9 +321,8 @@ class _AddCouchState extends State<AddCouch> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      width: double
-                          .infinity, // Set the button to have maximum width
+                    SizedBox(
+                      width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -336,17 +333,15 @@ class _AddCouchState extends State<AddCouch> {
                                 ? 'Please upload a bank passbook'
                                 : null;
                           });
+
                           if (context.read<DashCoachProvider>().validateForm(
                                 isIdCardSelected: _idCardImage != null,
                                 isBankPassbookSelected:
                                     _bankPassbookImage != null,
                               )) {
-                            context.read<DashCoachProvider>().updateCoach(
-                              context,
-                                idCardPath: _idCardImage!.path,
-                                bankPassbookPath: _bankPassbookImage!.path);
-
-                            Get.back();
+                            context
+                                .read<DashCoachProvider>()
+                                .toggleCoachCondition(context);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -357,8 +352,7 @@ class _AddCouchState extends State<AddCouch> {
                         ),
                         child: const Text(
                           'Save',
-                          style: TextStyle(
-                              color: Colors.blue), // Change text color to green
+                          style: TextStyle(color: Colors.blue),
                         ),
                       ),
                     ),
