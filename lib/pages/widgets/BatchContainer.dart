@@ -132,7 +132,7 @@ class BatchContainer extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AddStudentForm()));
+                              builder: (context) => const BatchAddStudent()));
                       // Get.toNamed(ConstantRoutes.);
                     },
                     child: const Text(

@@ -1,16 +1,13 @@
 import 'dart:developer';
-
 import 'package:badmiton_app/dbhelper/dbhelper.dart';
 import 'package:badmiton_app/dbhelper/dboperation.dart';
 import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-// import '../dashboardcontroller.dart/dash_board_provider.dart';
 
 class AddStudentProvider with ChangeNotifier {
   List<TextEditingController> studentcontroller =
       List.generate(10, (index) => TextEditingController());
-
   final GlobalKey<FormState> addstuentkey1 = GlobalKey<FormState>();
   List<Addstudent> addstudents = [];
   TimeOfDay studentcurrentTime = TimeOfDay.now();
@@ -52,15 +49,12 @@ class AddStudentProvider with ChangeNotifier {
 
   // Method to toggle the student condition between add and edit modes
   void toggleStudentCondition(BuildContext context) {
-    if (studentcondition == true) {
-      log('kkkkkkkkkkkkk');
+    if (studentcondition) {
+      log('Adding student');
       addStudentList(context);
-      notifyListeners();
     } else {
-      log('mm...');
-
+      log('Updating student');
       updatedstudent(context);
-      notifyListeners();
     }
     notifyListeners();
   }
@@ -80,6 +74,7 @@ class AddStudentProvider with ChangeNotifier {
   }
 
   Future<void> fetchStudents() async {
+    addstudents = [];
     final Database db = (await DBHelper.getInstance())!;
     addstudents = await DBOperation.fetchStudents(db);
     notifyListeners();
@@ -94,8 +89,7 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
       addstudents[i].mothername = studentcontroller[4].text;
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime =
-          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      addstudents[i].currenttime ='${studentcurrentTime.hour}:${studentcurrentTime.minute}';
       // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = int.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
@@ -123,7 +117,7 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller[7].text = addstdn.dateOfBirth.toString();
   }
 
-  void addStudentList( context) async {
+  void addStudentList(context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && addstuentkey1.currentState!.validate()) {
@@ -144,9 +138,8 @@ class AddStudentProvider with ChangeNotifier {
 
         // Insert the new student into the database
         await DBOperation.insertStudentTable(db, newStudent);
-        notifyListeners();
         // Fetch the updated list of students
-        await fetchStudents();
+        await fetchStudents(); // Ensure this is called to refresh the list
         notifyListeners();
 
         // Show a success message

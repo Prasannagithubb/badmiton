@@ -1,5 +1,3 @@
-
-
 const String addstudentName = "AddstudentName";
 
 class AddstudentColumns {
@@ -15,6 +13,7 @@ class AddstudentColumns {
   static const String currenttime = "currenttime";
   static const String dateOfBirth = "dateOfBirth";
   static const String isActive = "isActive";
+  static const String isPresent = "isPresent"; // Add this line
 }
 
 class Addstudent {
@@ -29,7 +28,8 @@ class Addstudent {
   int fees;
   String? currenttime;
   String dateOfBirth;
-  bool isActive; // Moved to the beginning of the constructor
+  bool isActive;
+  bool isPresent; // Add this line
 
   Addstudent({
     this.id,
@@ -44,7 +44,9 @@ class Addstudent {
     this.currenttime,
     required this.fees,
     this.isActive = true,
+    this.isPresent = false, // Default to false
   });
+
   Map<String, Object?> toMap() => {
         AddstudentColumns.id: id,
         AddstudentColumns.batchname: batchname,
@@ -58,5 +60,22 @@ class Addstudent {
         AddstudentColumns.currenttime: currenttime,
         AddstudentColumns.fees: fees,
         AddstudentColumns.isActive: isActive,
+        AddstudentColumns.isPresent: isPresent ? 1 : 0, // Add this line
       };
+
+  static Addstudent fromMap(Map<String, dynamic> map) => Addstudent(
+        id: map[AddstudentColumns.id],
+        batchname: map[AddstudentColumns.batchname],
+        dateOfBirth: map[AddstudentColumns.dateOfBirth],
+        studentname: map[AddstudentColumns.studentname],
+        studentmobilenumber: map[AddstudentColumns.studentmobilenumber],
+        fathername: map[AddstudentColumns.fathername],
+        fathermobilenumber: map[AddstudentColumns.fathermobilenumber],
+        mothername: map[AddstudentColumns.mothername],
+        mothermobilenumber: map[AddstudentColumns.mothermobilenumber],
+        currenttime: map[AddstudentColumns.currenttime],
+        fees: map[AddstudentColumns.fees],
+        isActive: map[AddstudentColumns.isActive] == 1,
+        isPresent: map[AddstudentColumns.isPresent] == 1, // Add this line
+      );
 }

@@ -60,7 +60,7 @@ class _DashBoardState extends State<DashBoard> {
               .elementAt(DashboardProvider.selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
+          type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

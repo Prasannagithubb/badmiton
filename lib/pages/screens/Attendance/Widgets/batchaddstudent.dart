@@ -8,14 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AddStudentForm extends StatefulWidget {
-  const AddStudentForm({super.key});
+class BatchAddStudent extends StatefulWidget {
+  const BatchAddStudent({super.key});
 
   @override
-  _AddStudentFormState createState() => _AddStudentFormState();
+  _BatchAddStudentState createState() => _BatchAddStudentState();
 }
 
-class _AddStudentFormState extends State<AddStudentForm> {
+class _BatchAddStudentState extends State<BatchAddStudent> {
   DateTime? selectedDateOfBirth;
   XFile? _image; // This will hold the image file
   final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
@@ -497,6 +497,8 @@ class _AddStudentFormState extends State<AddStudentForm> {
                 ),
               ),
               // if (!_isLoading) // Only show the button if not loading
+              
+              
               ElevatedButton(
                 onPressed: () {
                   setState(() {

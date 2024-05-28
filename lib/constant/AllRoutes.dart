@@ -3,7 +3,6 @@ import 'package:badmiton_app/pages/screens/Attendance/Screens/attendance.dart';
 import 'package:badmiton_app/pages/screens/DashStudent/widgets/addstudent1.dart';
 import 'package:badmiton_app/pages/screens/dashbatch/widgets/addbatch.dart';
 import 'package:get/get.dart';
-
 import '../pages/screens/Attendance/Widgets/batchaddstudent.dart';
 import '../pages/screens/DashBoard/screens/dashboard.dart';
 import '../pages/screens/Login/screens/loginscreen.dart';
@@ -44,7 +43,7 @@ class AllRoutes {
         transitionDuration: const Duration(seconds: 1)),
     GetPage<dynamic>(
         name: ConstantRoutes.addstudent,
-        page: () => const AddStudentForm(),
+        page: () => const BatchAddStudent(),
         transition: Transition.cupertino,
         transitionDuration: const Duration(seconds: 1)),
     GetPage<dynamic>(

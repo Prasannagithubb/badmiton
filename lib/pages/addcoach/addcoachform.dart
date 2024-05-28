@@ -1,4 +1,5 @@
 import 'dart:io';
+
 // import 'dart:math';
 import 'package:badmiton_app/controller/dashaddcoach.dart/dash_coach_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,8 @@ class AddCouchState extends State<AddCouch> {
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
   XFile? _image; // This will hold the profile image file
-  XFile? _idCardImage; // This will hold the ID card image file
-  XFile? _bankPassbookImage; // This will hold the bank passbook image file
+  // XFile? _idCardImage; // This will hold the ID card image file
+  // XFile?   context .read<DashCoachProvider>().bankPassbookImage; // This will hold the bank passbook image file
   final ImagePicker _picker = ImagePicker(); // Create an ImagePicker instance
   String? _idCardError;
   String? _bankPassbookError;
@@ -161,8 +162,10 @@ class AddCouchState extends State<AddCouch> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => _pickImage(_idCardImage, (image) {
-                          _idCardImage = image;
+                        onPressed: () => _pickImage(
+                            context.read<DashCoachProvider>().idCardImage,
+                            (image) {
+                          context.read<DashCoachProvider>().idCardImage = image;
                           _idCardError = null;
                         }),
                         child: const Text(
@@ -179,12 +182,15 @@ class AddCouchState extends State<AddCouch> {
                           style: const TextStyle(color: Colors.red),
                         ),
                       ),
-                    _idCardImage != null
+                    context.read<DashCoachProvider>().idCardImage != null
                         ? Column(
                             children: [
                               const SizedBox(height: 16),
                               Image.file(
-                                File(_idCardImage!.path),
+                                File(context
+                                    .read<DashCoachProvider>()
+                                    .idCardImage!
+                                    .path),
                                 height: 100,
                                 width: 100,
                               ),
@@ -224,9 +230,11 @@ class AddCouchState extends State<AddCouch> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () =>
-                            _pickImage(_bankPassbookImage, (image) {
-                          _bankPassbookImage = image;
+                        onPressed: () => _pickImage(
+                            context.read<DashCoachProvider>().bankPassbookImage,
+                            (image) {
+                          context.read<DashCoachProvider>().bankPassbookImage =
+                              image;
                           _bankPassbookError = null;
                         }),
                         child: const Text(
@@ -243,12 +251,15 @@ class AddCouchState extends State<AddCouch> {
                           style: const TextStyle(color: Colors.red),
                         ),
                       ),
-                    _bankPassbookImage != null
+                    context.read<DashCoachProvider>().bankPassbookImage != null
                         ? Column(
                             children: [
                               const SizedBox(height: 16),
                               Image.file(
-                                File(_bankPassbookImage!.path),
+                                File(context
+                                    .read<DashCoachProvider>()
+                                    .bankPassbookImage!
+                                    .path),
                                 height: 100,
                                 width: 100,
                               ),
@@ -326,23 +337,40 @@ class AddCouchState extends State<AddCouch> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            _idCardError = _idCardImage == null
-                                ? 'Please upload an ID card'
-                                : null;
-                            _bankPassbookError = _bankPassbookImage == null
+                            _idCardError =
+                                context.read<DashCoachProvider>().idCardImage ==
+                                        null
+                                    ? 'Please upload an ID card'
+                                    : null;
+                            _bankPassbookError = context
+                                        .read<DashCoachProvider>()
+                                        .bankPassbookImage ==
+                                    null
                                 ? 'Please upload a bank passbook'
                                 : null;
                           });
 
-                          if (context.read<DashCoachProvider>().validateForm(
-                                isIdCardSelected: _idCardImage != null,
-                                isBankPassbookSelected:
-                                    _bankPassbookImage != null,
-                              )) {
+                          if ((context
+                                          .read<DashCoachProvider>()
+                                          .idCardImage!
+                                          // ignore: unnecessary_null_comparison
+                                          .path !=
+                                      null ||
+                                  context
+                                      .read<DashCoachProvider>()
+                                      .idCardImage!
+                                      .path
+                                      .isNotEmpty) ||
+                              context
+                                  .read<DashCoachProvider>()
+                                  .bankPassbookImage!
+                                  .path
+                                  .isNotEmpty) {
                             context
                                 .read<DashCoachProvider>()
                                 .toggleCoachCondition(context);
                           }
+                          Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

@@ -1,8 +1,8 @@
 import 'dart:developer';
+
 import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:badmiton_app/dbmodel/batchmodel.dart';
 import 'package:badmiton_app/dbmodel/coachmodel.dart';
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBOperation {
@@ -110,23 +110,28 @@ class DBOperation {
     final List<Map<String, dynamic>> maps = await db.query(addstudentName);
     log('results:::${maps.toList()}');
     return List.generate(maps.length, (i) {
-      final currentTimeString =
-          maps[i][AddstudentColumns.currenttime].toString();
-      final timeParts = currentTimeString.split(':');
-      final currentTime = TimeOfDay(
-        hour: int.parse(timeParts[0]),
-        minute: int.parse(timeParts[1]),
-      );
+      // final currentTimeString =
+      //     maps[i][AddstudentColumns.currenttime].toString();
+      // final timeParts = currentTimeString.split(':');
+      // final currentTime = TimeOfDay(
+      //   hour: int.parse(timeParts[0]),
+      //   minute: int.parse(timeParts[1]),
+      // );
       return Addstudent(
         id: maps[i][AddstudentColumns.id] as int?,
         studentname: maps[i][AddstudentColumns.studentname].toString(),
         studentmobilenumber: int.parse(
-        maps[i][AddstudentColumns.studentmobilenumber].toString()),
+            maps[i][AddstudentColumns.studentmobilenumber].toString()),
         fathername: maps[i][AddstudentColumns.fathername].toString(),
-        fathermobilenumber: int.parse(maps[i][AddstudentColumns.fathermobilenumber].toString()),
+        fathermobilenumber:
+            int.parse(maps[i][AddstudentColumns.fathermobilenumber].toString()),
         mothername: maps[i][AddstudentColumns.mothername].toString(),
-        mothermobilenumber: int.parse(maps[i][AddstudentColumns.mothermobilenumber].toString()),
-        currenttime: '${currentTime.hour}:${currentTime.minute}',
+        mothermobilenumber:
+            int.parse(maps[i][AddstudentColumns.mothermobilenumber].toString()),
+
+        currenttime: maps[i][AddstudentColumns.currenttime].toString(),
+
+        // currenttime: '${currentTime.hour}:${currentTime.minute}',
         fees: int.parse(maps[i][AddstudentColumns.fees].toString()),
         dateOfBirth: maps[i][AddstudentColumns.dateOfBirth].toString(),
         batchname: maps[i][AddstudentColumns.batchname].toString(),
@@ -134,9 +139,9 @@ class DBOperation {
     });
   }
 
-  
   static Future<List<Coach>> fetchCoaches(Database db) async {
-    final List<Map<String, dynamic>> maps = await db.query(AddCoachColumns.tableName);
+    final List<Map<String, dynamic>> maps =
+        await db.query(AddCoachColumns.tableName);
     return List.generate(maps.length, (i) {
       return Coach(
         id: maps[i][AddCoachColumns.id] as int?,
@@ -160,8 +165,7 @@ class DBOperation {
     );
   }
 
-
-static Future<void> updateCoach(Database db, Coach updatedCoach) async {
+  static Future<void> updateCoach(Database db, Coach updatedCoach) async {
     await db.update(
       AddCoachColumns.tableName, // Ensure this is the correct table name
       updatedCoach.toMap(), // Convert updated coach object to a Map
@@ -170,17 +174,16 @@ static Future<void> updateCoach(Database db, Coach updatedCoach) async {
     );
   }
 
-
- static Future<void> deleteCoach(Database db, int coachId) async {
+  static Future<void> deleteCoach(Database db, int coachId) async {
     await db.delete(
       AddCoachColumns.tableName, // Ensure this is the correct table name
       where: '${AddCoachColumns.id} = ?',
       whereArgs: [coachId],
     );
   }
-  
 
-   static Future<void> updateStudent(Database db, Addstudent updatedStudent) async {
+  static Future<void> updateStudent(
+      Database db, Addstudent updatedStudent) async {
     await db.update(
       addstudentName, // Ensure this is the correct table name
       updatedStudent.toMap(), // Convert updated student object to a Map
@@ -189,7 +192,6 @@ static Future<void> updateCoach(Database db, Coach updatedCoach) async {
     );
   }
 
-   
 //
 // BatchTableName
   static Future<void> deleteBatch(Database db, int batchId) async {

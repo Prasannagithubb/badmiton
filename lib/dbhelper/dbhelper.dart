@@ -1,6 +1,7 @@
 import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../dbmodel/batchmodel.dart';
 import '../dbmodel/coachmodel.dart';
 
@@ -44,7 +45,8 @@ class DBHelper {
           ${AddstudentColumns.fees} TEXT,
           ${AddstudentColumns.currenttime} TEXT,
           ${AddstudentColumns.dateOfBirth} TEXT,
-          ${AddstudentColumns.isActive} BOOL
+          ${AddstudentColumns.isActive} BOOL,
+          ${AddstudentColumns.isPresent} BOOL
         )
       ''');
 
@@ -81,7 +83,7 @@ class DBHelper {
   }
 
   Future<void> createTables(Database db) async {
-  await db.execute('''
+    await db.execute('''
     CREATE TABLE ${AddCoachColumns.tableName} (
       ${AddCoachColumns.id} INTEGER PRIMARY KEY AUTOINCREMENT,
       ${AddCoachColumns.name} TEXT,
@@ -94,6 +96,5 @@ class DBHelper {
       ${AddCoachColumns.bankPassbookPath} TEXT
     )
   ''');
-}
-
+  }
 }

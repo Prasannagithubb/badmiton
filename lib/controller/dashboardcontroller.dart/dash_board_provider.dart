@@ -21,38 +21,10 @@ class DashboardProvider extends ChangeNotifier {
     DashBoardFees(),
     DashHome(),
   ];
-  // final List<Widget> pages = [
-  //   DashHome(),
-  //   DashBatch(),
-  //   DashStuddent(),
-  //   DashBoardFees(),
-  //   Page5(),
-  // ];
-
-  // void changePage(int index) {
-  //   if (index != bottomSelectedIndex && index < pages.length) {
-  //     bottomSelectedIndex = index;
-  //     notchController.index = index; // Update notch controller if needed
-  //     notifyListeners();
-  //   }
-  // }
-
   void onItemTapped(int index) {
     log('index::$index');
     selectedIndex = index;
     notifyListeners();
   }
 
-  // void goToPage(int index) {
-  //   if (index != bottomSelectedIndex && index < pages.length) {
-  //     bottomSelectedIndex = index;
-  //     notifyListeners(); // Notify that a change has occurred
-  //   }
-  // }
-
-  // @override
-  // void dispose() {
-  //   notchController.dispose(); // Dispose this if needed
-  //   super.dispose();
-  // }
 }

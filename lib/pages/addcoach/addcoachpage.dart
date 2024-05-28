@@ -23,6 +23,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     final dashCoachProvider = Provider.of<DashCoachProvider>(context);
     ThemeData theme = Theme.of(context);
@@ -149,9 +150,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                       context
                                           .read<DashCoachProvider>()
                                           .editCoach(
-                                              context
-                                                  .read<DashCoachProvider>()
-                                                  .coaches[index],
+                                              context.read<DashCoachProvider>() .coaches[index],
                                               index);
                                     });
                                     context

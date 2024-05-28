@@ -1,4 +1,3 @@
-// batch_list_provider.dart
 import 'dart:developer';
 
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
@@ -9,17 +8,14 @@ import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:badmiton_app/dbmodel/batchmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../dashstudentcontroller.dart/add_student_provider.dart';
 
 class BatchListProvider extends ChangeNotifier {
   List<Batchs> batches = [];
-  //crete a empty list
+  // Create an empty list
   List<TextEditingController> mycontroller =
       List.generate(10, (i) => TextEditingController());
-  // create a controller and get the value for texformfield
+  // Create a controller and get the value for textformfield
   List<TextEditingController> batchstudentctrlr =
       List.generate(10, (i) => TextEditingController());
   List<Batchs> get getbatches => batches;
@@ -60,13 +56,6 @@ class BatchListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // batchCount() {
-  //   if (mycontroller[3].text.isEmpty) {
-  //     mycontroller[3].text = '';
-  //     notifyListeners();
-  //   }
-  // }
-
   String getSelectedDays(List<bool> batchDays) {
     List<String> dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     List<String> selectedDays = [];
@@ -87,12 +76,17 @@ class BatchListProvider extends ChangeNotifier {
 
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
-  batchaddstudentlist(BuildContext context) async {
-    // final db = await DBHelper.getInstance();
+
+  Future<void> batchaddstudentlist( 
+  
+  context) async {
+    final Database? db = await DBHelper.getInstance();
     if (batchstudentformKey.currentState!.validate()) {
       DateTime dob = DateTime.parse(batchstudentctrlr[7].text);
-      batchaddstudents.add(Addstudent(
-        studentname: batchstudentctrlr[0].text,
+      Addstudent batchaddstudents2 = Addstudent(
+        studentname:
+        
+         batchstudentctrlr[0].text,
         studentmobilenumber: int.parse(batchstudentctrlr[1].text),
         fathername: batchstudentctrlr[2].text,
         fathermobilenumber: int.parse(batchstudentctrlr[3].text),
@@ -101,9 +95,10 @@ class BatchListProvider extends ChangeNotifier {
         fees: int.parse(batchstudentctrlr[6].text),
         dateOfBirth: dob.toString(),
         batchname: selectedBatch.toString(),
-      ));
+      );
 
-      context.read<AddStudentProvider>().addstudents = batchaddstudents;
+      await DBOperation.insertStudentTable(db!, batchaddstudents2);
+      // context.read<AddStudentProvider>().addstudents = batchaddstudents;
 
       notifyListeners();
       DashboardProvider.selectedIndex = 2;
@@ -116,14 +111,12 @@ class BatchListProvider extends ChangeNotifier {
       );
       notifyListeners();
     }
-    // Get.to(() => const DashStuddent());
     notifyListeners();
   }
 
   Future<void> fetchBatches() async {
     final Database db = (await DBHelper.getInstance())!;
     batches = await DBOperation.fetchBatches(db);
-
     notifyListeners();
   }
 
@@ -141,7 +134,46 @@ class BatchListProvider extends ChangeNotifier {
     }
   }
 
-  void addBatchList(BuildContext context) async {
+  Future<List<Addstudent>> fetchStudentsByBatchId(int batchId) async {
+    // Get the database instance
+    final db = await DBHelper.getInstance();
+
+    // Check if the database instance is not null
+    if (db != null) {
+      // Query the database for students with the given batchId
+      final List<Map<String, dynamic>> studentMaps = await db.query(
+        'AddstudentName', // Table name for students
+        where: '${AddstudentColumns.batchname} = ?',
+        whereArgs: [batchId],
+      );
+
+      // Convert the query results into Addstudent objects
+      return List.generate(studentMaps.length, (index) {
+        return Addstudent(
+          id: studentMaps[index][AddstudentColumns.id],
+          batchname: studentMaps[index][AddstudentColumns.batchname],
+          studentname: studentMaps[index][AddstudentColumns.studentname],
+          studentmobilenumber: studentMaps[index]
+              [AddstudentColumns.studentmobilenumber],
+          fathername: studentMaps[index][AddstudentColumns.fathername],
+          fathermobilenumber: studentMaps[index]
+              [AddstudentColumns.fathermobilenumber],
+          mothername: studentMaps[index][AddstudentColumns.mothername],
+          mothermobilenumber: studentMaps[index]
+              [AddstudentColumns.mothermobilenumber],
+          fees: studentMaps[index][AddstudentColumns.fees],
+          currenttime: studentMaps[index][AddstudentColumns.currenttime],
+          dateOfBirth: studentMaps[index][AddstudentColumns.dateOfBirth],
+          isActive: studentMaps[index][AddstudentColumns.isActive] == 1,
+        );
+      });
+    } else {
+      // Return an empty list if the database instance is null
+      return [];
+    }
+  }
+
+  void addBatchList( context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && batchformKey.currentState!.validate()) {
@@ -192,12 +224,18 @@ class BatchListProvider extends ChangeNotifier {
 
   void selectTime(BuildContext context) async {
     final TimeOfDay? selectedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now() // Use TimeOfDay object here
-        );
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
 
     if (selectedTime != null) {
-      currenttime = DateTime.parse(selectedTime.toString());
+      currenttime = DateTime(
+        currenttime.year,
+        currenttime.month,
+        currenttime.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
     }
   }
 }

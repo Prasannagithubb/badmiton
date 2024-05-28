@@ -23,6 +23,7 @@ class DashBatchState extends State<DashBatch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchListProvider>().init();
+      context.read<BatchListProvider>().fetchBatches();
     });
   }
 
@@ -186,7 +187,7 @@ class DashBatchState extends State<DashBatch> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const AddStudentForm(),
+                                                const BatchAddStudent(),
                                           ),
                                         );
                                       },

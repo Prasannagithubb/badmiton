@@ -14,8 +14,8 @@ class DashCoachProvider extends ChangeNotifier {
       List.generate(10, (i) => TextEditingController());
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
-  XFile? _idCardImage;
-  XFile? _bankPassbookImage;
+  XFile? idCardImage;
+  XFile? bankPassbookImage;
   bool coachCondition = true;
   List<Coach> coaches = [];
 
@@ -40,17 +40,16 @@ class DashCoachProvider extends ChangeNotifier {
 
   void removeCoach(int index) async {
     if (index >= 0 && index < coaches.length) {
-      final coachToRemove = coaches[index];
       final Database? db = await DBHelper.getInstance();
-      if (db != null && coachToRemove.id != null) {
-        await DBOperation.deleteCoach(db, coachToRemove.id!);
+      if (db != null && coaches[index].id != null) {
+        await DBOperation.deleteCoach(db, coaches[index].id!);
         coaches.removeAt(index);
         notifyListeners();
       }
     }
   }
 
-  Future<void> updateCoach( context,
+  Future<void> updateCoach(context,
       {required String idCardPath, required String bankPassbookPath}) async {
     if (indexStudent != null) {
       int i = indexStudent!;
@@ -89,8 +88,8 @@ class DashCoachProvider extends ChangeNotifier {
     coachController[3].text = coach.bankDetails;
     coachController[4].text = coach.dateOfJoining;
     coachController[5].text = coach.dateOfResignation;
-    _idCardImage = XFile(coach.idCardPath);
-    _bankPassbookImage = XFile(coach.bankPassbookPath);
+    idCardImage = XFile(coach.idCardPath);
+    bankPassbookImage = XFile(coach.bankPassbookPath);
 
     notifyListeners();
   }
@@ -98,12 +97,12 @@ class DashCoachProvider extends ChangeNotifier {
   void toggleCoachCondition(BuildContext context) {
     if (coachCondition) {
       log('Adding a new coach...');
-      saveForm(_idCardImage!.path, _bankPassbookImage!.path);
+      saveForm(idCardImage!.path, bankPassbookImage!.path);
     } else {
       log('Updating an existing coach...');
       updateCoach(context,
-          idCardPath: _idCardImage!.path,
-          bankPassbookPath: _bankPassbookImage!.path);
+          idCardPath: idCardImage!.path,
+          bankPassbookPath: bankPassbookImage!.path);
     }
     notifyListeners();
   }
@@ -140,17 +139,17 @@ class DashCoachProvider extends ChangeNotifier {
   }
 
   // Getters for the images
-  XFile? get idCardImage => _idCardImage;
-  XFile? get bankPassbookImage => _bankPassbookImage;
+  XFile? get getidCardImage => idCardImage;
+  XFile? get getbankPassbookImage => bankPassbookImage;
 
   // Setters for the images
-  set idCardImage(XFile? value) {
-    _idCardImage = value;
+  set setidCardImage(XFile? value) {
+    idCardImage = value;
     notifyListeners();
   }
 
-  set bankPassbookImage(XFile? value) {
-    _bankPassbookImage = value;
+  set setbankPassbookImage(XFile? value) {
+    bankPassbookImage = value;
     notifyListeners();
   }
 }
