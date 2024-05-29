@@ -1,6 +1,8 @@
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
 import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
+// import 'package:easy_date_timeline/easy_date_timeline.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,7 @@ class AttendancePage extends StatefulWidget {
 class _AttendancePageState extends State<AttendancePage> {
   List<Addstudent> students = [];
   DateTime selectedDate = DateTime.now();
+  bool isAttendanceLocked = false;
 
   @override
   void initState() {
@@ -30,37 +33,48 @@ class _AttendancePageState extends State<AttendancePage> {
     });
   }
 
-  void handleDateChange(DateTime selectedDate) {
-    if (selectedDate.isAfter(DateTime.now())) {
-      setState(() {
-        selectedDate = DateTime.now();
-      });
-      print('Future dates are not allowed. Resetting to today\'s date.');
-    } else {
-      setState(() {
-        selectedDate = selectedDate;
-      });
+  void handleDateChange(DateTime newDate) {
+    setState(() {
+      selectedDate = newDate;
+
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+
+      if (newDate.isBefore(today)) {
+        print('Selected date is in the past. Attendance is locked.');
+        isAttendanceLocked = true;
+      } else {
+        print(
+            'Selected date is today or in the future. Attendance is unlocked.');
+        isAttendanceLocked = false;
+      }
+
       print('Selected date: $selectedDate');
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Attendance'),
-      ),
-      body: Column(
-        children: [
-          EasyDateTimeLine(
-            initialDate: DateTime.now(),
-            onDateChange: handleDateChange,
-            headerProps: const EasyHeaderProps(
-              monthPickerType: MonthPickerType.switcher,
-              dateFormatter: DateFormatter.fullDateDMY(),
-            ),
+        appBar: AppBar(
+          title: const Text('Attendance'),
+        ),
+        body: Column(children: [
+          EasyInfiniteDateTimeLine(
+            selectionMode: const SelectionMode.autoCenter(),
+            firstDate: DateTime(2000), // Set to January 1, 2010
+            focusDate: selectedDate, // Set focus date to today
+            lastDate: DateTime.now(),
+            onDateChange: (selectedDate) {
+              handleDateChange(selectedDate);
+            },
+            // headerProps: const EasyHeaderProps(
+            //   monthPickerType: MonthPickerType.switcher,
+            //   dateFormatter: DateFormatter.fullDateDMY(),
+            // ),
             dayProps: const EasyDayProps(
-              dayStructure: DayStructure.dayStrDayNum,
+              width: 64.0,
+              height: 80.0,
               activeDayStyle: DayStyle(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -77,7 +91,7 @@ class _AttendancePageState extends State<AttendancePage> {
             ),
           ),
           const SizedBox(
-            height: 8,
+            height: 10,
           ),
           const Center(
             child: Text('List of students'),
@@ -87,6 +101,7 @@ class _AttendancePageState extends State<AttendancePage> {
               itemCount: students.length,
               itemBuilder: (context, index) {
                 final student = students[index];
+
                 return Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -114,24 +129,24 @@ class _AttendancePageState extends State<AttendancePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    trailing: Switch(
-                      value: student.isActive,
-                      onChanged: (bool value) {
-                        setState(() {
-                          student.isActive = value;
-                        });
-                      },
-                      activeColor: Colors.green,
-                      inactiveThumbColor: Colors.grey,
-                      inactiveTrackColor: Colors.grey[300],
-                    ),
+                    trailing: isAttendanceLocked
+                        ? null // Disable the switch if attendance is locked
+                        : Switch(
+                            value: student.isActive,
+                            onChanged: (bool value) {
+                              setState(() {
+                                student.isActive = value;
+                              });
+                            },
+                            activeColor: Colors.green,
+                            inactiveThumbColor: Colors.grey,
+                            inactiveTrackColor: Colors.grey[300],
+                          ),
                   ),
                 );
               },
             ),
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }

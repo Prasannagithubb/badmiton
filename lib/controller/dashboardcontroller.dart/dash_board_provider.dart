@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:developer';
+
 // import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:badmiton_app/pages/addcoach/addcoachpage.dart';
 import 'package:badmiton_app/pages/screens/DashFees/screens/dashfees.dart';
@@ -18,7 +19,7 @@ class DashboardProvider extends ChangeNotifier {
     DashBatch(),
     DashStuddent(),
     CoachListScreen(),
-    DashBoardFees(),
+    FeesScreen(),
     DashHome(),
   ];
   void onItemTapped(int index) {
@@ -26,5 +27,4 @@ class DashboardProvider extends ChangeNotifier {
     selectedIndex = index;
     notifyListeners();
   }
-
 }

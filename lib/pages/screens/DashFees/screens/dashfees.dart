@@ -1,104 +1,381 @@
-import 'package:badmiton_app/constant/Screen.dart';
-import 'package:badmiton_app/pages/screens/DashFees/widgets/pendingtabview.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/paidtabview.dart';
-
-class DashBoardFees extends StatefulWidget {
-  const DashBoardFees({super.key});
-
-  @override
-  State<DashBoardFees> createState() => _DashBoardFeesState();
+void main() {
+  runApp(MyApp());
 }
 
-class _DashBoardFeesState extends State<DashBoardFees>
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Fees Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: FeesScreen(),
+    );
+  }
+}
+
+class FeesScreen extends StatefulWidget {
+  @override
+  _FeesScreenState createState() => _FeesScreenState();
+}
+
+class _FeesScreenState extends State<FeesScreen>
     with SingleTickerProviderStateMixin {
-  TabController? _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    print('TabController initialized');
-  }
-
-  @override
-  void dispose() {
-    print('Disposing TabController');
-    _tabController?.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Building Widget');
-    if (_tabController == null) {
-      print('TabController is null when building widget');
-      return Container(); // Return an empty container to avoid errors.
-    }
-
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        elevation: 6.0,
-        shadowColor: Colors.black,
         centerTitle: true,
-        leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Fees', style: TextStyle(color: Colors.white)),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
-            child: const Icon(Icons.search, color: Colors.white),
-          ),
-          Padding(
-            padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
-            child: const Icon(Icons.notifications, color: Colors.white),
-          ),
-        ],
-        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text(
+          'Fees',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green.shade800,
       ),
       body: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.all(8.0),
-            height: Screens.bodyheight(context) * 0.06,
-            width: Screens.width(context) * 0.6,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey
-                      .withOpacity(0.5), // Adjust the opacity as needed
-                  spreadRadius: 1, // Spread radius
-                  blurRadius: 6, // Blur radius
-                  offset: const Offset(0, 1), // changes position of shadow
-                ),
-              ],
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ), // Optional: adds a background color to the TabBar container
-            child: TabBar(
-              controller: _tabController!,
-              labelColor: Colors.red,
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.grey,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorPadding: const EdgeInsets.all(1.0),
-              tabs: const [
-                Tab(text: 'Pending'),
-                Tab(text: 'Paid'),
-              ],
-            ),
+        children: [
+          TabBar(
+            indicatorColor: Colors.green,
+            labelColor: Colors.green,
+            controller: _tabController,
+            tabs: const [
+              Tab(text: 'Fees'),
+              Tab(text: 'Others'),
+            ],
           ),
           Expanded(
             child: TabBarView(
-              controller: _tabController!,
+              controller: _tabController,
               children: const [
-                TabviewPending(),
-                PaidTabView(),
+                FeesTab(),
+                OthersTab(),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+}
+
+class FeesTab extends StatefulWidget {
+  const FeesTab({super.key});
+
+  @override
+  _FeesTabState createState() => _FeesTabState();
+}
+
+class _FeesTabState extends State<FeesTab> {
+  bool isPaid = false;
+  String? selectedMonth;
+  final List<String> months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  void _showPaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  // color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.black.withOpacity(0.2),
+                  //     blurRadius: 10,
+                  //     spreadRadius: 5,
+                  //   ),
+                  // ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.bounceIn,
+                      child: const Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 100,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Amount Received!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          // image: const DecorationImage(
+          //   image: AssetImage(
+          //       'lib/assets/Badmiton logo.jpeg'), // Add your image asset here
+          //   fit: BoxFit.fill,
+          // ),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              elevation: 4.0,
+              child: ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Prasanna'),
+                subtitle: const Text('Morning Batch'),
+                trailing: IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () {
+                    // Add your edit functionality here
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: Card(
+                color: Colors.white,
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      DropdownButton<String>(
+                        hint: const Text('Select Month'),
+                        value: selectedMonth,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedMonth = newValue!;
+                          });
+                        },
+                        items: months
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text('Amount: 3000'),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: selectedMonth != null
+                            ? () {
+                                setState(() {
+                                  isPaid = true;
+                                });
+                                _showPaymentDialog();
+                              }
+                            : null,
+                        child: const Text('Pay'),
+                      ),
+                      const SizedBox(height: 20),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: isPaid
+                            ? const Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 40,
+                                key: ValueKey('paid'),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class OthersTab extends StatefulWidget {
+  const OthersTab({super.key});
+
+  @override
+  _OthersTabState createState() => _OthersTabState();
+}
+
+class _OthersTabState extends State<OthersTab> {
+  final TextEditingController _amountController = TextEditingController();
+  bool isPaid = false;
+
+  void _showPaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.bounceIn,
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                      size: 100,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Amount Received!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Card(
+          elevation: 4.0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextField(
+                  controller: _amountController,
+                  decoration: const InputDecoration(
+                    labelText: ' Amount',
+                    border: UnderlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: ' Remarks',
+                    border: UnderlineInputBorder(),
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isPaid = true;
+                  });
+                  _showPaymentDialog();
+                },
+                child: const Text('Save'),
+              ),
+              const SizedBox(height: 20),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: isPaid
+                    ? const Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 40,
+                        key: ValueKey('paid'),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
