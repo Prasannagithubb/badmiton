@@ -11,6 +11,10 @@ class AddStudentProvider with ChangeNotifier {
       List.generate(10, (index) => TextEditingController());
   final GlobalKey<FormState> addstuentkey1 = GlobalKey<FormState>();
   List<Addstudent> addstudents = [];
+  List<Addstudent> isActAddstudents = [];
+
+  List<Addstudent> inActAddstudents = [];
+
   TimeOfDay studentcurrentTime = TimeOfDay.now();
   String? selectedBatch;
   int? indexstudent;
@@ -78,6 +82,9 @@ class AddStudentProvider with ChangeNotifier {
     addstudents = [];
     final Database db = (await DBHelper.getInstance())!;
     addstudents = await DBOperation.fetchStudents(db);
+    for (var i = 0; i < addstudents.length; i++) {
+      // isActAddstudents
+    }
     notifyListeners();
   }
 

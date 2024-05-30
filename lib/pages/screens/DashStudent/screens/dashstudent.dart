@@ -116,18 +116,6 @@ class _DashStuddentState extends State<DashStuddent> {
               SizedBox(
                 height: Screens.bodyheight(context) * 0.002,
               ),
-              // const Row(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Text(
-              //       'Filter applied : ',
-              //       style: TextStyle(color: Colors.red),
-              //     ),
-              //     Text('Enrolled Days - Thu'),
-              //   ],
-              // ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -136,16 +124,6 @@ class _DashStuddentState extends State<DashStuddent> {
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.green, fontWeight: FontWeight.bold),
                   ),
-                  // Consumer<AddStudentProvider>(
-                  //   builder: (context, provider, child) {
-                  //     return
-                  // Text(
-                  //       'Active: ${context.watch<AddStudentProvider>().addstudents.length}', // Accessing activeCount directly from provider
-                  //       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  //           color: Colors.green, fontWeight: FontWeight.bold),
-                  //     );
-                  //   },
-                  // ),
                   IconButton(
                     onPressed: () {
                       setState(() {

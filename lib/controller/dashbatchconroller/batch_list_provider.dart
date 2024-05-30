@@ -77,16 +77,12 @@ class BatchListProvider extends ChangeNotifier {
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
 
-  Future<void> batchaddstudentlist( 
-  
-  context) async {
+  Future<void> batchaddstudentlist(context) async {
     final Database? db = await DBHelper.getInstance();
     if (batchstudentformKey.currentState!.validate()) {
       DateTime dob = DateTime.parse(batchstudentctrlr[7].text);
       Addstudent batchaddstudents2 = Addstudent(
-        studentname:
-        
-         batchstudentctrlr[0].text,
+        studentname: batchstudentctrlr[0].text,
         studentmobilenumber: int.parse(batchstudentctrlr[1].text),
         fathername: batchstudentctrlr[2].text,
         fathermobilenumber: int.parse(batchstudentctrlr[3].text),
@@ -122,15 +118,22 @@ class BatchListProvider extends ChangeNotifier {
 
   Future<void> deleteBatch(int index) async {
     final Database? db = await DBHelper.getInstance();
-    if (db != null) {
-      final batchToDelete = batches[index];
-      if (batchToDelete.id != null) {
-        await DBOperation.deleteBatch(db, batchToDelete.id!);
-        await fetchBatches();
-      } else {
-        // Handle the case where the batch ID is null, if necessary
-        print("Batch ID is null, cannot delete.");
+    final batchToDelete = batches[index];
+    if (batchToDelete.id != null) {
+      // Fetch the students associated with the batch
+      List<Addstudent> studentsToDelete =
+          await fetchStudentsByBatchId(batchToDelete.id!);
+
+      // Delete each student from the database
+      for (Addstudent student in studentsToDelete) {
+        await DBOperation.deleteStudent(db!, student.id!);
       }
+
+      // Delete the batch from the database
+      await DBOperation.deleteBatch(db!, batchToDelete.id!);
+
+      // Fetch the updated list of batches
+      await fetchBatches();
     }
   }
 
@@ -173,7 +176,7 @@ class BatchListProvider extends ChangeNotifier {
     }
   }
 
-  void addBatchList( context) async {
+  void addBatchList(context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && batchformKey.currentState!.validate()) {

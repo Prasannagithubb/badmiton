@@ -25,7 +25,6 @@ class _DashHomeState extends State<DashHome> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,
@@ -108,14 +107,14 @@ class _DashHomeState extends State<DashHome> {
                         },
                         child: AnimatedContainer(
                           duration: const Duration(seconds: 1),
-                          curve: Curves.fastLinearToSlowEaseIn,
+                          curve: Curves.fastEaseInToSlowEaseOut,
                           height: isTapped
                               ? isExpanded
                                   ? 60
                                   : 0
                               : isExpanded
                                   ? 225
-                                  : 230,
+                                  : 300,
                           width: isExpanded ? 385 : 390,
                           decoration: const BoxDecoration(
                             color: Colors.white,
@@ -200,23 +199,90 @@ class _DashHomeState extends State<DashHome> {
                 ),
               ),
             ),
-            // SingleChildScrollView(
-            //   scrollDirection: Axis.horizontal,
-            //   child: Row(
-            //     children: items
-            //         .map((item) => Card(
-            //               child: ListTile(
-            //                 title: Text("${item.title}: ${item.count}"),
-            //                 subtitle: Text(
-            //                     "${item.newStudents} new students ${item.period}"),
-            //                 leading: Icon(Icons.school),
-            //                 trailing: Icon(Icons.arrow_forward),
-            //               ),
-            //             ))
-            //         .toList(),
-            //   ),
-            // )
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    HomeCard(
+                      name: 'Batches',
+                      number: '3',
+                    ),
+                    HomeCard(
+                      name: 'Students',
+                      number: '30',
+                    ),
+
+                    HomeCard(
+                      name: 'Coaches',
+                      number: '2',
+                    ),
+                    HomeCard(
+                      name: 'Benches',
+                      number: '2',
+                    ),
+
+                    // Repeat the above Card for the remaining items
+                  ],
+                ),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeCard extends StatelessWidget {
+  final String name;
+  final String number;
+
+  const HomeCard({super.key, required this.name, required this.number});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: Screens.bodyheight(context) * 0.2,
+      width: Screens.width(context) * 0.35,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.white,
+            Colors.white
+          ], // Adjust gradient colors as needed
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Card(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              Text(
+                number,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

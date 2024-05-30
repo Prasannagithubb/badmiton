@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
 }
 
 class FeesScreen extends StatefulWidget {
+  const FeesScreen({super.key});
+
   @override
   _FeesScreenState createState() => _FeesScreenState();
 }
@@ -172,23 +174,6 @@ class _FeesTabState extends State<FeesTab> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              elevation: 4.0,
-              child: ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Prasanna'),
-                subtitle: const Text('Morning Batch'),
-                trailing: IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.blue,
-                  ),
-                  onPressed: () {
-                    // Add your edit functionality here
-                  },
-                ),
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),
@@ -346,8 +331,11 @@ class _OthersTabState extends State<OthersTab> {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   decoration: InputDecoration(
+                    focusColor: Colors.green,
                     labelText: ' Remarks',
-                    border: UnderlineInputBorder(),
+                    border: UnderlineInputBorder(
+                      
+                    ),
                   ),
                   maxLines: 1,
                 ),

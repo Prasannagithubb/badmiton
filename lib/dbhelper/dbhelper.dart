@@ -97,4 +97,12 @@ class DBHelper {
     )
   ''');
   }
+
+  static Future<void> deleteStudent(Database db, int id) async {
+    await db.delete(
+      'AddstudentName', // Table name for students
+      where: '${AddstudentColumns.id} = ?',
+      whereArgs: [id],
+    );
+  }
 }
