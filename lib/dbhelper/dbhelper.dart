@@ -37,6 +37,24 @@ class DBHelper {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           ${AddstudentColumns.batchname} TEXT,
           ${AddstudentColumns.studentname} TEXT,
+          ${AddstudentColumns.studentmobilenumber} INTEGER,
+          ${AddstudentColumns.fathername} TEXT,
+          ${AddstudentColumns.fathermobilenumber} INTEGER,
+          ${AddstudentColumns.mothername} TEXT,
+          ${AddstudentColumns.mothermobilenumber} INTEGER,
+          ${AddstudentColumns.fees} TEXT,
+          ${AddstudentColumns.currenttime} TEXT,
+          ${AddstudentColumns.dateOfBirth} TEXT,
+          ${AddstudentColumns.isActive} TEXT,
+          ${AddstudentColumns.isPresent} BOOL
+        )
+      ''');
+
+      await db.execute('''
+        CREATE TABLE inactive_students(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          ${AddstudentColumns.batchname} TEXT,
+          ${AddstudentColumns.studentname} TEXT,
           ${AddstudentColumns.studentmobilenumber} TEXT,
           ${AddstudentColumns.fathername} TEXT,
           ${AddstudentColumns.fathermobilenumber} TEXT,
@@ -80,22 +98,6 @@ class DBHelper {
       print('Error creating tables: $e');
       throw Exception('Error creating tables');
     }
-  }
-
-  Future<void> createTables(Database db) async {
-    await db.execute('''
-    CREATE TABLE ${AddCoachColumns.tableName} (
-      ${AddCoachColumns.id} INTEGER PRIMARY KEY AUTOINCREMENT,
-      ${AddCoachColumns.name} TEXT,
-      ${AddCoachColumns.mobile} TEXT,
-      ${AddCoachColumns.salary} TEXT,
-      ${AddCoachColumns.bankDetails} TEXT,
-      ${AddCoachColumns.dateOfJoining} TEXT,
-      ${AddCoachColumns.dateOfResignation} TEXT,
-      ${AddCoachColumns.idCardPath} TEXT,
-      ${AddCoachColumns.bankPassbookPath} TEXT
-    )
-  ''');
   }
 
   static Future<void> deleteStudent(Database db, int id) async {

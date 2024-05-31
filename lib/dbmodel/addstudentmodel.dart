@@ -25,11 +25,11 @@ class Addstudent {
   int fathermobilenumber;
   String mothername;
   int mothermobilenumber;
-  int fees;
+  double fees;
   String? currenttime;
   String dateOfBirth;
-  bool isActive;
-  bool isPresent; // Add this line
+  String? isActive;
+  bool? isPresent;
 
   Addstudent({
     this.id,
@@ -43,8 +43,8 @@ class Addstudent {
     required this.mothermobilenumber,
     this.currenttime,
     required this.fees,
-    this.isActive = true,
-    this.isPresent = false, // Default to false
+    this.isActive,
+    this.isPresent, // Default to false
   });
 
   Map<String, Object?> toMap() => {
@@ -60,7 +60,7 @@ class Addstudent {
         AddstudentColumns.currenttime: currenttime,
         AddstudentColumns.fees: fees,
         AddstudentColumns.isActive: isActive,
-        AddstudentColumns.isPresent: isPresent ? 1 : 0, // Add this line
+        AddstudentColumns.isPresent: isPresent,
       };
 
   static Addstudent fromMap(Map<String, dynamic> map) => Addstudent(
@@ -68,14 +68,17 @@ class Addstudent {
         batchname: map[AddstudentColumns.batchname],
         dateOfBirth: map[AddstudentColumns.dateOfBirth],
         studentname: map[AddstudentColumns.studentname],
-        studentmobilenumber: map[AddstudentColumns.studentmobilenumber],
+        studentmobilenumber:
+            int.parse(map[AddstudentColumns.studentmobilenumber].toString()),
         fathername: map[AddstudentColumns.fathername],
-        fathermobilenumber: map[AddstudentColumns.fathermobilenumber],
+        fathermobilenumber:
+            int.parse(map[AddstudentColumns.fathermobilenumber].toString()),
         mothername: map[AddstudentColumns.mothername],
-        mothermobilenumber: map[AddstudentColumns.mothermobilenumber],
+        mothermobilenumber:
+            int.parse(map[AddstudentColumns.mothermobilenumber].toString()),
         currenttime: map[AddstudentColumns.currenttime],
-        fees: map[AddstudentColumns.fees],
-        isActive: map[AddstudentColumns.isActive] == 1,
-        isPresent: map[AddstudentColumns.isPresent] == 1, // Add this line
+        fees: double.parse(map[AddstudentColumns.fees]),
+        isActive: map[AddstudentColumns.isActive],
+        isPresent: map[AddstudentColumns.isPresent] == 1,
       );
 }

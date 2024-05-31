@@ -82,16 +82,16 @@ class BatchListProvider extends ChangeNotifier {
     if (batchstudentformKey.currentState!.validate()) {
       DateTime dob = DateTime.parse(batchstudentctrlr[7].text);
       Addstudent batchaddstudents2 = Addstudent(
-        studentname: batchstudentctrlr[0].text,
-        studentmobilenumber: int.parse(batchstudentctrlr[1].text),
-        fathername: batchstudentctrlr[2].text,
-        fathermobilenumber: int.parse(batchstudentctrlr[3].text),
-        mothername: batchstudentctrlr[4].text,
-        mothermobilenumber: int.parse(batchstudentctrlr[5].text),
-        fees: int.parse(batchstudentctrlr[6].text),
-        dateOfBirth: dob.toString(),
-        batchname: selectedBatch.toString(),
-      );
+          studentname: batchstudentctrlr[0].text,
+          studentmobilenumber: int.parse(batchstudentctrlr[1].text),
+          fathername: batchstudentctrlr[2].text,
+          fathermobilenumber: int.parse(batchstudentctrlr[3].text),
+          mothername: batchstudentctrlr[4].text,
+          mothermobilenumber: int.parse(batchstudentctrlr[5].text),
+          fees: double.parse(batchstudentctrlr[6].text),
+          dateOfBirth: dob.toString(),
+          batchname: selectedBatch.toString(),
+          isActive: "Active");
 
       await DBOperation.insertStudentTable(db!, batchaddstudents2);
       // context.read<AddStudentProvider>().addstudents = batchaddstudents;
@@ -167,7 +167,7 @@ class BatchListProvider extends ChangeNotifier {
           fees: studentMaps[index][AddstudentColumns.fees],
           currenttime: studentMaps[index][AddstudentColumns.currenttime],
           dateOfBirth: studentMaps[index][AddstudentColumns.dateOfBirth],
-          isActive: studentMaps[index][AddstudentColumns.isActive] == 1,
+          isActive: studentMaps[index][AddstudentColumns.isActive],
         );
       });
     } else {

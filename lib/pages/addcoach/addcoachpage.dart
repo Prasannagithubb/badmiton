@@ -86,8 +86,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            margin: const EdgeInsets.all(
-                                8), // Adds space around each row for better clarity
+                            // margin: const EdgeInsets.all(
+                            //     8), // Adds space around each row for better clarity
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey
@@ -103,8 +103,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
                                     child: Text(
-                                      coach.name[
-                                          0], // First letter of the student's name
+                                      coach.name[0]
+                                          .toUpperCase(), // First letter of the student's name
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 20),
                                     ),
@@ -150,7 +150,9 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                       context
                                           .read<DashCoachProvider>()
                                           .editCoach(
-                                              context.read<DashCoachProvider>() .coaches[index],
+                                              context
+                                                  .read<DashCoachProvider>()
+                                                  .coaches[index],
                                               index);
                                     });
                                     context

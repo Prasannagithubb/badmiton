@@ -1,17 +1,16 @@
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
-import 'package:badmiton_app/dbmodel/addstudentmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class StudentScreen extends StatefulWidget {
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<StudentScreen> createState() => _StudentScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -45,6 +44,21 @@ class _LoginScreenState extends State<LoginScreen>
           ),
         ],
         backgroundColor: Theme.of(context).primaryColor,
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton(
+            backgroundColor: Colors.green,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              context.read<AddStudentProvider>().clearAll();
+              // Navigator.push(
+              context.read<AddStudentProvider>().studentcondition = true;
+              Get.toNamed(ConstantRoutes.addstudent1);
+            }),
       ),
       body: Container(
         color: Colors.white,
@@ -126,20 +140,13 @@ class _ActiveState extends State<Active> {
       child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: context
-              .watch<AddStudentProvider>()
-              .addstudents
-              .where((s) => s.isActive)
-              .length,
+          itemCount:
+              context.watch<AddStudentProvider>().isActAddstudents.length,
           itemBuilder: (BuildContext context, index) {
-            List<Addstudent> activeStudents = context
-                .watch<AddStudentProvider>()
-                .addstudents
-                .where((s) => s.isActive)
-                .toList();
-            var student = activeStudents[index];
-            return Container(
-                child: Column(
+            // List<Addstudent> activeStudents =
+            //     context.watch<AddStudentProvider>().isActAddstudents.toList();
+            // var student = activeStudents[index];
+            return Column(
               children: [
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
@@ -174,7 +181,7 @@ class _ActiveState extends State<Active> {
                             child: Text(
                               context
                                       .watch<AddStudentProvider>()
-                                      .addstudents[index]
+                                      .isActAddstudents[index]
                                       .studentname[
                                   0], // Display the first letter of the student name
                               style: TextStyle(
@@ -188,7 +195,7 @@ class _ActiveState extends State<Active> {
                               Text(
                                 context
                                     .watch<AddStudentProvider>()
-                                    .addstudents[index]
+                                    .isActAddstudents[index]
                                     .studentname,
                                 style: const TextStyle(
                                     fontSize: 16,
@@ -198,7 +205,7 @@ class _ActiveState extends State<Active> {
                               Text(
                                 context
                                     .watch<AddStudentProvider>()
-                                    .addstudents[index]
+                                    .isActAddstudents[index]
                                     .batchname,
                                 style: const TextStyle(
                                     fontSize: 14, color: Colors.black),
@@ -221,7 +228,7 @@ class _ActiveState extends State<Active> {
                                       .editstudent(
                                           context
                                               .read<AddStudentProvider>()
-                                              .addstudents[index],
+                                              .isActAddstudents[index],
                                           index);
                                   Get.toNamed(ConstantRoutes.addstudent1);
                                 },
@@ -254,13 +261,16 @@ class _ActiveState extends State<Active> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    int actualIndex = context
+                                    // int actualIndex = context
+                                    //     .read<AddStudentProvider>()
+                                    //     .addstudents
+                                    //     .indexOf(student);
+                                    context
                                         .read<AddStudentProvider>()
-                                        .addstudents
-                                        .indexOf(student);
-                                    Provider.of<AddStudentProvider>(context,
-                                            listen: false)
-                                        .toggleStudentActive(actualIndex);
+                                        .toggleStudentActive(context
+                                            .read<AddStudentProvider>()
+                                            .isActAddstudents[index]
+                                            .id!);
                                   },
                                   splashColor: Colors.white.withOpacity(
                                       0.5), // White splash for contrast
@@ -276,7 +286,7 @@ class _ActiveState extends State<Active> {
                   height: 10,
                 )
               ],
-            ));
+            );
           }),
     );
   }
@@ -292,153 +302,179 @@ class Inactive extends StatefulWidget {
 class _InactiveState extends State<Inactive> {
   @override
   Widget build(BuildContext context) {
-    List<Addstudent> inactiveStudents = context
-        .watch<AddStudentProvider>()
-        .addstudents
-        .where((s) => !s.isActive)
-        .toList();
-    return Column(
-      children: [
-        SizedBox(
-          height: Screens.bodyheight(context) * 0.003,
-        ),
-        Container(
-          child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              // height: itemCount * itemHeight,
-              itemCount: inactiveStudents.length,
-              itemBuilder: (BuildContext context, index) {
-                var inactiveStudents = context
-                    .watch<AddStudentProvider>()
-                    .addstudents
-                    .where((s) => !s.isActive)
-                    .toList();
-                Addstudent student = inactiveStudents[index];
-                return Column(
-                  children: [
-                    Container(
-                        height: Screens.bodyheight(context) *
-                            0.1, // Increased height for better layout
-                        width: Screens.width(context),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            // Enhancing shadow for 3D effect
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.7),
-                              // spreadRadius: 1,
-                              // blurRadius: 3,
-                              // offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal:
-                                  8.0), // Horizontal padding for internal spacing
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.white,
-                                child: Text(
-                                  student.studentname[
-                                      0], // Display the first letter of the student name
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.green.shade800),
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    student.studentname,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    student.batchname,
-                                    style: const TextStyle(
-                                        fontSize: 14, color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      color: Colors.green[
-                                          700], // A richer shade of green
-                                      size: 30, // Slightly larger icon size
-                                    ),
-                                    onPressed: () {
-                                      // Handle edit operation
-                                    },
-                                    splashColor: Colors
-                                        .greenAccent, // Splash color on press
-                                    highlightColor: Colors
-                                        .transparent, // No highlight color
-                                  ),
-                                  Ink(
-                                    decoration: BoxDecoration(
-                                      color: Colors
-                                          .red[100], // Light red background
-                                      shape: BoxShape
-                                          .circle, // Circular shape for the ink response
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.red.withOpacity(0.5),
-                                          spreadRadius: 1,
-                                          blurRadius: 3,
-                                          offset: const Offset(
-                                              0, 2), // Shadow position
-                                        ),
-                                      ],
-                                    ),
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red[
-                                            800], // Darker shade of red for the icon
-                                        size: 30,
-                                      ),
-                                      onPressed: () {
-                                        // Convert local index to global index if needed
-                                        int globalIndex = context
-                                            .read<AddStudentProvider>()
-                                            .addstudents
-                                            .indexOf(student);
-                                        Provider.of<AddStudentProvider>(context,
-                                                listen: false)
-                                            .deleteStudent(globalIndex);
-                                      },
-                                      splashColor: Colors.white.withOpacity(
-                                          0.5), // White splash for contrast
-                                      highlightColor: Colors.transparent,
-                                    ),
-                                  ),
-                                ],
+    // List<Addstudent> inactiveStudents = context
+    //     .watch<AddStudentProvider>()
+    //     .addstudents
+    //     .where((s) => s.isActive == "InActive")
+    //     .toList();
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: Screens.bodyheight(context) * 0.003,
+          ),
+          Container(
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                // height: itemCount * itemHeight,
+                itemCount:
+                    context.watch<AddStudentProvider>().inActAddstudents.length,
+                itemBuilder: (BuildContext context, index) {
+                  // var inactiveStudents = context
+                  //     .watch<AddStudentProvider>()
+                  //     .addstudents
+                  //     .where((s) => s.isActive == "InActive")
+                  //     .toList();
+                  // Addstudent student = inactiveStudents[index];
+                  return Column(
+                    children: [
+                      Container(
+                          height: Screens.bodyheight(context) *
+                              0.1, // Increased height for better layout
+                          width: Screens.width(context),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              // Enhancing shadow for 3D effect
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.7),
+                                // spreadRadius: 1,
+                                // blurRadius: 3,
+                                // offset: const Offset(0, 4),
                               ),
                             ],
                           ),
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                );
-              }),
-        ),
-      ],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal:
+                                    8.0), // Horizontal padding for internal spacing
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: Text(
+                                    context
+                                        .watch<AddStudentProvider>()
+                                        .inActAddstudents[index]
+                                        .studentname[0]
+                                        .toUpperCase(), // Display the first letter of the student name
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        color: Colors.green.shade800),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      context
+                                          .watch<AddStudentProvider>()
+                                          .inActAddstudents[index]
+                                          .studentname,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    Text(
+                                      context
+                                          .watch<AddStudentProvider>()
+                                          .inActAddstudents[index]
+                                          .batchname,
+                                      style: const TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.green[
+                                            700], // A richer shade of green
+                                        size: 30, // Slightly larger icon size
+                                      ),
+                                      onPressed: () {
+                                        // Handle edit operation
+                                      },
+                                      splashColor: Colors
+                                          .greenAccent, // Splash color on press
+                                      highlightColor: Colors
+                                          .transparent, // No highlight color
+                                    ),
+                                    Ink(
+                                        decoration: BoxDecoration(
+                                          color: Colors
+                                              .red[100], // Light red background
+                                          shape: BoxShape
+                                              .circle, // Circular shape for the ink response
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.red.withOpacity(0.5),
+                                              spreadRadius: 1,
+                                              blurRadius: 3,
+                                              offset: const Offset(
+                                                  0, 2), // Shadow position
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red[
+                                                800], // Darker shade of red for the icon
+                                            size: 30,
+                                          ),
+                                          onPressed: () {
+                                            // int actualIndex = context
+                                            //     .read<AddStudentProvider>()
+                                            //     .addstudents
+                                            //     .indexOf(student);
+                                            context
+                                                .read<AddStudentProvider>()
+                                                .deleteStudent(context
+                                                    .watch<AddStudentProvider>()
+                                                    .inActAddstudents[index]
+                                                    .id!);
+                                          },
+                                          splashColor: Colors.white.withOpacity(
+                                              0.5), // White splash for contrast
+                                          highlightColor: Colors.transparent,
+                                        )),
+
+                                    // onPressed: () {
+                                    //           int actualIndex = context
+                                    //               .read<AddStudentProvider>()
+                                    //               .addstudents
+                                    //               .indexOf(student);
+                                    //           Provider.of<AddStudentProvider>(
+                                    //                   context,
+                                    //                   listen: false)
+                                    //               .toggleStudentActive(
+                                    //                   actualIndex);
+                                    //         },
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -123,19 +123,19 @@ class _AttendancePageState extends State<AttendancePage> {
                       ),
                     ),
                     subtitle: Text(
-                      student.isActive ? 'Present' : 'Absent',
+                      student.isPresent! ? 'Present' : 'Absent',
                       style: TextStyle(
-                        color: student.isActive ? Colors.green : Colors.red,
+                        color: student.isPresent! ? Colors.green : Colors.red,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     trailing: isAttendanceLocked
                         ? null // Disable the switch if attendance is locked
                         : Switch(
-                            value: student.isActive,
+                            value: student.isPresent!,
                             onChanged: (bool value) {
                               setState(() {
-                                student.isActive = value;
+                                student.isPresent = value;
                               });
                             },
                             activeColor: Colors.green,

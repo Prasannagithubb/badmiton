@@ -12,7 +12,6 @@ class AddStudentProvider with ChangeNotifier {
   final GlobalKey<FormState> addstuentkey1 = GlobalKey<FormState>();
   List<Addstudent> addstudents = [];
   List<Addstudent> isActAddstudents = [];
-
   List<Addstudent> inActAddstudents = [];
 
   TimeOfDay studentcurrentTime = TimeOfDay.now();
@@ -35,9 +34,14 @@ class AddStudentProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void toggleStudentActive(int index) {
-    var student = addstudents[index];
-    student.isActive = !student.isActive;
+  Future<void> toggleStudentActive(int id) async {
+    final Database? db = await DBHelper.getInstance();
+
+    // var student = addstudents[index];
+    await DBOperation.changeActToInAct(db!, id);
+    await fetchStudents();
+
+    // student.isActive = !student.isActive;
     notifyListeners();
   }
 
@@ -67,25 +71,55 @@ class AddStudentProvider with ChangeNotifier {
   Future<void> deleteStudent(int index) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
-      final batchToDelete = addstudents[index];
-      if (batchToDelete.id != null) {
-        await DBOperation.deleteStudent(db, batchToDelete.id!);
+      final studentToDelete = addstudents[index];
+      if (studentToDelete.id != null) {
+        // Move student to inactive table
+        await DBOperation.insertInactiveStudent(db, studentToDelete);
+        // Delete student from active table
+        await DBOperation.deleteActiveStudent(db, studentToDelete.id!);
+        // Remove the student from the active list
+        addstudents.removeAt(index);
+        // Fetch the updated list of students
         await fetchStudents();
+        notifyListeners();
       } else {
-        // Handle the case where the batch ID is null, if necessary
-        log("Batch ID is null, cannot delete.");
+        log("Student ID is null, cannot delete.");
       }
     }
   }
 
   Future<void> fetchStudents() async {
-    addstudents = [];
     final Database db = (await DBHelper.getInstance())!;
-    addstudents = await DBOperation.fetchStudents(db);
+    addstudents = await DBOperation.fetchActiveStudents(db);
     for (var i = 0; i < addstudents.length; i++) {
-      // isActAddstudents
+      if (addstudents[i].isActive == "Active") {
+        isActAddstudents.add(Addstudent(
+            id: addstudents[i].id,
+            batchname: addstudents[i].batchname,
+            dateOfBirth: addstudents[i].dateOfBirth,
+            studentname: addstudents[i].studentname,
+            studentmobilenumber: addstudents[i].studentmobilenumber,
+            fathername: addstudents[i].fathername,
+            fathermobilenumber: addstudents[i].fathermobilenumber,
+            mothername: addstudents[i].mothername,
+            mothermobilenumber: addstudents[i].mothermobilenumber,
+            fees: addstudents[i].fees));
+      } else {
+        inActAddstudents.add(Addstudent(
+            id: addstudents[i].id,
+            batchname: addstudents[i].batchname,
+            dateOfBirth: addstudents[i].dateOfBirth,
+            studentname: addstudents[i].studentname,
+            studentmobilenumber: addstudents[i].studentmobilenumber,
+            fathername: addstudents[i].fathername,
+            fathermobilenumber: addstudents[i].fathermobilenumber,
+            mothername: addstudents[i].mothername,
+            mothermobilenumber: addstudents[i].mothermobilenumber,
+            fees: addstudents[i].fees));
+      }
+      // inActAddstudents = await DBOperation.fetchInactiveStudents(db);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void updatedstudent(BuildContext context) {
@@ -100,9 +134,34 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].currenttime =
           '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
       // addstudents[i].currenttime = studentcurrentTime;
-      addstudents[i].fees = int.parse(studentcontroller[6].text);
+      addstudents[i].fees = double.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
       addstudents[i].batchname = selectedBatch.toString();
+      addstudents[i].isActive = "Active";
+      Navigator.pop(context);
+      notifyListeners();
+      // addstudents[i] = addstdn;
+    } catch (e) {
+      print('Error parsing values: $e');
+    }
+  }
+
+  void actToInActstudent(BuildContext context) {
+    int i = indexstudent!;
+    try {
+      addstudents[i].studentname = studentcontroller[0].text;
+      addstudents[i].studentmobilenumber = int.parse(studentcontroller[1].text);
+      addstudents[i].fathername = studentcontroller[2].text;
+      addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
+      addstudents[i].mothername = studentcontroller[4].text;
+      addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
+      addstudents[i].currenttime =
+          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      // addstudents[i].currenttime = studentcurrentTime;
+      addstudents[i].fees = double.parse(studentcontroller[6].text);
+      addstudents[i].dateOfBirth = studentcontroller[7].text;
+      addstudents[i].batchname = selectedBatch.toString();
+      addstudents[i].isActive = "Active";
       Navigator.pop(context);
       // addstudents[i] = addstdn;
     } catch (e) {
@@ -132,18 +191,18 @@ class AddStudentProvider with ChangeNotifier {
     if (db != null && addstuentkey1.currentState!.validate()) {
       try {
         Addstudent newStudent = Addstudent(
-          studentname: studentcontroller[0].text,
-          studentmobilenumber: int.tryParse(studentcontroller[1].text) ?? 0,
-          fathername: studentcontroller[2].text,
-          fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
-          mothername: studentcontroller[4].text,
-          mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-          currenttime:
-              '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
-          fees: int.tryParse(studentcontroller[6].text) ?? 0,
-          dateOfBirth: studentcontroller[7].text,
-          batchname: selectedBatch.toString(),
-        );
+            studentname: studentcontroller[0].text,
+            studentmobilenumber: int.tryParse(studentcontroller[1].text) ?? 0,
+            fathername: studentcontroller[2].text,
+            fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
+            mothername: studentcontroller[4].text,
+            mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
+            currenttime:
+                '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            fees: double.parse(studentcontroller[6].text) ?? 0,
+            dateOfBirth: studentcontroller[7].text,
+            batchname: selectedBatch.toString(),
+            isActive: "Active");
 
         // Insert the new student into the database
         await DBOperation.insertStudentTable(db, newStudent);

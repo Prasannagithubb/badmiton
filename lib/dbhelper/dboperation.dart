@@ -132,7 +132,7 @@ class DBOperation {
         currenttime: maps[i][AddstudentColumns.currenttime].toString(),
 
         // currenttime: '${currentTime.hour}:${currentTime.minute}',
-        fees: int.parse(maps[i][AddstudentColumns.fees].toString()),
+        fees: double.parse(maps[i][AddstudentColumns.fees].toString()),
         dateOfBirth: maps[i][AddstudentColumns.dateOfBirth].toString(),
         batchname: maps[i][AddstudentColumns.batchname].toString(),
       );
@@ -192,6 +192,13 @@ class DBOperation {
     );
   }
 
+  static Future changeActToInAct(Database db, int id) async {
+    List<Map<String, Object?>> result = await db.rawQuery(
+        ''' UPDATE $addstudentName  SET isActive = "InActive" Where id= $id ''');
+    //log("Updated Coupon list::" + result.toString());
+    return result;
+  }
+
 //
 // BatchTableName
   static Future<void> deleteBatch(Database db, int batchId) async {
@@ -208,5 +215,43 @@ class DBOperation {
       where: 'id = ?',
       whereArgs: [studentId],
     );
+  }
+
+  static Future<int> insertInactiveStudent(
+      Database db, Addstudent student) async {
+    return await db.insert('inactive_students', student.toMap());
+  }
+
+  static Future<int> deleteActiveStudent(Database db, int id) async {
+    return await db.delete('AddstudentName', where: 'id = ?', whereArgs: [id]);
+  }
+
+  static Future<List<Addstudent>> fetchActiveStudents(
+    Database db,
+  ) async {
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery(''' select * from AddstudentName''');
+    log("Std List$maps");
+    return List.generate(maps.length, (i) {
+      return Addstudent.fromMap(maps[i]);
+    });
+  }
+  // static Future<List<Addstudent>> fetchActiveStudents(Database db) async {
+  //   final List<Map<String, dynamic>> maps = await db.query(
+  //     'AddstudentName',
+  //     where: '${AddstudentColumns.isActive} = ?',
+  //     whereArgs: [1],
+  //   );
+  //   log("Std List" + maps.toString());
+  // return List.generate(maps.length, (i) {
+  //   return Addstudent.fromMap(maps[i]);
+  // });
+  // }
+
+  static Future<List<Addstudent>> fetchInactiveStudents(Database db) async {
+    final List<Map<String, dynamic>> maps = await db.query('inactive_students');
+    return List.generate(maps.length, (i) {
+      return Addstudent.fromMap(maps[i]);
+    });
   }
 }
