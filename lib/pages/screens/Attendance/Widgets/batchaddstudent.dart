@@ -150,47 +150,45 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                 key: context.watch<BatchListProvider>().batchstudentformKey,
                 child: Column(
                   children: [
-                    Container(
-                      child: DropdownButtonFormField<String>(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the Batch name';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          // labelText: 'Batch Name',
-                          labelStyle: TextStyle(color: Colors.grey),
-                          hintText: 'Batch name',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          prefixIcon: Icon(
-                            Icons.batch_prediction_outlined,
-                            color: Colors.blue,
-                          ),
-                          // Remove border
-                          // border: InputBorder.none,
-                          // filled: true,
-                          // fillColor: Colors.white,
-                          // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                    DropdownButtonFormField<String>(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the Batch name';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        // labelText: 'Batch Name',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        hintText: 'Batch name',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        prefixIcon: Icon(
+                          Icons.batch_prediction_outlined,
+                          color: Colors.blue,
                         ),
-                        value: context.read<BatchListProvider>().selectedBatch,
-                        icon: const Icon(Icons.arrow_drop_down,
-                            color: Colors.grey),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            context.read<BatchListProvider>().selectedBatch =
-                                newValue;
-                            batchController.text = newValue ?? "";
-                          });
-                        },
-                        items:
-                            context.read<BatchListProvider>().batches.map((e) {
-                          return DropdownMenuItem<String>(
-                            value: e.name,
-                            child: Text(e.name),
-                          );
-                        }).toList(),
+                        // Remove border
+                        // border: InputBorder.none,
+                        // filled: true,
+                        // fillColor: Colors.white,
+                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
+                      value: context.read<BatchListProvider>().selectedBatch,
+                      icon: const Icon(Icons.arrow_drop_down,
+                          color: Colors.grey),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          context.read<BatchListProvider>().selectedBatch =
+                              newValue;
+                          batchController.text = newValue ?? "";
+                        });
+                      },
+                      items:
+                          context.read<BatchListProvider>().batches.map((e) {
+                        return DropdownMenuItem<String>(
+                          value: e.name,
+                          child: Text(e.name),
+                        );
+                      }).toList(),
                     ),
                     const SizedBox(height: 15),
                     TextFormField(

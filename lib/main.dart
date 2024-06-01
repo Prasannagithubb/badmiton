@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
           //             : themes.selectedTheme == 'red'
           //                 ? redTheme(context)
           //                 : roseTheme(context),
-          home: ConfigurationPage(),
+          home: const ConfigurationPage(),
         );
       }),
     );

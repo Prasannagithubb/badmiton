@@ -29,6 +29,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FloatingActionButton(
@@ -48,7 +49,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Coach', style: TextStyle(color: Colors.white)),
+        title: const Text('Coach',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: const [
           // IconButton(
           //   icon: const Icon(
@@ -78,103 +80,138 @@ class _CoachListScreenState extends State<CoachListScreen> {
                           ?.copyWith(color: Colors.grey),
                     ),
                   )
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: dashCoachProvider.coaches.length,
-                      itemBuilder: (context, index) {
-                        final coach = dashCoachProvider.coaches[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            // margin: const EdgeInsets.all(
-                            //     8), // Adds space around each row for better clarity
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey
-                                  .shade100, // Light grey color for each list item for better contrast
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    child: Text(
-                                      coach.name[0]
-                                          .toUpperCase(), // First letter of the student's name
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          coach.name,
-                                          style: const TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          coach.mobile,
-                                          style: const TextStyle(
-                                              color: Colors.black54),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.edit,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary),
-                                  onPressed: () {
-                                    log(context
-                                        .read<DashCoachProvider>()
-                                        .coaches
-                                        .length
-                                        .toString());
-                                    setState(() {
-                                      context
-                                          .read<DashCoachProvider>()
-                                          .editCoach(
-                                              context
-                                                  .read<DashCoachProvider>()
-                                                  .coaches[index],
-                                              index);
-                                    });
-                                    context
-                                        .read<DashCoachProvider>()
-                                        .coachCondition = false;
-                                    Get.toNamed(ConstantRoutes.addCoachform);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.redAccent),
-                                  onPressed: () {
-                                    dashCoachProvider.removeCoach(index);
-                                  },
-                                ),
-                              ],
+                : Column(
+                    children: [
+                      SizedBox(height: Screens.bodyheight(context) * 0.01),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'All Coaches',
+                            style: theme.textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Screens.bodyheight(context) * 0.020,
+                      ),
+                      SizedBox(
+                        height: Screens.bodyheight(context) * 0.055,
+                        width: Screens.width(context) * 0.80,
+                        child: TextFormField(
+                          cursorColor: Colors.green,
+                          decoration: const InputDecoration(
+                            focusColor: Colors.green,
+                            focusedBorder: OutlineInputBorder(),
+                            labelText: 'Search Coaches',
+                            labelStyle: TextStyle(color: Colors.black),
+                            // hintText: 'Enter studen',
+                            suffixIcon:
+                                Icon(Icons.search), // Using a filter icon
+                            border:
+                                OutlineInputBorder(), // Adds a border to the TextFormField
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Screens.bodyheight(context) * 0.004,
+                      ),
+                    ],
+                  ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: dashCoachProvider.coaches.length,
+                itemBuilder: (context, index) {
+                  final coach = dashCoachProvider.coaches[index];
+                  return Card(
+                    elevation: 4.0,
+                    child: Container(
+                      padding: const EdgeInsets.all(4.0),
+                      // margin: const EdgeInsets.all(
+                      //     8), // Adds space around each row for better clarity
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors
+                            .white, // Light grey color for each list item for better contrast
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.white,
+                              child:
+                                  Image.asset('lib/assets/Badmiton_pure.png'),
+                              //  Text(
+                              //   coach.name[0]
+                              //       .toUpperCase(), // First letter of the student's name
+                              //   style: const TextStyle(
+                              //       color: Colors.white, fontSize: 20),
+                              // ),
                             ),
                           ),
-                        );
-                      },
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    coach.name,
+                                    style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    coach.mobile,
+                                    style:
+                                        const TextStyle(color: Colors.black54),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.edit,
+                                color: Theme.of(context).colorScheme.secondary),
+                            onPressed: () {
+                              log(context
+                                  .read<DashCoachProvider>()
+                                  .coaches
+                                  .length
+                                  .toString());
+                              setState(() {
+                                context.read<DashCoachProvider>().editCoach(
+                                    context
+                                        .read<DashCoachProvider>()
+                                        .coaches[index],
+                                    index);
+                              });
+                              context.read<DashCoachProvider>().coachCondition =
+                                  false;
+                              Get.toNamed(ConstantRoutes.addCoachform);
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent),
+                            onPressed: () {
+                              dashCoachProvider.removeCoach(index);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

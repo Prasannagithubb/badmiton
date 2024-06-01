@@ -1,22 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fees Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FeesScreen(),
-    );
-  }
-}
-
 class FeesScreen extends StatefulWidget {
   const FeesScreen({super.key});
 
@@ -37,11 +20,12 @@ class _FeesScreenState extends State<FeesScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           'Fees',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.green.shade800,
       ),
@@ -158,88 +142,126 @@ class _FeesTabState extends State<FeesTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          // image: const DecorationImage(
-          //   image: AssetImage(
-          //       'lib/assets/Badmiton logo.jpeg'), // Add your image asset here
-          //   fit: BoxFit.fill,
-          // ),
-          borderRadius: BorderRadius.circular(15),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 10,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: Card(
-                color: Colors.white,
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SizedBox(
+            height: 290,
+            width: double.infinity,
+            child: Container(
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    // Enhancing shadow for 3D effect
+                  ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      DropdownButton<String>(
-                        hint: const Text('Select Month'),
-                        value: selectedMonth,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedMonth = newValue!;
-                          });
-                        },
-                        items: months
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text('Amount: 3000'),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: selectedMonth != null
-                            ? () {
-                                setState(() {
-                                  isPaid = true;
-                                });
-                                _showPaymentDialog();
-                              }
-                            : null,
-                        child: const Text('Pay'),
-                      ),
-                      const SizedBox(height: 20),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: isPaid
-                            ? const Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                                size: 40,
-                                key: ValueKey('paid'),
-                              )
-                            : const SizedBox.shrink(),
-                      ),
-                    ],
+                child: Card(
+                  color: Colors.green.shade100.withOpacity(0.9),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                ),
-              ),
-            ),
-          ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              hint: Text(
+                                'Select Month',
+                                style: TextStyle(color: Colors.grey.shade600),
+                              ),
+                              value: selectedMonth,
+                              icon: Icon(Icons.arrow_drop_down,
+                                  color: Colors.green.shade800),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedMonth = newValue!;
+                                });
+                              },
+                              items: months.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                          thickness: 1.0,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Amount: 3000',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade800,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: selectedMonth != null
+                              ? () {
+                                  setState(() {
+                                    isPaid = true;
+                                  });
+                                  _showPaymentDialog();
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 5,
+                          ),
+                          child: const Text(
+                            'Pay',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: isPaid
+                              ? const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                  size: 40,
+                                  key: ValueKey('paid'),
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -333,9 +355,7 @@ class _OthersTabState extends State<OthersTab> {
                   decoration: InputDecoration(
                     focusColor: Colors.green,
                     labelText: ' Remarks',
-                    border: UnderlineInputBorder(
-                      
-                    ),
+                    border: UnderlineInputBorder(),
                   ),
                   maxLines: 1,
                 ),

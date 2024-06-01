@@ -111,6 +111,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                                   ),
                                 ]),
                                 child: TextFormField(
+                                  cursorColor: Colors.green,
                                   controller:
                                       context.watch<LoginCtrl>().userrnameCtrlr,
                                   validator: (value) {
@@ -151,6 +152,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                                   ),
                                 ]),
                                 child: TextFormField(
+                                  cursorColor: Colors.green,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter password';
@@ -230,14 +232,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
           ),
         ),
       ),
-      // Stack(
-      //   clipBehavior: Clip.none,
-      //   children: [
-
-      //   ],
-      // ),
-
-      // Add more widgets here if you need them
+     
     );
   }
 

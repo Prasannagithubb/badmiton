@@ -24,6 +24,8 @@ class AddStudentProvider with ChangeNotifier {
   List<bool> checkboxValues = List.generate(8, (index) => false);
 
   clearAll() {
+    isActAddstudents = [];
+    inActAddstudents = [];
     studentcondition = false;
     studentcontroller = List.generate(10, (i) => TextEditingController());
     notifyListeners();
@@ -68,27 +70,30 @@ class AddStudentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteStudent(int index) async {
+  Future<void> deleteStudent(int id) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
-      final studentToDelete = addstudents[index];
-      if (studentToDelete.id != null) {
-        // Move student to inactive table
-        await DBOperation.insertInactiveStudent(db, studentToDelete);
-        // Delete student from active table
-        await DBOperation.deleteActiveStudent(db, studentToDelete.id!);
-        // Remove the student from the active list
-        addstudents.removeAt(index);
-        // Fetch the updated list of students
-        await fetchStudents();
-        notifyListeners();
-      } else {
-        log("Student ID is null, cannot delete.");
-      }
+      // final studentToDelete = addstudents[index];
+      // if (studentToDelete.id != null) {
+      // Move student to inactive table
+      // await DBOperation.insertInactiveStudent(db, studentToDelete);
+      // Delete student from active table
+      await DBOperation.deleteActiveStudent(db, id);
+      // Remove the student from the active list
+      // addstudents.removeAt(index);
+      // Fetch the updated list of students
+      await fetchStudents();
+      notifyListeners();
+      // } else {
+      //   log("Student ID is null, cannot delete.");
+      // }
     }
   }
 
   Future<void> fetchStudents() async {
+    isActAddstudents = [];
+    inActAddstudents = [];
+    addstudents = [];
     final Database db = (await DBHelper.getInstance())!;
     addstudents = await DBOperation.fetchActiveStudents(db);
     for (var i = 0; i < addstudents.length; i++) {
@@ -197,9 +202,8 @@ class AddStudentProvider with ChangeNotifier {
             fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
             mothername: studentcontroller[4].text,
             mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-            currenttime:
-                '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
-            fees: double.parse(studentcontroller[6].text) ?? 0,
+            currenttime: '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            fees: double.parse(studentcontroller[6].text),
             dateOfBirth: studentcontroller[7].text,
             batchname: selectedBatch.toString(),
             isActive: "Active");

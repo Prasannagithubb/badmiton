@@ -25,12 +25,14 @@ class _DashHomeState extends State<DashHome> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Dashboard', style: TextStyle(color: Colors.white)),
+        title: const Text('Dashboard',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: [
           Padding(
             padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),

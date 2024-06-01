@@ -1,9 +1,11 @@
 import 'dart:developer';
+
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../controller/dashbatchconroller/batch_list_provider.dart';
 import '../../../../controller/dashboardcontroller.dart/dash_board_provider.dart';
 import '../../Attendance/Widgets/batchaddstudent.dart';
@@ -51,7 +53,7 @@ class DashBatchState extends State<DashBatch> {
           ],
         ),
       ),
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,

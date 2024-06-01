@@ -27,6 +27,8 @@ class DashCoachProvider extends ChangeNotifier {
   void clearAll() {
     coachController = List.generate(10, (i) => TextEditingController());
     coachCondition = false;
+    // idCardImage = '' as XFile?;
+    // bankPassbookImage = '' as XFile?;
     notifyListeners();
   }
 
@@ -43,9 +45,11 @@ class DashCoachProvider extends ChangeNotifier {
       final Database? db = await DBHelper.getInstance();
       if (db != null && coaches[index].id != null) {
         await DBOperation.deleteCoach(db, coaches[index].id!);
-        coaches.removeAt(index);
+        fetchCoaches();
+        // coaches.removeAt(index);
         notifyListeners();
       }
+      notifyListeners();
     }
   }
 
@@ -67,7 +71,6 @@ class DashCoachProvider extends ChangeNotifier {
             ..bankPassbookPath = bankPassbookPath;
 
           await DBOperation.updateCoach(db, coach);
-          Navigator.pop(context);
           fetchCoaches();
         }
       } catch (e) {
@@ -90,7 +93,6 @@ class DashCoachProvider extends ChangeNotifier {
     coachController[5].text = coach.dateOfResignation;
     idCardImage = XFile(coach.idCardPath);
     bankPassbookImage = XFile(coach.bankPassbookPath);
-
     notifyListeners();
   }
 

@@ -26,6 +26,7 @@ class _StudentScreenState extends State<StudentScreen>
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         elevation: 6.0,
         shadowColor: Colors.black,
@@ -151,137 +152,142 @@ class _ActiveState extends State<Active> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
                 ),
-                Container(
-                    height: Screens.bodyheight(context) *
-                        0.1, // Increased height for better layout
-                    width: Screens.width(context),
-                    decoration: BoxDecoration(
-                      color: Colors.green.shade100,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        // Enhancing shadow for 3D effect
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.7),
-                          // spreadRadius: 1,
-                          // blurRadius: 3,
-                          // offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal:
-                              8.0), // Horizontal padding for internal spacing
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Text(
-                              context
-                                      .watch<AddStudentProvider>()
-                                      .isActAddstudents[index]
-                                      .studentname[
-                                  0], // Display the first letter of the student name
-                              style: TextStyle(
-                                  fontSize: 24, color: Colors.green.shade800),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                context
-                                    .watch<AddStudentProvider>()
-                                    .isActAddstudents[index]
-                                    .studentname,
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              Text(
-                                context
-                                    .watch<AddStudentProvider>()
-                                    .isActAddstudents[index]
-                                    .batchname,
-                                style: const TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Colors
-                                      .green[700], // A richer shade of green
-                                  size: 30, // Slightly larger icon size
-                                ),
-                                onPressed: () {
-                                  context
-                                      .read<AddStudentProvider>()
-                                      .editstudent(
-                                          context
-                                              .read<AddStudentProvider>()
-                                              .isActAddstudents[index],
-                                          index);
-                                  Get.toNamed(ConstantRoutes.addstudent1);
-                                },
-                                splashColor:
-                                    Colors.greenAccent, // Splash color on press
-                                highlightColor:
-                                    Colors.transparent, // No highlight color
-                              ),
-                              Ink(
-                                decoration: BoxDecoration(
-                                  color:
-                                      Colors.red[100], // Light red background
-                                  shape: BoxShape
-                                      .circle, // Circular shape for the ink response
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.red.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset:
-                                          const Offset(0, 2), // Shadow position
-                                    ),
-                                  ],
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[
-                                        800], // Darker shade of red for the icon
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    // int actualIndex = context
-                                    //     .read<AddStudentProvider>()
-                                    //     .addstudents
-                                    //     .indexOf(student);
-                                    context
-                                        .read<AddStudentProvider>()
-                                        .toggleStudentActive(context
-                                            .read<AddStudentProvider>()
-                                            .isActAddstudents[index]
-                                            .id!);
-                                  },
-                                  splashColor: Colors.white.withOpacity(
-                                      0.5), // White splash for contrast
-                                  highlightColor: Colors.transparent,
-                                ),
-                              ),
-                            ],
-                          ),
+                Card(
+                  elevation: 4.0,
+                  child: Container(
+                      height: Screens.bodyheight(context) *
+                          0.1, // Increased height for better layout
+                      width: Screens.width(context),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: const [
+                          // Enhancing shadow for 3D effect
+                          // BoxShadow(
+                          //   color: Colors.black.withOpacity(0.7),
+                          //   // spreadRadius: 1,
+                          //   // blurRadius: 3,
+                          //   // offset: const Offset(0, 4),
+                          // ),
                         ],
                       ),
-                    )),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                                8.0), // Horizontal padding for internal spacing
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.white,
+                              child:
+                                  Image.asset('lib/assets/Badmiton_pure.png'),
+                              //  Text(
+                              //   context
+                              //       .watch<AddStudentProvider>()
+                              //       .isActAddstudents[index]
+                              //       .studentname[0]
+                              //       .toUpperCase(), // Display the first letter of the student name
+                              //   style: TextStyle(
+                              //       fontSize: 24, color: Colors.green.shade800),
+                              // ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  context
+                                      .watch<AddStudentProvider>()
+                                      .isActAddstudents[index]
+                                      .studentname,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                Text(
+                                  context
+                                      .watch<AddStudentProvider>()
+                                      .isActAddstudents[index]
+                                      .batchname,
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors
+                                        .green[700], // A richer shade of green
+                                    size: 30, // Slightly larger icon size
+                                  ),
+                                  onPressed: () {
+                                    context
+                                        .read<AddStudentProvider>()
+                                        .editstudent(
+                                            context
+                                                .read<AddStudentProvider>()
+                                                .isActAddstudents[index],
+                                            index);
+                                    Get.toNamed(ConstantRoutes.addstudent1);
+                                  },
+                                  splashColor: Colors
+                                      .greenAccent, // Splash color on press
+                                  highlightColor:
+                                      Colors.transparent, // No highlight color
+                                ),
+                                Ink(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Colors.red[100], // Light red background
+                                    shape: BoxShape
+                                        .circle, // Circular shape for the ink response
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.red.withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 3,
+                                        offset: const Offset(
+                                            0, 2), // Shadow position
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red[
+                                          800], // Darker shade of red for the icon
+                                      size: 30,
+                                    ),
+                                    onPressed: () {
+                                      // int actualIndex = context
+                                      //     .read<AddStudentProvider>()
+                                      //     .addstudents
+                                      //     .indexOf(student);
+                                      context
+                                          .read<AddStudentProvider>()
+                                          .toggleStudentActive(context
+                                              .read<AddStudentProvider>()
+                                              .isActAddstudents[index]
+                                              .id!);
+                                    },
+                                    splashColor: Colors.white.withOpacity(
+                                        0.5), // White splash for contrast
+                                    highlightColor: Colors.transparent,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
                 const SizedBox(
                   height: 10,
                 )
@@ -329,143 +335,150 @@ class _InactiveState extends State<Inactive> {
                   // Addstudent student = inactiveStudents[index];
                   return Column(
                     children: [
-                      Container(
-                          height: Screens.bodyheight(context) *
-                              0.1, // Increased height for better layout
-                          width: Screens.width(context),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              // Enhancing shadow for 3D effect
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.7),
-                                // spreadRadius: 1,
-                                // blurRadius: 3,
-                                // offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal:
-                                    8.0), // Horizontal padding for internal spacing
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.white,
-                                  child: Text(
-                                    context
-                                        .watch<AddStudentProvider>()
-                                        .inActAddstudents[index]
-                                        .studentname[0]
-                                        .toUpperCase(), // Display the first letter of the student name
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        color: Colors.green.shade800),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      context
-                                          .watch<AddStudentProvider>()
-                                          .inActAddstudents[index]
-                                          .studentname,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      context
-                                          .watch<AddStudentProvider>()
-                                          .inActAddstudents[index]
-                                          .batchname,
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.green[
-                                            700], // A richer shade of green
-                                        size: 30, // Slightly larger icon size
-                                      ),
-                                      onPressed: () {
-                                        // Handle edit operation
-                                      },
-                                      splashColor: Colors
-                                          .greenAccent, // Splash color on press
-                                      highlightColor: Colors
-                                          .transparent, // No highlight color
-                                    ),
-                                    Ink(
-                                        decoration: BoxDecoration(
-                                          color: Colors
-                                              .red[100], // Light red background
-                                          shape: BoxShape
-                                              .circle, // Circular shape for the ink response
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.red.withOpacity(0.5),
-                                              spreadRadius: 1,
-                                              blurRadius: 3,
-                                              offset: const Offset(
-                                                  0, 2), // Shadow position
-                                            ),
-                                          ],
-                                        ),
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.red[
-                                                800], // Darker shade of red for the icon
-                                            size: 30,
-                                          ),
-                                          onPressed: () {
-                                            // int actualIndex = context
-                                            //     .read<AddStudentProvider>()
-                                            //     .addstudents
-                                            //     .indexOf(student);
-                                            context
-                                                .read<AddStudentProvider>()
-                                                .deleteStudent(context
-                                                    .watch<AddStudentProvider>()
-                                                    .inActAddstudents[index]
-                                                    .id!);
-                                          },
-                                          splashColor: Colors.white.withOpacity(
-                                              0.5), // White splash for contrast
-                                          highlightColor: Colors.transparent,
-                                        )),
-
-                                    // onPressed: () {
-                                    //           int actualIndex = context
-                                    //               .read<AddStudentProvider>()
-                                    //               .addstudents
-                                    //               .indexOf(student);
-                                    //           Provider.of<AddStudentProvider>(
-                                    //                   context,
-                                    //                   listen: false)
-                                    //               .toggleStudentActive(
-                                    //                   actualIndex);
-                                    //         },
-                                  ],
+                      Card(
+                        elevation: 4.0,
+                        child: Container(
+                            height: Screens.bodyheight(context) *
+                                0.1, // Increased height for better layout
+                            width: Screens.width(context),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: [
+                                // Enhancing shadow for 3D effect
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.7),
+                                  // spreadRadius: 1,
+                                  // blurRadius: 3,
+                                  // offset: const Offset(0, 4),
                                 ),
                               ],
                             ),
-                          )),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal:
+                                      8.0), // Horizontal padding for internal spacing
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.white,
+                                    child: Image.asset(
+                                        'lib/assets/Badmiton_pure.png'),
+                                    // Text(
+                                    //   context
+                                    //       .watch<AddStudentProvider>()
+                                    //       .inActAddstudents[index]
+                                    //       .studentname[0]
+                                    //       .toUpperCase(), // Display the first letter of the student name
+                                    //   style: TextStyle(
+                                    //       fontSize: 24,
+                                    //       color: Colors.green.shade800),
+                                    // ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        context
+                                            .watch<AddStudentProvider>()
+                                            .inActAddstudents[index]
+                                            .studentname,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        context
+                                            .watch<AddStudentProvider>()
+                                            .inActAddstudents[index]
+                                            .batchname,
+                                        style: const TextStyle(
+                                            fontSize: 14, color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.green[
+                                              700], // A richer shade of green
+                                          size: 30, // Slightly larger icon size
+                                        ),
+                                        onPressed: () {
+                                          // Handle edit operation
+                                        },
+                                        splashColor: Colors
+                                            .greenAccent, // Splash color on press
+                                        highlightColor: Colors
+                                            .transparent, // No highlight color
+                                      ),
+                                      Ink(
+                                          decoration: BoxDecoration(
+                                            color: Colors.red[
+                                                100], // Light red background
+                                            shape: BoxShape
+                                                .circle, // Circular shape for the ink response
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color:
+                                                    Colors.red.withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 3,
+                                                offset: const Offset(
+                                                    0, 2), // Shadow position
+                                              ),
+                                            ],
+                                          ),
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red[
+                                                  800], // Darker shade of red for the icon
+                                              size: 30,
+                                            ),
+                                            onPressed: () {
+                                              // int actualIndex = context
+                                              //     .read<AddStudentProvider>()
+                                              //     .addstudents
+                                              //     .indexOf(student);
+                                              context
+                                                  .read<AddStudentProvider>()
+                                                  .deleteStudent(context
+                                                      .read<
+                                                          AddStudentProvider>()
+                                                      .inActAddstudents[index]
+                                                      .id!);
+                                            },
+                                            splashColor: Colors.white.withOpacity(
+                                                0.5), // White splash for contrast
+                                            highlightColor: Colors.transparent,
+                                          )),
+                                      // onPressed: () {
+                                      //           int actualIndex = context
+                                      //               .read<AddStudentProvider>()
+                                      //               .addstudents
+                                      //               .indexOf(student);
+                                      //           Provider.of<AddStudentProvider>(
+                                      //                   context,
+                                      //                   listen: false)
+                                      //               .toggleStudentActive(
+                                      //                   actualIndex);
+                                      //         },
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
