@@ -2,7 +2,7 @@ import 'package:badmiton_app/Models/batchcontainer.dart';
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
-import 'package:badmiton_app/pages/screens/Attendance/Widgets/batchaddstudent.dart';
+import 'package:badmiton_app/pages/screens/DashStudent/screens/batchaddstudent.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';

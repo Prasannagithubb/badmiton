@@ -32,28 +32,23 @@ class BatchListProvider extends ChangeNotifier {
   final studentcurrentTime = TimeOfDay.now();
 
   FocusNode studentIntakeFocusNode = FocusNode();
-  void addBatch(Batchs batch) {
-    batches.add(batch);
-    notifyListeners();
-  }
+  String? selectedBatch;
+  List<Addstudent> batchaddstudents = [];
 
   init() {
     clearAll();
-    fetchBatches();
-    notifyListeners();
+    fetchBatchess();
   }
 
   clearAll() {
     checkboxValues = List.generate(7, (index) => false);
     mycontroller = List.generate(50, (i) => TextEditingController());
     batchstudentctrlr = List.generate(50, (i) => TextEditingController());
-    notifyListeners();
   }
 
   clearAdd() {
     checkboxValues = List.generate(7, (index) => false);
     batchstudentctrlr = List.generate(50, (i) => TextEditingController());
-    notifyListeners();
   }
 
   String getSelectedDays(List<bool> batchDays) {
@@ -69,13 +64,9 @@ class BatchListProvider extends ChangeNotifier {
     return selectedDays.join(' ');
   }
 
-  // Add this inside your BatchListProvider
   int get activeCount {
     return batches.where((batch) => batch.isActive).length;
   }
-
-  String? selectedBatch;
-  List<Addstudent> batchaddstudents = [];
 
   Future<void> batchaddstudentlist(context) async {
     final Database? db = await DBHelper.getInstance();
@@ -94,8 +85,6 @@ class BatchListProvider extends ChangeNotifier {
           isActive: "Active");
 
       await DBOperation.insertStudentTable(db!, batchaddstudents2);
-      // context.read<AddStudentProvider>().addstudents = batchaddstudents;
-
       notifyListeners();
       DashboardProvider.selectedIndex = 2;
       Get.offAllNamed(ConstantRoutes.dashboard);
@@ -105,14 +94,13 @@ class BatchListProvider extends ChangeNotifier {
           content: Text('Student added!'),
         ),
       );
-      notifyListeners();
     }
-    notifyListeners();
   }
 
-  Future<void> fetchBatches() async {
+  Future<void> fetchBatchess() async {
     final Database db = (await DBHelper.getInstance())!;
     batches = await DBOperation.fetchBatches(db);
+    log('Batch length::::${batches.length}');
     notifyListeners();
   }
 
@@ -120,37 +108,28 @@ class BatchListProvider extends ChangeNotifier {
     final Database? db = await DBHelper.getInstance();
     final batchToDelete = batches[index];
     if (batchToDelete.id != null) {
-      // Fetch the students associated with the batch
       List<Addstudent> studentsToDelete =
           await fetchStudentsByBatchId(batchToDelete.id!);
 
-      // Delete each student from the database
       for (Addstudent student in studentsToDelete) {
         await DBOperation.deleteStudent(db!, student.id!);
       }
 
-      // Delete the batch from the database
       await DBOperation.deleteBatch(db!, batchToDelete.id!);
 
-      // Fetch the updated list of batches
-      await fetchBatches();
+      await fetchBatchess();
     }
   }
 
   Future<List<Addstudent>> fetchStudentsByBatchId(int batchId) async {
-    // Get the database instance
     final db = await DBHelper.getInstance();
-
-    // Check if the database instance is not null
     if (db != null) {
-      // Query the database for students with the given batchId
       final List<Map<String, dynamic>> studentMaps = await db.query(
-        'AddstudentName', // Table name for students
+        'AddstudentName',
         where: '${AddstudentColumns.batchname} = ?',
         whereArgs: [batchId],
       );
 
-      // Convert the query results into Addstudent objects
       return List.generate(studentMaps.length, (index) {
         return Addstudent(
           id: studentMaps[index][AddstudentColumns.id],
@@ -171,12 +150,11 @@ class BatchListProvider extends ChangeNotifier {
         );
       });
     } else {
-      // Return an empty list if the database instance is null
       return [];
     }
   }
 
-  void addBatchList(context) async {
+  Future<void> addBatchList(context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && batchformKey.currentState!.validate()) {
@@ -192,22 +170,15 @@ class BatchListProvider extends ChangeNotifier {
           isActive: false,
         );
 
-        // Insert the new batch into the database
         await DBOperation.insertBatchTable(db, newBatch);
-        notifyListeners();
+        await fetchBatchess();
 
-        // Fetch the updated list of batches
-        await fetchBatches();
-        notifyListeners();
-
-        // Show a success message
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Batch added successfully!'),
           ),
         );
 
-        // Navigate back to the previous page
         Navigator.pop(context);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

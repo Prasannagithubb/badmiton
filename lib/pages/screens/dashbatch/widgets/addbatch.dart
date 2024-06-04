@@ -25,11 +25,11 @@ class _AddBatchState extends State<AddBatch> {
   //   super.dispose();
   // }
 
-  void addBatch(BuildContext context, Batchs batch) {
-    final batchListProvider =
-        Provider.of<BatchListProvider>(context, listen: false);
-    batchListProvider.addBatch(batch);
-  }
+  // void addBatch(BuildContext context, Batchs batch) {
+  //   final batchListProvider =
+  //       Provider.of<BatchListProvider>(context, listen: false);
+  //   batchListProvider.addBatch(batch);
+  // }
 
   bool hasError = false;
   String? selectedTime;

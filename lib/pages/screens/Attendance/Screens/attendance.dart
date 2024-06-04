@@ -27,7 +27,7 @@ class _AttendancePageState extends State<AttendancePage> {
   void fetchStudents() async {
     final addStudentProvider =
         Provider.of<AddStudentProvider>(context, listen: false);
-    await addStudentProvider.fetchStudents();
+    await addStudentProvider.fetchStudents(context);
     setState(() {
       students = addStudentProvider.addstudents;
     });

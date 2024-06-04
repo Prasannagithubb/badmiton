@@ -24,11 +24,11 @@ class AddStudentProvider with ChangeNotifier {
   List<bool> checkboxValues = List.generate(8, (index) => false);
 
   clearAll() {
+    addstudents = [];
     isActAddstudents = [];
     inActAddstudents = [];
     studentcondition = false;
     studentcontroller = List.generate(10, (i) => TextEditingController());
-    notifyListeners();
   }
 
   // void addStudent(Addstudent addstudent) {
@@ -36,12 +36,12 @@ class AddStudentProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> toggleStudentActive(int id) async {
+  Future<void> toggleStudentActive(BuildContext context, int id) async {
     final Database? db = await DBHelper.getInstance();
 
     // var student = addstudents[index];
     await DBOperation.changeActToInAct(db!, id);
-    await fetchStudents();
+    await fetchStudents(context);
 
     // student.isActive = !student.isActive;
     notifyListeners();
@@ -59,10 +59,10 @@ class AddStudentProvider with ChangeNotifier {
   bool studentcondition = false; // Initially set to false for add operation
 
   // Method to toggle the student condition between add and edit modes
-  void toggleStudentCondition(BuildContext context) {
-    if (studentcondition) {
+  Future<void> toggleStudentCondition(BuildContext context) async {
+    if (studentcondition == true) {
       log('Adding student');
-      addStudentList(context);
+      await addStudentList(context);
     } else {
       log('Updating student');
       updatedstudent(context);
@@ -70,7 +70,7 @@ class AddStudentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteStudent(int id) async {
+  Future<void> deleteStudent(BuildContext context, int id) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
       // final studentToDelete = addstudents[index];
@@ -82,7 +82,7 @@ class AddStudentProvider with ChangeNotifier {
       // Remove the student from the active list
       // addstudents.removeAt(index);
       // Fetch the updated list of students
-      await fetchStudents();
+      await fetchStudents(context);
       notifyListeners();
       // } else {
       //   log("Student ID is null, cannot delete.");
@@ -90,17 +90,21 @@ class AddStudentProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchStudents() async {
+  Future<void> fetchStudents(BuildContext context) async {
     isActAddstudents = [];
     inActAddstudents = [];
     addstudents = [];
     final Database db = (await DBHelper.getInstance())!;
     addstudents = await DBOperation.fetchActiveStudents(db);
+    log('addstudents length::${addstudents.length}');
     for (var i = 0; i < addstudents.length; i++) {
       if (addstudents[i].isActive == "Active") {
+        log('addstudents111 length::${addstudents.length}');
+
         isActAddstudents.add(Addstudent(
             id: addstudents[i].id,
             batchname: addstudents[i].batchname,
+            isActive: addstudents[i].isActive,
             dateOfBirth: addstudents[i].dateOfBirth,
             studentname: addstudents[i].studentname,
             studentmobilenumber: addstudents[i].studentmobilenumber,
@@ -109,9 +113,14 @@ class AddStudentProvider with ChangeNotifier {
             mothername: addstudents[i].mothername,
             mothermobilenumber: addstudents[i].mothermobilenumber,
             fees: addstudents[i].fees));
+
+        // notifyListeners();
       } else {
+        log('addstudents222 length::${addstudents.length}');
+
         inActAddstudents.add(Addstudent(
             id: addstudents[i].id,
+            isActive: addstudents[i].isActive,
             batchname: addstudents[i].batchname,
             dateOfBirth: addstudents[i].dateOfBirth,
             studentname: addstudents[i].studentname,
@@ -121,10 +130,12 @@ class AddStudentProvider with ChangeNotifier {
             mothername: addstudents[i].mothername,
             mothermobilenumber: addstudents[i].mothermobilenumber,
             fees: addstudents[i].fees));
+        notifyListeners();
       }
       // inActAddstudents = await DBOperation.fetchInactiveStudents(db);
       notifyListeners();
     }
+    log('isActAddstudents length::${isActAddstudents.length}');
   }
 
   void updatedstudent(BuildContext context) {
@@ -136,8 +147,7 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
       addstudents[i].mothername = studentcontroller[4].text;
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime =
-          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      addstudents[i].currenttime ='${studentcurrentTime.hour}:${studentcurrentTime.minute}';
       // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = double.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
@@ -190,7 +200,7 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller[7].text = addstdn.dateOfBirth.toString();
   }
 
-  void addStudentList(context) async {
+  addStudentList(context) async {
     final Database? db = await DBHelper.getInstance();
 
     if (db != null && addstuentkey1.currentState!.validate()) {
@@ -202,7 +212,7 @@ class AddStudentProvider with ChangeNotifier {
             fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
             mothername: studentcontroller[4].text,
             mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-            currenttime: '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            currenttime:'${studentcurrentTime.hour}:${studentcurrentTime.minute}',
             fees: double.parse(studentcontroller[6].text),
             dateOfBirth: studentcontroller[7].text,
             batchname: selectedBatch.toString(),
@@ -211,15 +221,18 @@ class AddStudentProvider with ChangeNotifier {
         // Insert the new student into the database
         await DBOperation.insertStudentTable(db, newStudent);
         // Fetch the updated list of students
-        await fetchStudents(); // Ensure this is called to refresh the list
+        await fetchStudents(
+            context); // Ensure this is called to refresh the list
         notifyListeners();
-
+        if (addstudents.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Student added successfully!'),
+            ),
+          );
+          notifyListeners();
+        }
         // Show a success message
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Student added successfully!'),
-          ),
-        );
 
         // Navigate back to the previous page
         Navigator.pop(context);

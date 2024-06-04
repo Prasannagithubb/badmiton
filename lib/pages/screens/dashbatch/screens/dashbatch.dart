@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../controller/dashbatchconroller/batch_list_provider.dart';
 import '../../../../controller/dashboardcontroller.dart/dash_board_provider.dart';
-import '../../Attendance/Widgets/batchaddstudent.dart';
+import '../../DashStudent/screens/batchaddstudent.dart';
 
 class DashBatch extends StatefulWidget {
   const DashBatch({super.key});
@@ -23,7 +23,7 @@ class DashBatchState extends State<DashBatch> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BatchListProvider>().init();
-      context.read<BatchListProvider>().fetchBatches();
+      context.read<BatchListProvider>().fetchBatchess();
     });
   }
 
@@ -44,6 +44,7 @@ class DashBatchState extends State<DashBatch> {
                 setState(() {
                   log('select index::${DashboardProvider.selectedIndex}');
                 });
+                context.read<BatchListProvider>().clearAll();
                 Get.toNamed(ConstantRoutes.addbatch);
 
                 print('add batch pressed');
@@ -59,7 +60,7 @@ class DashBatchState extends State<DashBatch> {
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Batch',
+        title: const Text('Batchs',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: [
           Padding(
@@ -92,8 +93,8 @@ class DashBatchState extends State<DashBatch> {
                     itemCount:
                         context.watch<BatchListProvider>().batches.length,
                     itemBuilder: (context, index) {
-                      final batch =
-                          context.watch<BatchListProvider>().batches[index];
+                      // final batch =
+                      //     context.watch<BatchListProvider>().batches[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 3.0, horizontal: 6.0),
@@ -132,7 +133,11 @@ class DashBatchState extends State<DashBatch> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        batch.name.toUpperCase(),
+                                        context
+                                            .watch<BatchListProvider>()
+                                            .batches[index]
+                                            .name
+                                            .toUpperCase(),
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           fontWeight: FontWeight.bold,
@@ -141,7 +146,10 @@ class DashBatchState extends State<DashBatch> {
                                       ),
                                       const SizedBox(height: 2),
                                       Text(
-                                        batch.description,
+                                        context
+                                            .watch<BatchListProvider>()
+                                            .batches[index]
+                                            .description,
                                         style:
                                             theme.textTheme.bodyLarge?.copyWith(
                                           color: Colors.black,
@@ -152,7 +160,10 @@ class DashBatchState extends State<DashBatch> {
                                       Text(
                                         context
                                             .watch<BatchListProvider>()
-                                            .getSelectedDays(batch.batchDays),
+                                            .getSelectedDays(context
+                                                .watch<BatchListProvider>()
+                                                .batches[index]
+                                                .batchDays),
                                         style: theme.textTheme.bodyMedium
                                             ?.copyWith(
                                           color: Colors.black,

@@ -68,6 +68,8 @@ class FeesTab extends StatefulWidget {
   _FeesTabState createState() => _FeesTabState();
 }
 
+TextEditingController amountController = TextEditingController(text: '3000');
+
 class _FeesTabState extends State<FeesTab> {
   bool isPaid = false;
   String? selectedMonth;
@@ -86,54 +88,56 @@ class _FeesTabState extends State<FeesTab> {
     'December'
   ];
 
-  void _showPaymentDialog() {
+  void showPaymentFeesDialog() {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  // color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withOpacity(0.2),
-                  //     blurRadius: 10,
-                  //     spreadRadius: 5,
-                  //   ),
-                  // ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.bounceIn,
-                      child: const Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                        size: 100,
+        return Center(
+          child: AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    // color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black.withOpacity(0.2),
+                    //     blurRadius: 10,
+                    //     spreadRadius: 5,
+                    //   ),
+                    // ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.bounceIn,
+                        child: const Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 70,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Amount Received!',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Amount Received!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -152,7 +156,7 @@ class _FeesTabState extends State<FeesTab> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: SizedBox(
-            height: 290,
+            height: 348,
             width: double.infinity,
             child: Container(
                 decoration: const BoxDecoration(
@@ -161,103 +165,114 @@ class _FeesTabState extends State<FeesTab> {
                   ],
                 ),
                 child: Card(
-                  color: Colors.green.shade100.withOpacity(0.9),
-                  elevation: 4,
+                  color: Colors.white,
+                  // elevation: 4,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              hint: Text(
-                                'Select Month',
-                                style: TextStyle(color: Colors.grey.shade600),
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Select Month',
+                              labelStyle: const TextStyle(color: Colors.green),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              value: selectedMonth,
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Colors.green.shade800),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedMonth = newValue!;
-                                });
-                              },
-                              items: months.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                );
-                              }).toList(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.green),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            hint: const Text(
+                              'Select Month',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            value: selectedMonth,
+                            icon: Icon(Icons.arrow_drop_down,
+                                color: Colors.green.shade800),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedMonth = newValue!;
+                              });
+                            },
+                            items: months
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Amount',
+                              labelStyle: const TextStyle(color: Colors.green),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.green),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            controller: TextEditingController(
+                              text: '3000',
                             ),
                           ),
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1.0,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Amount: 3000',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green.shade800,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: selectedMonth != null
-                              ? () {
-                                  setState(() {
-                                    isPaid = true;
-                                  });
-                                  _showPaymentDialog();
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                          const SizedBox(height: 25),
+                          ElevatedButton(
+                            onPressed: selectedMonth != null
+                                ? () {
+                                    setState(() {
+                                      isPaid = true;
+                                    });
+                                    showPaymentFeesDialog();
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              elevation: 5,
+                              minimumSize: const Size(
+                                  double.infinity, 50), // Full width button
                             ),
-                            elevation: 5,
-                          ),
-                          child: const Text(
-                            'Pay',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            child: const Text(
+                              'Pay',
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: isPaid
-                              ? const Icon(
-                                  Icons.check_circle,
-                                  color: Colors.green,
-                                  size: 40,
-                                  key: ValueKey('paid'),
-                                )
-                              : const SizedBox.shrink(),
-                        ),
-                      ],
-                    ),
-                  ),
+                          const SizedBox(height: 20),
+                          AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            child: isPaid
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                    size: 40,
+                                    key: ValueKey('paid'),
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ],
+                      )),
                 )),
           ),
         ),
@@ -276,51 +291,55 @@ class OthersTab extends StatefulWidget {
 class _OthersTabState extends State<OthersTab> {
   final TextEditingController _amountController = TextEditingController();
   bool isPaid = false;
-
-  void _showPaymentDialog() {
+  void showPaymentDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return Center(
-          child: Material(
-            type: MaterialType.transparency,
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 5,
+          child: AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    // color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black.withOpacity(0.2),
+                    //     blurRadius: 10,
+                    //     spreadRadius: 5,
+                    //   ),
+                    // ],
                   ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.bounceIn,
-                    child: const Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                      size: 100,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.bounceIn,
+                        child: const Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 70,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Amount Received!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Amount Received!',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
@@ -330,61 +349,141 @@ class _OthersTabState extends State<OthersTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Card(
-          elevation: 4.0,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextField(
-                  controller: _amountController,
-                  decoration: const InputDecoration(
-                    labelText: ' Amount',
-                    border: UnderlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+          height: 230,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: TextField(
-                  decoration: InputDecoration(
-                    focusColor: Colors.green,
-                    labelText: ' Remarks',
-                    border: UnderlineInputBorder(),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    height: 348,
+                    width: double.infinity,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          // Enhancing shadow for 3D effect
+                        ],
+                      ),
+                      child: Card(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: TextField(
+                                  cursorColor: Colors.green,
+                                  controller: _amountController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Amount',
+                                    labelStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.green),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: TextField(
+                                  cursorColor: Colors.green,
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.green,
+                                    labelText: 'Remarks',
+                                    labelStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.green),
+                                    ),
+                                  ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isPaid = true;
+                                    });
+                                    showPaymentDialog();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Colors.white.withOpacity(0.9),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30, vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    elevation: 2,
+                                    minimumSize: const Size(double.infinity,
+                                        50), // Full width button
+                                  ),
+                                  child: const Text(
+                                    'Save',
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Center(
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: isPaid
+                                      ? const Icon(
+                                          Icons.check_circle,
+                                          color: Colors.green,
+                                          size: 40,
+                                          key: ValueKey('paid'),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  maxLines: 1,
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isPaid = true;
-                  });
-                  _showPaymentDialog();
-                },
-                child: const Text('Save'),
-              ),
-              const SizedBox(height: 20),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: isPaid
-                    ? const Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                        size: 40,
-                        key: ValueKey('paid'),
-                      )
-                    : const SizedBox.shrink(),
-              ),
-            ],
-          ),
-        ),
-      ),
+              ],
+            ),
+          )),
     );
   }
 }
