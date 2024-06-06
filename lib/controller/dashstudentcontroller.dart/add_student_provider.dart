@@ -17,16 +17,23 @@ class AddStudentProvider with ChangeNotifier {
   TimeOfDay studentcurrentTime = TimeOfDay.now();
   String? selectedBatch;
   int? indexstudent;
-  TextEditingController batchController = TextEditingController();
+  // TextEditingController batchController = TextEditingController();
   List<String> selectedWeekdays = []; // List to store selected weekdays
   List<String> selectedWeekends = [];
   bool isChecked = false;
   List<bool> checkboxValues = List.generate(8, (index) => false);
 
+  init(BuildContext context) {
+    clearAll();
+    fetchStudents(context);
+    batchList();
+  }
+
   clearAll() {
     addstudents = [];
     isActAddstudents = [];
     inActAddstudents = [];
+    batchItem = [];
     studentcondition = false;
     studentcontroller = List.generate(10, (i) => TextEditingController());
   }
@@ -79,9 +86,6 @@ class AddStudentProvider with ChangeNotifier {
       // await DBOperation.insertInactiveStudent(db, studentToDelete);
       // Delete student from active table
       await DBOperation.deleteActiveStudent(db, id);
-      // Remove the student from the active list
-      // addstudents.removeAt(index);
-      // Fetch the updated list of students
       await fetchStudents(context);
       notifyListeners();
       // } else {
@@ -90,11 +94,14 @@ class AddStudentProvider with ChangeNotifier {
     }
   }
 
+  List<String> batchItem = [];
   Future<void> fetchStudents(BuildContext context) async {
     isActAddstudents = [];
     inActAddstudents = [];
     addstudents = [];
+
     final Database db = (await DBHelper.getInstance())!;
+
     addstudents = await DBOperation.fetchActiveStudents(db);
     log('addstudents length::${addstudents.length}');
     for (var i = 0; i < addstudents.length; i++) {
@@ -138,31 +145,10 @@ class AddStudentProvider with ChangeNotifier {
     log('isActAddstudents length::${isActAddstudents.length}');
   }
 
-  void updatedstudent(BuildContext context) {
+  Future<void> updatedstudent(BuildContext context) async {
     int i = indexstudent!;
-    try {
-      addstudents[i].studentname = studentcontroller[0].text;
-      addstudents[i].studentmobilenumber = int.parse(studentcontroller[1].text);
-      addstudents[i].fathername = studentcontroller[2].text;
-      addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
-      addstudents[i].mothername = studentcontroller[4].text;
-      addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime ='${studentcurrentTime.hour}:${studentcurrentTime.minute}';
-      // addstudents[i].currenttime = studentcurrentTime;
-      addstudents[i].fees = double.parse(studentcontroller[6].text);
-      addstudents[i].dateOfBirth = studentcontroller[7].text;
-      addstudents[i].batchname = selectedBatch.toString();
-      addstudents[i].isActive = "Active";
-      Navigator.pop(context);
-      notifyListeners();
-      // addstudents[i] = addstdn;
-    } catch (e) {
-      print('Error parsing values: $e');
-    }
-  }
+    final Database? db = await DBHelper.getInstance();
 
-  void actToInActstudent(BuildContext context) {
-    int i = indexstudent!;
     try {
       addstudents[i].studentname = studentcontroller[0].text;
       addstudents[i].studentmobilenumber = int.parse(studentcontroller[1].text);
@@ -177,17 +163,69 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].dateOfBirth = studentcontroller[7].text;
       addstudents[i].batchname = selectedBatch.toString();
       addstudents[i].isActive = "Active";
+
+      Addstudent updatestn = Addstudent(
+          id: addstudents[i].id,
+          batchname: addstudents[i].batchname,
+          dateOfBirth: addstudents[i].dateOfBirth,
+          studentname: addstudents[i].studentname,
+          studentmobilenumber: addstudents[i].studentmobilenumber,
+          fathername: addstudents[i].fathername,
+          fathermobilenumber: addstudents[i].fathermobilenumber,
+          mothername: addstudents[i].mothername,
+          mothermobilenumber: addstudents[i].mothermobilenumber,
+          isActive: addstudents[i].isActive,
+          currenttime: addstudents[i].currenttime,
+          fees: addstudents[i].fees);
+
+      DBOperation.updateStudent(db!, updatestn);
+      fetchStudents(context);
       Navigator.pop(context);
+      notifyListeners();
       // addstudents[i] = addstdn;
     } catch (e) {
       print('Error parsing values: $e');
     }
   }
 
-  DateTime? dob;
+  // void actToInActstudent(BuildContext context) {
+  //   int i = indexstudent!;
+  //   try {
+  //     addstudents[i].studentname = studentcontroller[0].text;
+  //     addstudents[i].studentmobilenumber = int.parse(studentcontroller[1].text);
+  //     addstudents[i].fathername = studentcontroller[2].text;
+  //     addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
+  //     addstudents[i].mothername = studentcontroller[4].text;
+  //     addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
+  //     addstudents[i].currenttime =
+  //         '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+  //     // addstudents[i].currenttime = studentcurrentTime;
+  //     addstudents[i].fees = double.parse(studentcontroller[6].text);
+  //     addstudents[i].dateOfBirth = studentcontroller[7].text;
+  //     addstudents[i].batchname = selectedBatch.toString();
+  //     addstudents[i].isActive = "InActive";
+  //     Navigator.pop(context);
+  //     notifyListeners();
+  //     // addstudents[i] = addstdn;
+  //   } catch (e) {
+  //     print('Error parsing values: $e');
+  //   }
+  // }
+
+  // DateTime? dob;
+  batchList() async {
+    batchItem = [];
+    final Database db = (await DBHelper.getInstance())!;
+    List<Map<String, Object?>> batchitemList =
+        await DBOperation.getBatchList(db);
+    for (var i = 0; i < batchitemList.length; i++) {
+      batchItem.add(batchitemList[i]['batchname'].toString());
+    }
+    log('batchItembatchItem::${batchItem.length}');
+  }
 
   editstudent(Addstudent addstdn, int i) {
-    log(studentcondition.toString());
+    log("addstdn.batchname:::${addstdn.batchname}");
     studentcondition = false;
     indexstudent = i;
     studentcontroller[0].text = addstdn.studentname;
@@ -198,6 +236,8 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller[5].text = addstdn.mothermobilenumber.toString();
     studentcontroller[6].text = addstdn.fees.toString();
     studentcontroller[7].text = addstdn.dateOfBirth.toString();
+    selectedBatch = addstdn.batchname;
+    notifyListeners();
   }
 
   addStudentList(context) async {
@@ -212,7 +252,8 @@ class AddStudentProvider with ChangeNotifier {
             fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
             mothername: studentcontroller[4].text,
             mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-            currenttime:'${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            currenttime:
+                '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
             fees: double.parse(studentcontroller[6].text),
             dateOfBirth: studentcontroller[7].text,
             batchname: selectedBatch.toString(),

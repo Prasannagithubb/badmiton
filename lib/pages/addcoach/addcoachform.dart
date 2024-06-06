@@ -85,7 +85,9 @@ class AddCouchState extends State<AddCouch> {
       appBar: AppBar(
         surfaceTintColor: Colors.white,
         centerTitle: true,
-        title: const Text('Add Coach'),
+        title: Text(context.read<DashCoachProvider>().coachCondition
+            ? 'Add Coach'
+            : 'Update Coach'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -276,16 +278,23 @@ class AddCouchState extends State<AddCouch> {
                                   .coachController[4]
                                   .text =
                               date != null
-                                  ? '${date.year}-${date.month}-${date.day}'
+                                  ? '${date.day}-${date.month}-${date.year}'
                                   : '';
+                          FocusScope.of(context).requestFocus(context
+                              .read<DashCoachProvider>()
+                              .dateOfJoiningFocusNode);
                         });
                       }),
                       child: AbsorbPointer(
                         child: TextFormField(
+                          readOnly: true,
                           controller: context
                               .watch<DashCoachProvider>()
                               .coachController[4],
                           cursorColor: Colors.blue,
+                          focusNode: context
+                              .read<DashCoachProvider>()
+                              .dateOfJoiningFocusNode,
                           decoration: getInputDecoration(
                               'Date of Joining', Icons.calendar_today),
                           validator: (value) {
@@ -309,12 +318,19 @@ class AddCouchState extends State<AddCouch> {
                                   .coachController[5]
                                   .text =
                               date != null
-                                  ? '${date.year}-${date.month}-${date.day}'
+                                  ? '${date.day}-${date.month}-${date.year}'
                                   : '';
+                          FocusScope.of(context).requestFocus(context
+                              .read<DashCoachProvider>()
+                              .dateOfresignationFocusNode);
                         });
                       }),
                       child: AbsorbPointer(
                         child: TextFormField(
+                          readOnly: true,
+                          focusNode: context
+                              .read<DashCoachProvider>()
+                              .dateOfresignationFocusNode,
                           controller: context
                               .watch<DashCoachProvider>()
                               .coachController[5],
@@ -350,27 +366,40 @@ class AddCouchState extends State<AddCouch> {
                                 : null;
                           });
 
-                          if ((context
-                                          .read<DashCoachProvider>()
-                                          .idCardImage!
-                                          // ignore: unnecessary_null_comparison
-                                          .path !=
-                                      null ||
+                          if ((context.read<DashCoachProvider>()
+                                          .idCardImage
+                                          ?.path !=
+                                      null &&
                                   context
                                       .read<DashCoachProvider>()
                                       .idCardImage!
                                       .path
                                       .isNotEmpty) ||
-                              context
-                                  .read<DashCoachProvider>()
-                                  .bankPassbookImage!
-                                  .path
-                                  .isNotEmpty) {
+                              (context.read<DashCoachProvider>()
+                                          .bankPassbookImage
+                                          ?.path !=
+                                      null &&
+                                  context.read<DashCoachProvider>()
+                                      .bankPassbookImage!
+                                      .path
+                                      .isNotEmpty)) {
                             context
                                 .read<DashCoachProvider>()
                                 .toggleCoachCondition(context);
+
+                            final message =
+                                context.read<DashCoachProvider>().coachCondition
+                                    ? 'Saved successfully'
+                                    : 'Coach updated sucessfully';
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(message),
+                              ),
+                            );
+
+                            Navigator.pop(context);
                           }
-                          Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
@@ -378,9 +407,11 @@ class AddCouchState extends State<AddCouch> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(color: Colors.blue),
+                        child: Text(
+                          context.read<DashCoachProvider>().coachCondition
+                              ? 'Save'
+                              : 'Update',
+                          style: const TextStyle(color: Colors.blue),
                         ),
                       ),
                     ),
@@ -394,3 +425,8 @@ class AddCouchState extends State<AddCouch> {
     );
   }
 }
+
+
+    // context
+    //                             .read<DashCoachProvider>()
+    //                             .toggleCoachCondition(context);

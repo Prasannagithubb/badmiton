@@ -105,39 +105,45 @@ class DBOperation {
   //     );
   //   });
   // }
-
-  static Future<List<Addstudent>> fetchStudents(Database db) async {
-    final List<Map<String, dynamic>> maps = await db.query(addstudentName);
-    log('results:::${maps.toList()}');
-    return List.generate(maps.length, (i) {
-      // final currentTimeString =
-      //     maps[i][AddstudentColumns.currenttime].toString();
-      // final timeParts = currentTimeString.split(':');
-      // final currentTime = TimeOfDay(
-      //   hour: int.parse(timeParts[0]),
-      //   minute: int.parse(timeParts[1]),
-      // );
-      return Addstudent(
-        id: maps[i][AddstudentColumns.id] as int?,
-        studentname: maps[i][AddstudentColumns.studentname].toString(),
-        studentmobilenumber: int.parse(
-            maps[i][AddstudentColumns.studentmobilenumber].toString()),
-        fathername: maps[i][AddstudentColumns.fathername].toString(),
-        fathermobilenumber:
-            int.parse(maps[i][AddstudentColumns.fathermobilenumber].toString()),
-        mothername: maps[i][AddstudentColumns.mothername].toString(),
-        mothermobilenumber:
-            int.parse(maps[i][AddstudentColumns.mothermobilenumber].toString()),
-
-        currenttime: maps[i][AddstudentColumns.currenttime].toString(),
-
-        // currenttime: '${currentTime.hour}:${currentTime.minute}',
-        fees: double.parse(maps[i][AddstudentColumns.fees].toString()),
-        dateOfBirth: maps[i][AddstudentColumns.dateOfBirth].toString(),
-        batchname: maps[i][AddstudentColumns.batchname].toString(),
-      );
-    });
+  static Future getBatchList(Database db) async {
+    final List<Map<String, Object?>> result = await db
+        .rawQuery('SELECT batchname FROM $addstudentName group by batchname');
+    log("batchname:::${result.toList()}");
+    return result;
   }
+
+  // static Future<List<Addstudent>> fetchStudents(Database db) async {
+  //   final List<Map<String, dynamic>> maps = await db.query(addstudentName);
+  //   log('results:::${maps.toList()}');
+  //   return List.generate(maps.length, (i) {
+  //     // final currentTimeString =
+  //     //     maps[i][AddstudentColumns.currenttime].toString();
+  //     // final timeParts = currentTimeString.split(':');
+  //     // final currentTime = TimeOfDay(
+  //     //   hour: int.parse(timeParts[0]),
+  //     //   minute: int.parse(timeParts[1]),
+  //     // );
+  //     return Addstudent(
+  //       id: maps[i][AddstudentColumns.id] as int?,
+  //       studentname: maps[i][AddstudentColumns.studentname].toString(),
+  //       studentmobilenumber: int.parse(
+  //           maps[i][AddstudentColumns.studentmobilenumber].toString()),
+  //       fathername: maps[i][AddstudentColumns.fathername].toString(),
+  //       fathermobilenumber:
+  //           int.parse(maps[i][AddstudentColumns.fathermobilenumber].toString()),
+  //       mothername: maps[i][AddstudentColumns.mothername].toString(),
+  //       mothermobilenumber:
+  //           int.parse(maps[i][AddstudentColumns.mothermobilenumber].toString()),
+
+  //       currenttime: maps[i][AddstudentColumns.currenttime].toString(),
+
+  //       // currenttime: '${currentTime.hour}:${currentTime.minute}',
+  //       fees: double.parse(maps[i][AddstudentColumns.fees].toString()),
+  //       dateOfBirth: maps[i][AddstudentColumns.dateOfBirth].toString(),
+  //       batchname: maps[i][AddstudentColumns.batchname].toString(),
+  //     );
+  //   });
+  // }
 
   static Future<List<Coach>> fetchCoaches(Database db) async {
     final List<Map<String, dynamic>> maps =
@@ -190,6 +196,9 @@ class DBOperation {
       where: 'id = ?',
       whereArgs: [updatedStudent.id],
     );
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery(''' select * from AddstudentName''');
+    log("Std List${maps.toString()}");
   }
 
   static Future changeActToInAct(Database db, int id) async {
@@ -231,7 +240,7 @@ class DBOperation {
   ) async {
     final List<Map<String, dynamic>> maps =
         await db.rawQuery(''' select * from AddstudentName''');
-    log("Std List${maps.length}");
+    log("Std List111::${maps}");
     return List.generate(maps.length, (i) {
       return Addstudent.fromMap(maps[i]);
     });

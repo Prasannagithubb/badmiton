@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:badmiton_app/dbhelper/dbhelper.dart';
 import 'package:badmiton_app/dbhelper/dboperation.dart';
 import 'package:badmiton_app/dbmodel/coachmodel.dart';
@@ -18,6 +17,8 @@ class DashCoachProvider extends ChangeNotifier {
   XFile? bankPassbookImage;
   bool coachCondition = true;
   List<Coach> coaches = [];
+   final FocusNode dateOfJoiningFocusNode = FocusNode();
+   final FocusNode dateOfresignationFocusNode = FocusNode();
 
   void init() {
     clearAll();
@@ -27,8 +28,7 @@ class DashCoachProvider extends ChangeNotifier {
   void clearAll() {
     coachController = List.generate(10, (i) => TextEditingController());
     coachCondition = false;
-    // idCardImage = '' as XFile?;
-    // bankPassbookImage = '' as XFile?;
+
     notifyListeners();
   }
 
@@ -84,7 +84,6 @@ class DashCoachProvider extends ChangeNotifier {
   void editCoach(Coach coach, int i) {
     coachCondition = false;
     indexStudent = i;
-
     coachController[0].text = coach.name;
     coachController[1].text = coach.mobile;
     coachController[2].text = coach.salary;

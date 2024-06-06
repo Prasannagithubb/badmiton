@@ -1,6 +1,5 @@
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
-import 'package:badmiton_app/dbmodel/batchmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -109,28 +108,20 @@ class _AddBatchState extends State<AddBatch> {
                       hasError = false;
                       return null;
                     },
-                    focusNode: context.read<BatchListProvider>().feesFocusNode,
                     controller:
                         context.read<BatchListProvider>().mycontroller[0],
                     cursorColor: Colors.blue,
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(color: Colors.grey),
-                      // hintText: 'Enter the batch name',
                       labelText: 'Batch Name',
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
                       prefixIcon: Icon(Icons.person, color: Colors.blue),
-                      // hintText: "Enter your Name",
-                      // hintStyle: TextStyle(color: Colors.blue),
-                      // filled: true,
-                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                   ),
                 ),
@@ -159,17 +150,12 @@ class _AddBatchState extends State<AddBatch> {
                       labelText: 'Description',
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
                       prefixIcon: Icon(Icons.description, color: Colors.blue),
-                      // hintText: "Enter your Description",
                       hintStyle: TextStyle(color: Colors.blue),
-                      // filled: true,
-                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                     maxLines: 2,
                   ),
@@ -219,10 +205,7 @@ class _AddBatchState extends State<AddBatch> {
                       ),
                       prefixIcon: Icon(Icons.currency_rupee_rounded,
                           color: Colors.blue),
-                      // hintText: "Enter your Name",
                       hintStyle: TextStyle(color: Colors.blue),
-                      // filled: true,
-                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                     keyboardType: TextInputType.number,
                   ),
@@ -479,8 +462,7 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) *
-                                      0.0001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) * 0.0001), // Add spacing between checkbox and text
                               const Text('Mon'),
                               formdategap(context),
                               Checkbox(

@@ -194,6 +194,13 @@ class DashBatchState extends State<DashBatch> {
                                         context
                                             .read<BatchListProvider>()
                                             .clearAdd();
+                                        context
+                                                .read<BatchListProvider>()
+                                                .selectedBatch =
+                                            context
+                                                .read<BatchListProvider>()
+                                                .batches[index]
+                                                .name;
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

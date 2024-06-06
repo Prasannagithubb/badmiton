@@ -8,6 +8,8 @@ import 'package:badmiton_app/pages/screens/DashStudent/screens/studentscreen.dar
 import 'package:badmiton_app/pages/screens/dashbatch/screens/dashbatch.dart';
 import 'package:flutter/material.dart';
 
+import '../../pages/screens/report/report.dart';
+
 class DashboardProvider extends ChangeNotifier {
   static int selectedIndex = 0;
   // final NotchBottomBarController notchController =
@@ -19,7 +21,7 @@ class DashboardProvider extends ChangeNotifier {
     StudentScreen(),
     CoachListScreen(),
     FeesScreen(),
-    DashHome(),
+    ReportPage(),
   ];
   void onItemTapped(int index) {
     log('index::$index');

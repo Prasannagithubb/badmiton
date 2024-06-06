@@ -52,17 +52,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
         title: const Text('Coach',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: const [
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.add,
-          //     color: Colors.white,
-          //   ),
-          //   onPressed: () {
-          //     context.read<DashCoachProvider>().clearAll();
-          //     context.read<DashCoachProvider>().couchswitch = true;
-          //     Get.toNamed(ConstantRoutes.addCoachform);
-          //   },
-          // ),
         ],
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -73,12 +62,18 @@ class _CoachListScreenState extends State<CoachListScreen> {
           children: [
             SizedBox(height: Screens.bodyheight(context) * 0.01),
             dashCoachProvider.coaches.isEmpty
-                ? Center(
-                    child: Text(
-                      'Press + Add a new coach',
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(color: Colors.grey),
-                    ),
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: Screens.bodyheight(context) * 0.43),
+                      Center(
+                        child: Text(
+                          'Press + Add a new coach',
+                          style: theme.textTheme.bodyMedium
+                              ?.copyWith(color: Colors.grey),
+                        ),
+                      ),
+                    ],
                   )
                 : Column(
                     children: [
@@ -106,7 +101,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             focusedBorder: OutlineInputBorder(),
                             labelText: 'Search Coaches',
                             labelStyle: TextStyle(color: Colors.black),
-                            // hintText: 'Enter studen',
                             suffixIcon:
                                 Icon(Icons.search), // Using a filter icon
                             border:
@@ -128,8 +122,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
                     elevation: 4.0,
                     child: Container(
                       padding: const EdgeInsets.all(4.0),
-                      // margin: const EdgeInsets.all(
-                      //     8), // Adds space around each row for better clarity
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         color: Colors
@@ -145,12 +137,6 @@ class _CoachListScreenState extends State<CoachListScreen> {
                               backgroundColor: Colors.white,
                               child:
                                   Image.asset('lib/assets/Badmiton_pure.png'),
-                              //  Text(
-                              //   coach.name[0]
-                              //       .toUpperCase(), // First letter of the student's name
-                              //   style: const TextStyle(
-                              //       color: Colors.white, fontSize: 20),
-                              // ),
                             ),
                           ),
                           Expanded(

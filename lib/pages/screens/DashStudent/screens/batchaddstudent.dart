@@ -173,8 +173,8 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       value: context.read<BatchListProvider>().selectedBatch,
-                      icon: const Icon(Icons.arrow_drop_down,
-                          color: Colors.grey),
+                      icon:
+                          const Icon(Icons.arrow_drop_down, color: Colors.grey),
                       onChanged: (String? newValue) {
                         setState(() {
                           context.read<BatchListProvider>().selectedBatch =
@@ -182,8 +182,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           batchController.text = newValue ?? "";
                         });
                       },
-                      items:
-                          context.read<BatchListProvider>().batches.map((e) {
+                      items: context.read<BatchListProvider>().batches.map((e) {
                         return DropdownMenuItem<String>(
                           value: e.name,
                           child: Text(e.name),
@@ -315,8 +314,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                             Icon(Icons.phone_android, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -346,8 +343,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         prefixIcon: Icon(Icons.person, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       keyboardType: TextInputType.text,
                     ),
@@ -372,14 +367,10 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         prefixIcon:
                             Icon(Icons.phone_android, color: Colors.blue),
-                        // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -400,18 +391,13 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         labelStyle: TextStyle(color: Colors.grey),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         prefixIcon:
                             Icon(Icons.calendar_today, color: Colors.blue),
-                        // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       onTap: () async {
                         final DateTime? pickedDate = await showDatePicker(
@@ -423,7 +409,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         if (pickedDate != null) {
                           // Format the selected date to display only the date part
                           final formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                              DateFormat('dd-MM-yyyy').format(pickedDate);
                           // Update the controller with the formatted date
                           context
                               .read<BatchListProvider>()
@@ -436,7 +422,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                     ),
 
                     const SizedBox(height: 15),
-
                     TextFormField(
                       readOnly: true,
                       controller: _dateController,
@@ -485,8 +470,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                             Icon(Icons.currency_rupee, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -494,9 +477,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                   ],
                 ),
               ),
-              // if (!_isLoading) // Only show the button if not loading
-              
-              
               ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -512,7 +492,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                   ),
                 ),
                 child: const Text(
-                  'Save',
+                  'save',
                   style: TextStyle(color: Colors.blue),
                 ),
               ),

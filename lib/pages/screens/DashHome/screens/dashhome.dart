@@ -246,22 +246,13 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Screens.bodyheight(context) * 0.2,
       width: Screens.width(context) * 0.35,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            Colors.white
-          ], // Adjust gradient colors as needed
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      // decoration: const BoxDecoration(color: Colors.lightGreen),
       child: Card(
-        color: Colors.transparent,
-        child: Padding(
+        color: const Color.fromARGB(255, 232, 246, 233),
+        child: Container(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -269,7 +260,7 @@ class HomeCard extends StatelessWidget {
               Text(
                 name,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 76, 176, 80),
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -278,7 +269,7 @@ class HomeCard extends StatelessWidget {
               Text(
                 number,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 76, 176, 80),
                   fontSize: 40.0,
                   fontWeight: FontWeight.bold,
                 ),

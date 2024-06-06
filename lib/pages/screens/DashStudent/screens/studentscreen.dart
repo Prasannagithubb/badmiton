@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
+import 'package:badmiton_app/pages/screens/DashStudent/widgets/addstudent1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,7 @@ class _StudentScreenState extends State<StudentScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    context.read<AddStudentProvider>().clearAll();
-    context.read<AddStudentProvider>().fetchStudents(context);
+    context.read<AddStudentProvider>().init(context);
   }
 
   @override
@@ -233,14 +233,21 @@ class _ActiveState extends State<Active> {
                                     size: 30, // Slightly larger icon size
                                   ),
                                   onPressed: () {
-                                    context
-                                        .read<AddStudentProvider>()
-                                        .editstudent(
-                                            context
-                                                .read<AddStudentProvider>()
-                                                .isActAddstudents[index],
-                                            index);
-                                    Get.toNamed(ConstantRoutes.addstudent1);
+                                    setState(() {
+                                      context
+                                          .read<AddStudentProvider>()
+                                          .editstudent(
+                                              context
+                                                  .read<AddStudentProvider>()
+                                                  .isActAddstudents[index],
+                                              index);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AddStudentForm1()));
+                                      // Get.toNamed(ConstantRoutes.addstudent1);
+                                    });
                                   },
                                   splashColor: Colors
                                       .greenAccent, // Splash color on press
@@ -412,21 +419,21 @@ class _InactiveState extends State<Inactive> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.green[
-                                            700], // A richer shade of green
-                                        size: 30, // Slightly larger icon size
-                                      ),
-                                      onPressed: () {
-                                        // Handle edit operation
-                                      },
-                                      splashColor: Colors
-                                          .greenAccent, // Splash color on press
-                                      highlightColor: Colors
-                                          .transparent, // No highlight color
-                                    ),
+                                    // IconButton(
+                                    //   icon: Icon(
+                                    //     Icons.edit,
+                                    //     color: Colors.green[
+                                    //         700], // A richer shade of green
+                                    //     size: 30, // Slightly larger icon size
+                                    //   ),
+                                    //   onPressed: () {
+                                    //     // Handle edit operation
+                                    //   },
+                                    //   splashColor: Colors
+                                    //       .greenAccent, // Splash color on press
+                                    //   highlightColor: Colors
+                                    //       .transparent, // No highlight color
+                                    // ),
                                     Ink(
                                         decoration: BoxDecoration(
                                           color: Colors
@@ -470,17 +477,7 @@ class _InactiveState extends State<Inactive> {
                                               0.5), // White splash for contrast
                                           highlightColor: Colors.transparent,
                                         )),
-                                    // onPressed: () {
-                                    //           int actualIndex = context
-                                    //               .read<AddStudentProvider>()
-                                    //               .addstudents
-                                    //               .indexOf(student);
-                                    //           Provider.of<AddStudentProvider>(
-                                    //                   context,
-                                    //                   listen: false)
-                                    //               .toggleStudentActive(
-                                    //                   actualIndex);
-                                    //         },
+                                
                                   ],
                                 ),
                               ],

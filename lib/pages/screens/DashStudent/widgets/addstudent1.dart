@@ -1,7 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:badmiton_app/constant/Screen.dart';
-import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,16 +34,10 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
     }
   }
 
-  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {});
-  }
-
-  void updateTextController() {
-    context.read<AddStudentProvider>().batchController.text =
-        context.read<AddStudentProvider>().selectedBatch ?? "";
   }
 
   DateTime? dateOfBirth;
@@ -75,9 +69,12 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
           Icons.menu,
           color: Colors.white,
         ),
-        title: const Text(
-          'Add student',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          context.read<AddStudentProvider>().studentcondition == true
+              ? 'Add Student'
+              : 'Update Student',
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
           Padding(
@@ -146,14 +143,13 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                     setState(() {
                       context.read<AddStudentProvider>().selectedBatch =
                           newValue;
-                      context.read<AddStudentProvider>().batchController.text =
-                          newValue ?? "";
                     });
                   },
-                  items: context.read<BatchListProvider>().batches.map((e) {
+                  items: context.watch<AddStudentProvider>().batchItem.map((e) {
+                    log("selectedBatch ::${context.read<AddStudentProvider>().batchItem}");
                     return DropdownMenuItem<String>(
-                      value: e.name,
-                      child: Text(e.name),
+                      value: e,
+                      child: Text(e),
                     );
                   }).toList(),
                 ),
@@ -765,13 +761,18 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                       context
                           .read<AddStudentProvider>()
                           .toggleStudentCondition(context);
-                      // context
-                      //     .read<AddStudentProvider>()
-                      //     .addstudentlist(context);
-                      // context.read<AddStudentProvider>().updatedstudent(
-                      // context.read<AddStudentProvider>().addstudents[i],
-                      // ,
                     });
+
+                    final message =
+                        context.read<AddStudentProvider>().studentcondition
+                            ? 'Saved successfully'
+                            : 'updated successfully';
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -779,9 +780,11 @@ class _AddStudentForm1State extends State<AddStudentForm1> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(color: Colors.blue),
+                  child: Text(
+                    context.read<AddStudentProvider>().studentcondition
+                        ? 'save'
+                        : 'update',
+                    style: const TextStyle(color: Colors.blue),
                   ),
                 ),
               ],

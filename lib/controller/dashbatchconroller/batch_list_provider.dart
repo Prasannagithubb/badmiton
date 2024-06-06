@@ -25,13 +25,12 @@ class BatchListProvider extends ChangeNotifier {
 
   List<bool> checkboxValues = List.generate(7, (index) => false);
   DateTime currenttime = DateTime.now();
-  FocusNode nameFocusNode = FocusNode();
-  FocusNode descriptionFocusNode = FocusNode();
-  FocusNode feesFocusNode = FocusNode();
+  // FocusNode nameFocusNode = FocusNode();
+  // FocusNode descriptionFocusNode = FocusNode();
+  // FocusNode feesFocusNode = FocusNode();
   final pageController = PageController(initialPage: 0);
   final studentcurrentTime = TimeOfDay.now();
-
-  FocusNode studentIntakeFocusNode = FocusNode();
+  // FocusNode studentIntakeFocusNode = FocusNode();
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
 
