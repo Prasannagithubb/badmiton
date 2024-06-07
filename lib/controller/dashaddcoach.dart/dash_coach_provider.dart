@@ -9,16 +9,15 @@ import 'package:sqflite/sqflite.dart';
 class DashCoachProvider extends ChangeNotifier {
   int? indexStudent;
   final coachFormKey = GlobalKey<FormState>();
-  List<TextEditingController> coachController =
-      List.generate(10, (i) => TextEditingController());
+  List<TextEditingController> coachController = List.generate(10, (i) => TextEditingController());
   DateTime? dateOfJoining;
   DateTime? dateOfResignation;
   XFile? idCardImage;
   XFile? bankPassbookImage;
   bool coachCondition = true;
   List<Coach> coaches = [];
-   final FocusNode dateOfJoiningFocusNode = FocusNode();
-   final FocusNode dateOfresignationFocusNode = FocusNode();
+  final FocusNode dateOfJoiningFocusNode = FocusNode();
+  final FocusNode dateOfresignationFocusNode = FocusNode();
 
   void init() {
     clearAll();
@@ -28,7 +27,6 @@ class DashCoachProvider extends ChangeNotifier {
   void clearAll() {
     coachController = List.generate(10, (i) => TextEditingController());
     coachCondition = false;
-
     notifyListeners();
   }
 

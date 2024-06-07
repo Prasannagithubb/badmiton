@@ -164,8 +164,7 @@ class BatchListProvider extends ChangeNotifier {
           fees: double.tryParse(mycontroller[2].text) ?? 0.0,
           batchDays: checkboxValues,
           studentIntake: int.tryParse(mycontroller[3].text) ?? 0,
-          time:
-              '${currenttime.hour}:${currenttime.minute}:${currenttime.second}',
+          time:'${currenttime.hour}:${currenttime.minute}:${currenttime.second}',
           isActive: false,
         );
 

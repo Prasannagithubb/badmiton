@@ -179,8 +179,7 @@ class DashBatchState extends State<DashBatch> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(
-                                            ConstantRoutes.takeattendance);
+                                        Get.toNamed(ConstantRoutes.takeattendance);
                                       },
                                       child: const Icon(
                                         Icons.check_circle,
@@ -191,16 +190,9 @@ class DashBatchState extends State<DashBatch> {
                                     const SizedBox(height: 10),
                                     GestureDetector(
                                       onTap: () {
-                                        context
-                                            .read<BatchListProvider>()
-                                            .clearAdd();
-                                        context
-                                                .read<BatchListProvider>()
-                                                .selectedBatch =
-                                            context
-                                                .read<BatchListProvider>()
-                                                .batches[index]
-                                                .name;
+                                        context.read<BatchListProvider>().clearAdd();
+                                        context.read<BatchListProvider>() .selectedBatch =
+                                            context.read<BatchListProvider>().batches[index].name;
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -236,12 +228,8 @@ class DashBatchState extends State<DashBatch> {
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
-                                                    context
-                                                        .read<
-                                                            BatchListProvider>()
-                                                        .deleteBatch(index);
-                                                    Navigator.of(context)
-                                                        .pop(); // Dismiss the dialog
+                                                    context.read<BatchListProvider>().deleteBatch(index);
+                                                    Navigator.of(context).pop(); // Dismiss the dialog
                                                   },
                                                   child: const Text(
                                                     "Delete",

@@ -240,7 +240,7 @@ class DBOperation {
   ) async {
     final List<Map<String, dynamic>> maps =
         await db.rawQuery(''' select * from AddstudentName''');
-    log("Std List111::${maps}");
+    log("Std List111::$maps");
     return List.generate(maps.length, (i) {
       return Addstudent.fromMap(maps[i]);
     });

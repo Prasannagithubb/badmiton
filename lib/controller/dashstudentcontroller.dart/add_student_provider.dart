@@ -13,7 +13,6 @@ class AddStudentProvider with ChangeNotifier {
   List<Addstudent> addstudents = [];
   List<Addstudent> isActAddstudents = [];
   List<Addstudent> inActAddstudents = [];
-
   TimeOfDay studentcurrentTime = TimeOfDay.now();
   String? selectedBatch;
   int? indexstudent;
@@ -43,14 +42,10 @@ class AddStudentProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> toggleStudentActive(BuildContext context, int id) async {
+  Future<void> toggleStudentActive( context, int id) async {
     final Database? db = await DBHelper.getInstance();
-
-    // var student = addstudents[index];
     await DBOperation.changeActToInAct(db!, id);
     await fetchStudents(context);
-
-    // student.isActive = !student.isActive;
     notifyListeners();
   }
 
@@ -77,7 +72,7 @@ class AddStudentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteStudent(BuildContext context, int id) async {
+  Future<void> deleteStudent( context, int id) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
       // final studentToDelete = addstudents[index];
@@ -145,7 +140,7 @@ class AddStudentProvider with ChangeNotifier {
     log('isActAddstudents length::${isActAddstudents.length}');
   }
 
-  Future<void> updatedstudent(BuildContext context) async {
+  Future<void> updatedstudent( context) async {
     int i = indexstudent!;
     final Database? db = await DBHelper.getInstance();
 
@@ -184,7 +179,7 @@ class AddStudentProvider with ChangeNotifier {
       notifyListeners();
       // addstudents[i] = addstdn;
     } catch (e) {
-      print('Error parsing values: $e');
+      log('Error parsing values: $e');
     }
   }
 
@@ -252,8 +247,7 @@ class AddStudentProvider with ChangeNotifier {
             fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
             mothername: studentcontroller[4].text,
             mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-            currenttime:
-                '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            currenttime:'${studentcurrentTime.hour}:${studentcurrentTime.minute}',
             fees: double.parse(studentcontroller[6].text),
             dateOfBirth: studentcontroller[7].text,
             batchname: selectedBatch.toString(),

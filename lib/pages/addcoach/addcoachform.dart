@@ -370,11 +370,7 @@ class AddCouchState extends State<AddCouch> {
                                           .idCardImage
                                           ?.path !=
                                       null &&
-                                  context
-                                      .read<DashCoachProvider>()
-                                      .idCardImage!
-                                      .path
-                                      .isNotEmpty) ||
+                                  context .read<DashCoachProvider>() .idCardImage! .path .isNotEmpty) ||
                               (context.read<DashCoachProvider>()
                                           .bankPassbookImage
                                           ?.path !=

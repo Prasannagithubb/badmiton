@@ -295,10 +295,6 @@ class _AddBatchState extends State<AddBatch> {
                       ),
                       prefixIcon:
                           Icon(Icons.people_alt_rounded, color: Colors.blue),
-                      // hintText: "Enter Student intake",
-                      // hintStyle: TextStyle(color: Colors.grey),
-                      // filled: true,
-                      // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                     ),
                   ),
                 ),
@@ -462,7 +458,8 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) * 0.0001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) *
+                                      0.0001), // Add spacing between checkbox and text
                               const Text('Mon'),
                               formdategap(context),
                               Checkbox(
