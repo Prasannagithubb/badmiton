@@ -238,8 +238,7 @@ class DBOperation {
   static Future<List<Addstudent>> fetchActiveStudents(
     Database db,
   ) async {
-    final List<Map<String, dynamic>> maps =
-        await db.rawQuery(''' select * from AddstudentName''');
+    final List<Map<String, dynamic>> maps = await db.rawQuery(''' select * from AddstudentName''');
     log("Std List111::$maps");
     return List.generate(maps.length, (i) {
       return Addstudent.fromMap(maps[i]);

@@ -94,21 +94,19 @@ class _AttendancePageState extends State<AttendancePage> {
             height: 10,
           ),
           const Center(
-            child: Text('List of students'),
+            child: Text('List of students',),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: students.length,
               itemBuilder: (context, index) {
                 final student = students[index];
-
                 return Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin:const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     tileColor: Colors.white,

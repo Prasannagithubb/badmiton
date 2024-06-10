@@ -36,7 +36,7 @@ class Coach {
     required this.bankPassbookPath,
   });
   Map<String, Object?> toMap() => {
-        AddCoachColumns.id: id,
+        AddCoachColumns.id:  id,
         AddCoachColumns.name: name,
         AddCoachColumns.mobile: mobile,
         AddCoachColumns.salary: salary,

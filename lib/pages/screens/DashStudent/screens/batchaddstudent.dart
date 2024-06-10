@@ -281,8 +281,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         prefixIcon: Icon(Icons.person, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
+                
                       ),
                       keyboardType: TextInputType.text,
                     ),
@@ -377,9 +376,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                     const SizedBox(height: 15),
                     TextFormField(
                       cursorColor: Colors.blue,
-                      controller: context
-                          .watch<BatchListProvider>()
-                          .batchstudentctrlr[7],
+                      controller: context.watch<BatchListProvider>().batchstudentctrlr[7],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the Date of Birth';
@@ -420,7 +417,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                       readOnly:
                           true, // Make the field read-only to prevent manual input
                     ),
-
                     const SizedBox(height: 15),
                     TextFormField(
                       readOnly: true,
@@ -466,8 +462,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           borderSide: BorderSide(color: Colors.black),
                           // borderRadius: BorderRadius.circular(5.5),
                         ),
-                        prefixIcon:
-                            Icon(Icons.currency_rupee, color: Colors.blue),
+                        prefixIcon: Icon(Icons.currency_rupee, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
@@ -480,9 +475,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    context
-                        .read<BatchListProvider>()
-                        .batchaddstudentlist(context);
+                    context .read<BatchListProvider>().batchaddstudentlist(context);
                   });
                 },
                 style: ElevatedButton.styleFrom(

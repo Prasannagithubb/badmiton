@@ -151,8 +151,7 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
       addstudents[i].mothername = studentcontroller[4].text;
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime =
-          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      addstudents[i].currenttime ='${studentcurrentTime.hour}:${studentcurrentTime.minute}';
       // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = double.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;

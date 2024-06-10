@@ -134,14 +134,11 @@ class BatchListProvider extends ChangeNotifier {
           id: studentMaps[index][AddstudentColumns.id],
           batchname: studentMaps[index][AddstudentColumns.batchname],
           studentname: studentMaps[index][AddstudentColumns.studentname],
-          studentmobilenumber: studentMaps[index]
-              [AddstudentColumns.studentmobilenumber],
+          studentmobilenumber: studentMaps[index][AddstudentColumns.studentmobilenumber],
           fathername: studentMaps[index][AddstudentColumns.fathername],
-          fathermobilenumber: studentMaps[index]
-              [AddstudentColumns.fathermobilenumber],
+          fathermobilenumber: studentMaps[index][AddstudentColumns.fathermobilenumber],
           mothername: studentMaps[index][AddstudentColumns.mothername],
-          mothermobilenumber: studentMaps[index]
-              [AddstudentColumns.mothermobilenumber],
+          mothermobilenumber: studentMaps[index] [AddstudentColumns.mothermobilenumber],
           fees: studentMaps[index][AddstudentColumns.fees],
           currenttime: studentMaps[index][AddstudentColumns.currenttime],
           dateOfBirth: studentMaps[index][AddstudentColumns.dateOfBirth],
@@ -170,7 +167,6 @@ class BatchListProvider extends ChangeNotifier {
 
         await DBOperation.insertBatchTable(db, newBatch);
         await fetchBatchess();
-
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Batch added successfully!'),

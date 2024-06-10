@@ -366,16 +366,23 @@ class AddCouchState extends State<AddCouch> {
                                 : null;
                           });
 
-                          if ((context.read<DashCoachProvider>()
+                          if ((context
+                                          .read<DashCoachProvider>()
                                           .idCardImage
                                           ?.path !=
                                       null &&
-                                  context .read<DashCoachProvider>() .idCardImage! .path .isNotEmpty) ||
-                              (context.read<DashCoachProvider>()
+                                  context
+                                      .read<DashCoachProvider>()
+                                      .idCardImage!
+                                      .path
+                                      .isNotEmpty) ||
+                              (context
+                                          .read<DashCoachProvider>()
                                           .bankPassbookImage
                                           ?.path !=
                                       null &&
-                                  context.read<DashCoachProvider>()
+                                  context
+                                      .read<DashCoachProvider>()
                                       .bankPassbookImage!
                                       .path
                                       .isNotEmpty)) {
