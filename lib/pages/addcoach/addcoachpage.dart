@@ -50,8 +50,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
         leading: const Icon(Icons.menu, color: Colors.white),
         title: const Text('Coach',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        actions: const [
-        ],
+        actions: const [],
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Padding(

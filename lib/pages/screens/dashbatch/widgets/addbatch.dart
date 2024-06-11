@@ -469,9 +469,7 @@ class _AddBatchState extends State<AddBatch> {
                                     .checkboxValues[1],
                                 onChanged: (bool? newValue) {
                                   setState(() {
-                                    context
-                                        .read<BatchListProvider>()
-                                        .checkboxValues[1] = newValue ?? false;
+                                    context .read<BatchListProvider>().checkboxValues[1] = newValue ?? false;
                                   });
                                 },
                               ),
@@ -513,8 +511,7 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) *
-                                      0.001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) * 0.001), // Add spacing between checkbox and text
                               const Text('Thu'),
                               formdategap(context),
                             ],
@@ -552,25 +549,18 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) *
-                                      0.001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) * 0.001), // Add spacing between checkbox and text
                               const Text('Sat'),
                               Checkbox(
                                 activeColor: Colors.blue,
-                                value: context
-                                    .read<BatchListProvider>()
-                                    .checkboxValues[6],
+                                value: context.read<BatchListProvider>().checkboxValues[6],
                                 onChanged: (bool? newValue) {
                                   setState(() {
-                                    context
-                                        .read<BatchListProvider>()
-                                        .checkboxValues[6] = newValue ?? false;
+                                    context.read<BatchListProvider>().checkboxValues[6] = newValue ?? false;
                                   });
                                 },
                               ),
-                              SizedBox(
-                                  width: Screens.width(context) *
-                                      0.001), // Add spacing between checkbox and text
+                              SizedBox(width: Screens.width(context) * 0.001), // Add spacing between checkbox and text
                               const Text('Sun'),
                             ],
                           ),

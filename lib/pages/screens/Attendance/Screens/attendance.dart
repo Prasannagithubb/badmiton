@@ -25,8 +25,7 @@ class _AttendancePageState extends State<AttendancePage> {
   }
 
   void fetchStudents() async {
-    final addStudentProvider =
-        Provider.of<AddStudentProvider>(context, listen: false);
+    final addStudentProvider = Provider.of<AddStudentProvider>(context, listen: false);
     await addStudentProvider.fetchStudents(context);
     setState(() {
       students = addStudentProvider.addstudents;
@@ -68,10 +67,7 @@ class _AttendancePageState extends State<AttendancePage> {
             onDateChange: (selectedDate) {
               handleDateChange(selectedDate);
             },
-            // headerProps: const EasyHeaderProps(
-            //   monthPickerType: MonthPickerType.switcher,
-            //   dateFormatter: DateFormatter.fullDateDMY(),
-            // ),
+           
             dayProps: const EasyDayProps(
               width: 64.0,
               height: 80.0,

@@ -93,7 +93,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
   List<bool> checkboxValues = List.generate(8, (index) => false);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     // AddStudentProvider addStudentProvider =
     //     Provider.of<AddStudentProvider>(context, listen: false);
     // ThemeData theme = Theme.of(context);
@@ -281,7 +281,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         prefixIcon: Icon(Icons.person, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                
                       ),
                       keyboardType: TextInputType.text,
                     ),
@@ -376,7 +375,9 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                     const SizedBox(height: 15),
                     TextFormField(
                       cursorColor: Colors.blue,
-                      controller: context.watch<BatchListProvider>().batchstudentctrlr[7],
+                      controller: context
+                          .watch<BatchListProvider>()
+                          .batchstudentctrlr[7],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the Date of Birth';
@@ -462,7 +463,8 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           borderSide: BorderSide(color: Colors.black),
                           // borderRadius: BorderRadius.circular(5.5),
                         ),
-                        prefixIcon: Icon(Icons.currency_rupee, color: Colors.blue),
+                        prefixIcon:
+                            Icon(Icons.currency_rupee, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
@@ -475,7 +477,9 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    context .read<BatchListProvider>().batchaddstudentlist(context);
+                    context
+                        .read<BatchListProvider>()
+                        .batchaddstudentlist(context);
                   });
                 },
                 style: ElevatedButton.styleFrom(
@@ -496,6 +500,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
     );
   }
 
-  SizedBox Formdategap(BuildContext context) =>
+  SizedBox formdategap(BuildContext context) =>
       SizedBox(width: Screens.width(context) * 0.001);
 }

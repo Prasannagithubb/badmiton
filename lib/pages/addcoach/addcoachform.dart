@@ -123,8 +123,7 @@ class AddCouchState extends State<AddCouch> {
                   ),
                   child: const CircleAvatar(
                     radius: 60,
-                    backgroundColor:
-                        Colors.transparent, // Make background color transparent
+                    backgroundColor: Colors.transparent, // Make background color transparent
                   ),
                 ),
               ),
