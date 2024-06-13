@@ -2,7 +2,7 @@ import 'package:badmiton_app/controller/dashaddcoach.dart/dash_coach_provider.da
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
 import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
 import 'package:badmiton_app/controller/logincontroller/logincontroller.dart';
-import 'package:badmiton_app/pages/screens/ConfigurationPage/screens/ConfigurationPage.dart';
+import 'package:badmiton_app/pages/screens/ConfigurationPage/screens/configurationpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

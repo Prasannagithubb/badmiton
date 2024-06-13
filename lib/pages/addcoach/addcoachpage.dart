@@ -99,10 +99,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             focusedBorder: OutlineInputBorder(),
                             labelText: 'Search Coaches',
                             labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon:
-                                Icon(Icons.search), // Using a filter icon
-                            border:
-                                OutlineInputBorder(), // Adds a border to the TextFormField
+                            suffixIcon:Icon(Icons.search), // Using a filter icon
+                            border: OutlineInputBorder(), // Adds a border to the TextFormField
                           ),
                         ),
                       ),
@@ -122,8 +120,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                       padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors
-                            .white, // Light grey color for each list item for better contrast
+                        color: Colors.white, // Light grey color for each list item for better contrast
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -133,14 +130,12 @@ class _CoachListScreenState extends State<CoachListScreen> {
                             child: CircleAvatar(
                               radius: 30,
                               backgroundColor: Colors.white,
-                              child:
-                                  Image.asset('lib/assets/Badmiton_pure.png'),
+                              child: Image.asset('lib/assets/Badmiton_pure.png'),
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -154,8 +149,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                   ),
                                   Text(
                                     coach.mobile,
-                                    style:
-                                        const TextStyle(color: Colors.black54),
+                                    style: const TextStyle(color: Colors.black54),
                                   ),
                                 ],
                               ),
@@ -172,9 +166,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                   .toString());
                               setState(() {
                                 context.read<DashCoachProvider>().editCoach(
-                                    context
-                                        .read<DashCoachProvider>()
-                                        .coaches[index],
+                                    context.read<DashCoachProvider>().coaches[index],
                                     index);
                               });
                               context.read<DashCoachProvider>().coachCondition =

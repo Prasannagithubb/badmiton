@@ -68,14 +68,11 @@ class Addstudent {
         batchname: map[AddstudentColumns.batchname],
         dateOfBirth: map[AddstudentColumns.dateOfBirth],
         studentname: map[AddstudentColumns.studentname],
-        studentmobilenumber:
-            int.parse(map[AddstudentColumns.studentmobilenumber].toString()),
+        studentmobilenumber:int.parse(map[AddstudentColumns.studentmobilenumber].toString()),
         fathername: map[AddstudentColumns.fathername],
-        fathermobilenumber:
-            int.parse(map[AddstudentColumns.fathermobilenumber].toString()),
+        fathermobilenumber:int.parse(map[AddstudentColumns.fathermobilenumber].toString()),
         mothername: map[AddstudentColumns.mothername],
-        mothermobilenumber:
-            int.parse(map[AddstudentColumns.mothermobilenumber].toString()),
+        mothermobilenumber: int.parse(map[AddstudentColumns.mothermobilenumber].toString()),
         currenttime: map[AddstudentColumns.currenttime],
         fees: double.parse(map[AddstudentColumns.fees]),
         isActive: map[AddstudentColumns.isActive],

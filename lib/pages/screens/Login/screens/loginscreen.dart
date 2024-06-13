@@ -232,11 +232,10 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
           ),
         ),
       ),
-     
     );
   }
 
-  Widget _gap() => const SizedBox(height: 20);
+  Widget gap() => const SizedBox(height: 20);
 }
 
 class CustomShapePainter extends CustomPainter {

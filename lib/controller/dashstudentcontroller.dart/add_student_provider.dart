@@ -261,7 +261,7 @@ class AddStudentProvider with ChangeNotifier {
         if (addstudents.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Student added successfully!'),
+              content: Text('Student added sucessfully!'),
             ),
           );
           notifyListeners();

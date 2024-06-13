@@ -37,7 +37,7 @@ class _ReportPageState extends State<ReportPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Reports are shown here',
+                'Reports are shown here ',
                 style: TextStyle(color: Colors.grey),
               ),
             ],

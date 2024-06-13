@@ -123,7 +123,8 @@ class AddCouchState extends State<AddCouch> {
                   ),
                   child: const CircleAvatar(
                     radius: 60,
-                    backgroundColor: Colors.transparent, // Make background color transparent
+                    backgroundColor:
+                        Colors.transparent, // Make background color transparent
                   ),
                 ),
               ),
@@ -147,8 +148,7 @@ class AddCouchState extends State<AddCouch> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
-                      controller:
-                          context.watch<DashCoachProvider>().coachController[1],
+                      controller: context.watch<DashCoachProvider>().coachController[1],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -214,8 +214,7 @@ class AddCouchState extends State<AddCouch> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
-                      controller:
-                          context.watch<DashCoachProvider>().coachController[3],
+                      controller: context.watch<DashCoachProvider>().coachController[3],
                       cursorColor: Colors.blue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -365,19 +364,15 @@ class AddCouchState extends State<AddCouch> {
                                 : null;
                           });
 
-                          if ((context
-                                          .read<DashCoachProvider>()
+                          if ((context.read<DashCoachProvider>()
                                           .idCardImage
                                           ?.path !=
                                       null &&
-                                  context
-                                      .read<DashCoachProvider>()
+                                  context.read<DashCoachProvider>()
                                       .idCardImage!
                                       .path
                                       .isNotEmpty) ||
-                              (context
-                                          .read<DashCoachProvider>()
-                                          .bankPassbookImage
+                              (context.read<DashCoachProvider>().bankPassbookImage
                                           ?.path !=
                                       null &&
                                   context
@@ -393,13 +388,11 @@ class AddCouchState extends State<AddCouch> {
                                 context.read<DashCoachProvider>().coachCondition
                                     ? 'Saved successfully'
                                     : 'Coach updated sucessfully';
-
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(message),
                               ),
                             );
-
                             Navigator.pop(context);
                           }
                         },
@@ -427,8 +420,3 @@ class AddCouchState extends State<AddCouch> {
     );
   }
 }
-
-
-    // context
-    //                             .read<DashCoachProvider>()
-    //                             .toggleCoachCondition(context);

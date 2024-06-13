@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/controller/dashboardcontroller.dart/dash_board_provider.dart';
 import 'package:badmiton_app/dbhelper/dbhelper.dart';
@@ -22,7 +21,6 @@ class BatchListProvider extends ChangeNotifier {
   final batchstudentformKey = GlobalKey<FormState>();
   final batchformKey = GlobalKey<FormState>();
   String selectedTiming = '4pm to 5pm';
-
   List<bool> checkboxValues = List.generate(7, (index) => false);
   DateTime currenttime = DateTime.now();
   // FocusNode nameFocusNode = FocusNode();

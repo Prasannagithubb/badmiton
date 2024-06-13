@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../constant/ConstantRoutes.dart';
 import '../../../../constant/Screen.dart';
-// import 'package:transportserviceapp/Constant/Screen.dart';
-// import 'package:transportserviceapp/constant/ConstantRoutes.dart';
 
 class ConfigurationPage extends StatefulWidget {
   const ConfigurationPage({super.key});
@@ -26,7 +23,6 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
     setState(() {
       Get.offAllNamed(ConstantRoutes.splash);
     });
-    //     MaterialPageRoute(builder: (context) => const SplashScreen()));
   }
 
   @override
