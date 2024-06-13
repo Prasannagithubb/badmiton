@@ -32,7 +32,6 @@ class AddStudentProvider with ChangeNotifier {
     addstudents = [];
     isActAddstudents = [];
     inActAddstudents = [];
-    batchItem = [];
     studentcondition = false;
     studentcontroller = List.generate(10, (i) => TextEditingController());
   }
@@ -42,7 +41,7 @@ class AddStudentProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> toggleStudentActive( context, int id) async {
+  Future<void> toggleStudentActive(context, int id) async {
     final Database? db = await DBHelper.getInstance();
     await DBOperation.changeActToInAct(db!, id);
     await fetchStudents(context);
@@ -72,7 +71,7 @@ class AddStudentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteStudent( context, int id) async {
+  Future<void> deleteStudent(context, int id) async {
     final Database? db = await DBHelper.getInstance();
     if (db != null) {
       // final studentToDelete = addstudents[index];
@@ -140,7 +139,7 @@ class AddStudentProvider with ChangeNotifier {
     log('isActAddstudents length::${isActAddstudents.length}');
   }
 
-  Future<void> updatedstudent( context) async {
+  Future<void> updatedstudent(context) async {
     int i = indexstudent!;
     final Database? db = await DBHelper.getInstance();
 
@@ -151,7 +150,8 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].fathermobilenumber = int.parse(studentcontroller[3].text);
       addstudents[i].mothername = studentcontroller[4].text;
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
-      addstudents[i].currenttime ='${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      addstudents[i].currenttime =
+          '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
       // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = double.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
@@ -246,7 +246,8 @@ class AddStudentProvider with ChangeNotifier {
             fathermobilenumber: int.tryParse(studentcontroller[3].text) ?? 0,
             mothername: studentcontroller[4].text,
             mothermobilenumber: int.tryParse(studentcontroller[5].text) ?? 0,
-            currenttime:'${studentcurrentTime.hour}:${studentcurrentTime.minute}',
+            currenttime:
+                '${studentcurrentTime.hour}:${studentcurrentTime.minute}',
             fees: double.parse(studentcontroller[6].text),
             dateOfBirth: studentcontroller[7].text,
             batchname: selectedBatch.toString(),

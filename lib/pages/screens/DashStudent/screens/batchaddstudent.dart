@@ -80,12 +80,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
     }
   }
 
-  // void addstudent(BuildContext context, Addstudent addstudent) {
-  //   final studentListProvider =
-  //       Provider.of<BatchListProvider>(context, listen: false);
-  //   studentListProvider.addStudent(addstudent);
-  // }
-
   TextEditingController batchController = TextEditingController();
   List<String> selectedWeekdays = []; // List to store selected weekdays
   List<String> selectedWeekends = [];
@@ -375,9 +369,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                     const SizedBox(height: 15),
                     TextFormField(
                       cursorColor: Colors.blue,
-                      controller: context
-                          .watch<BatchListProvider>()
-                          .batchstudentctrlr[7],
+                      controller: context.watch<BatchListProvider>().batchstudentctrlr[7],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the Date of Birth';

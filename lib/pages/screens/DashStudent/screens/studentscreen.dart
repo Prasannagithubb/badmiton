@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class StudentScreen extends StatefulWidget {
+  const StudentScreen({super.key});
+
   @override
   State<StudentScreen> createState() => _StudentScreenState();
 }
@@ -124,11 +126,9 @@ class _StudentScreenState extends State<StudentScreen>
                   child: TextFormField(
                     controller: _searchController,
                     decoration: const InputDecoration(
-                      
                       labelText: 'Search students',
                       suffixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
-                        
                       ),
                     ),
                   ),
@@ -166,7 +166,7 @@ class _StudentScreenState extends State<StudentScreen>
 class Active extends StatelessWidget {
   final List<Addstudent> students;
 
-  const Active({required this.students});
+  const Active({super.key, required this.students});
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +290,7 @@ class Active extends StatelessWidget {
 class Inactive extends StatelessWidget {
   final List<Addstudent> students;
 
-  const Inactive({required this.students});
+  const Inactive({super.key, required this.students});
 
   @override
   Widget build(BuildContext context) {
