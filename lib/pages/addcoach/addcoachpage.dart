@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashaddcoach.dart/dash_coach_provider.dart';
@@ -14,11 +15,28 @@ class CoachListScreen extends StatefulWidget {
 }
 
 class _CoachListScreenState extends State<CoachListScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashCoachProvider>().init();
+    });
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      _searchQuery = _searchController.text;
     });
   }
 
@@ -26,6 +44,10 @@ class _CoachListScreenState extends State<CoachListScreen> {
   Widget build(BuildContext context) {
     final dashCoachProvider = Provider.of<DashCoachProvider>(context);
     ThemeData theme = Theme.of(context);
+
+    List filteredCoaches = dashCoachProvider.coaches.where((coach) {
+      return coach.name.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -93,14 +115,17 @@ class _CoachListScreenState extends State<CoachListScreen> {
                         height: Screens.bodyheight(context) * 0.055,
                         width: Screens.width(context) * 0.80,
                         child: TextFormField(
+                          controller: _searchController,
                           cursorColor: Colors.green,
                           decoration: const InputDecoration(
                             focusColor: Colors.green,
                             focusedBorder: OutlineInputBorder(),
                             labelText: 'Search Coaches',
                             labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon:Icon(Icons.search), // Using a filter icon
-                            border: OutlineInputBorder(), // Adds a border to the TextFormField
+                            suffixIcon:
+                                Icon(Icons.search), // Using a filter icon
+                            border:
+                                OutlineInputBorder(), // Adds a border to the TextFormField
                           ),
                         ),
                       ),
@@ -111,16 +136,17 @@ class _CoachListScreenState extends State<CoachListScreen> {
                   ),
             Expanded(
               child: ListView.builder(
-                itemCount: dashCoachProvider.coaches.length,
+                itemCount: filteredCoaches.length,
                 itemBuilder: (context, index) {
-                  final coach = dashCoachProvider.coaches[index];
+                  final coach = filteredCoaches[index];
                   return Card(
                     elevation: 4.0,
                     child: Container(
                       padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors.white, // Light grey color for each list item for better contrast
+                        color: Colors
+                            .white, // Light grey color for each list item for better contrast
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -135,7 +161,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -149,7 +176,8 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                   ),
                                   Text(
                                     coach.mobile,
-                                    style: const TextStyle(color: Colors.black54),
+                                    style:
+                                        const TextStyle(color: Colors.black54),
                                   ),
                                 ],
                               ),
@@ -166,7 +194,9 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                   .toString());
                               setState(() {
                                 context.read<DashCoachProvider>().editCoach(
-                                    context.read<DashCoachProvider>().coaches[index],
+                                    context
+                                        .read<DashCoachProvider>()
+                                        .coaches[index],
                                     index);
                               });
                               context.read<DashCoachProvider>().coachCondition =

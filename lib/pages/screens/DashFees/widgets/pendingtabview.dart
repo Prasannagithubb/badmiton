@@ -87,7 +87,7 @@ class _TabviewPendingState extends State<TabviewPending>
                             return SizedBox(
                               width: Screens.width(context),
                               height: 200,
-                              child: const Center(child: Text('Sort tab')),
+                              child: const Center(child: Text('sort tab')),
                             );
                           }));
                       for (int buttonIndex = 0;
@@ -130,7 +130,7 @@ class _TabviewPendingState extends State<TabviewPending>
                                 width: Screens.width(context),
                                 height: 200,
                                 child:
-                                    const Center(child: Text(' Filterd List')),
+                                    const Center(child: Text(' Filtered List')),
                               );
                             }));
                       },
@@ -172,7 +172,7 @@ class _TabviewPendingState extends State<TabviewPending>
                           children: [
                             Icon(Icons.download),
                             SizedBox(width: 5),
-                            Text('Download'),
+                            Text('Downloaded'),
                           ],
                         ),
                       ),

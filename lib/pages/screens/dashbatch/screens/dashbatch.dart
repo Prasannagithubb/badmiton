@@ -18,6 +18,8 @@ class DashBatch extends StatefulWidget {
 }
 
 class DashBatchState extends State<DashBatch> {
+  TextEditingController searchController = TextEditingController();
+  bool isSearching = false;
   @override
   void initState() {
     super.initState();
@@ -46,7 +48,6 @@ class DashBatchState extends State<DashBatch> {
                 });
                 context.read<BatchListProvider>().clearAll();
                 Get.toNamed(ConstantRoutes.addbatch);
-
                 print('add batch pressed');
               },
               child: const Icon(Icons.add),
@@ -65,7 +66,14 @@ class DashBatchState extends State<DashBatch> {
         actions: [
           Padding(
             padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
-            child: const Icon(Icons.search, color: Colors.white),
+            child: IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
+              onPressed: () {
+                setState(() {
+                  isSearching = !isSearching;
+                });
+              },
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
@@ -80,6 +88,32 @@ class DashBatchState extends State<DashBatch> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: Screens.bodyheight(context) * 0.01),
+            if (isSearching)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    focusColor: Colors.black,
+                    focusedBorder: const UnderlineInputBorder(),
+                    hintText: 'Search...',
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        setState(() {
+                          searchController.clear();
+                          isSearching = false;
+                        });
+                      },
+                    ),
+                  ),
+                  onChanged: (value) {
+                    context
+                        .read<BatchListProvider>()
+                        .updateFilteredBatches(value);
+                  },
+                ),
+              ),
             context.watch<BatchListProvider>().batches.isEmpty
                 ? Center(
                     child: Text(
@@ -90,8 +124,10 @@ class DashBatchState extends State<DashBatch> {
                   )
                 : Expanded(
                     child: ListView.builder(
-                    itemCount:
-                        context.watch<BatchListProvider>().batches.length,
+                    itemCount: context
+                        .watch<BatchListProvider>()
+                        .filteredBatches
+                        .length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -126,14 +162,13 @@ class DashBatchState extends State<DashBatch> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         context
                                             .watch<BatchListProvider>()
-                                            .batches[index]
+                                            .filteredBatches[index]
                                             .name
                                             .toUpperCase(),
                                         style: theme.textTheme.titleMedium
@@ -144,10 +179,7 @@ class DashBatchState extends State<DashBatch> {
                                       ),
                                       const SizedBox(height: 2),
                                       Text(
-                                        context
-                                            .watch<BatchListProvider>()
-                                            .batches[index]
-                                            .description,
+                                        context.watch<BatchListProvider>().filteredBatches[index].description,
                                         style:
                                             theme.textTheme.bodyLarge?.copyWith(
                                           color: Colors.black,
@@ -160,7 +192,7 @@ class DashBatchState extends State<DashBatch> {
                                             .watch<BatchListProvider>()
                                             .getSelectedDays(context
                                                 .watch<BatchListProvider>()
-                                                .batches[index]
+                                                .filteredBatches[index]
                                                 .batchDays),
                                         style: theme.textTheme.bodyMedium
                                             ?.copyWith(
@@ -197,7 +229,7 @@ class DashBatchState extends State<DashBatch> {
                                                 .selectedBatch =
                                             context
                                                 .read<BatchListProvider>()
-                                                .batches[index]
+                                                .filteredBatches[index]
                                                 .name;
                                         Navigator.push(
                                           context,

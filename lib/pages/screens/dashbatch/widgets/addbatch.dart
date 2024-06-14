@@ -64,13 +64,7 @@ class _AddBatchState extends State<AddBatch> {
         title: const Text('Add Batch'),
         centerTitle: true,
         actions: const [
-          // if (_formKey.currentState?.validate() ?? false)
-          // IconButton(
-          //   icon: const Icon(Icons.add),
-          //   onPressed: () {
-          //     // Add your action here
-          //   },
-          // ),
+
         ],
       ),
       body: Padding(
@@ -83,18 +77,6 @@ class _AddBatchState extends State<AddBatch> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.02,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //     Text(
-                //       'Batch name',
-                //       style: Theme.of(context)
-                //           .textTheme
-                //           .labelMedium
-                //           ?.copyWith(color: Colors.blue),
-                //     ),
-                //   ],
-                // ),
                 SizedBox(
                   height: hasError
                       ? Screens.bodyheight(context) * 0.1
@@ -108,8 +90,7 @@ class _AddBatchState extends State<AddBatch> {
                       hasError = false;
                       return null;
                     },
-                    controller:
-                        context.read<BatchListProvider>().mycontroller[0],
+                    controller: context.read<BatchListProvider>().mycontroller[0],
                     cursorColor: Colors.blue,
                     decoration: const InputDecoration(
                       hintStyle: TextStyle(color: Colors.grey),
@@ -163,19 +144,6 @@ class _AddBatchState extends State<AddBatch> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
                 ),
-
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //     Text(
-                //       'Fees',
-                //       style: Theme.of(context)
-                //           .textTheme
-                //           .labelMedium
-                //           ?.copyWith(color: Colors.blue),
-                //     ),
-                //   ],
-                // ),
                 SizedBox(
                   height: hasError
                       ? Screens.bodyheight(context) * 0.1
@@ -196,12 +164,9 @@ class _AddBatchState extends State<AddBatch> {
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
-                      // ignore: prefer_const_constructors
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.5),
                       ),
                       prefixIcon: Icon(Icons.currency_rupee_rounded,
                           color: Colors.blue),
@@ -363,19 +328,6 @@ class _AddBatchState extends State<AddBatch> {
                         Expanded(
                           child: Row(
                             children: [
-                              // Radio<String>(
-                              //   value: 'to',
-                              //   groupValue: selectedTime,
-                              //   onChanged: (String? value) {
-                              //     if (value != null) {
-                              //       setState(() {
-                              //         selectedTime = value;
-                              //       });
-                              //     }
-                              //   },
-                              // ),
-                              // const Text('To'),
-                              // const SizedBox(width: 10),
                               Expanded(
                                 child: TextFormField(
                                   readOnly: true,
@@ -415,7 +367,6 @@ class _AddBatchState extends State<AddBatch> {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: const BoxDecoration(
-                          // border: Border.all()
                           ),
                       child: Column(
                         children: [
@@ -458,8 +409,7 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) *
-                                      0.0001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) * 0.0001), // Add spacing between checkbox and text
                               const Text('Mon'),
                               formdategap(context),
                               Checkbox(
@@ -533,7 +483,7 @@ class _AddBatchState extends State<AddBatch> {
                               ),
                               SizedBox(
                                   width: Screens.width(context) *
-                                      0.001), // Add spacing between checkbox and text
+                                      0.001),
                               const Text('Fri'),
                               Checkbox(
                                 activeColor: Colors.blue,
@@ -549,7 +499,7 @@ class _AddBatchState extends State<AddBatch> {
                                 },
                               ),
                               SizedBox(
-                                  width: Screens.width(context) * 0.001), // Add spacing between checkbox and text
+                                  width: Screens.width(context) * 0.001),
                               const Text('Sat'),
                               Checkbox(
                                 activeColor: Colors.blue,
@@ -560,7 +510,7 @@ class _AddBatchState extends State<AddBatch> {
                                   });
                                 },
                               ),
-                              SizedBox(width: Screens.width(context) * 0.001), // Add spacing between checkbox and text
+                              SizedBox(width: Screens.width(context) * 0.001),
                               const Text('Sun'),
                             ],
                           ),
@@ -572,17 +522,6 @@ class _AddBatchState extends State<AddBatch> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
                 ),
-
-                // TextFormField(
-                //   controller: studentIntakeController,
-                //   keyboardType: TextInputType.number,
-                //   decoration: const InputDecoration(
-                //     hintText: 'Enter the maximum number of students',
-                //     hintStyle: TextStyle(color: Colors.grey),
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
-
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
                 ),
@@ -594,9 +533,7 @@ class _AddBatchState extends State<AddBatch> {
                           Colors.blue.shade300), // Set background color
                       foregroundColor: MaterialStateProperty.all<Color>(
                           Colors.white), // Set text color
-                      // You can add more styles as needed
                     ),
-                    // style: ButtonStyle(foregroundColor: Colors.blue),
                     onPressed: () {
                       setState(() {
                         context.read<BatchListProvider>().addBatchList(context);
