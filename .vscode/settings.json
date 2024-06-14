@@ -3,5 +3,6 @@
         "addcouch",
         "Dashboardprovider",
         "studentname"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

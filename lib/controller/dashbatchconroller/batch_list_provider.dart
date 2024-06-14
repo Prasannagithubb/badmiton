@@ -11,8 +11,10 @@ import 'package:sqflite/sqflite.dart';
 
 class BatchListProvider extends ChangeNotifier {
   List<Batchs> batches = [];
+  // Create an empty list
   List<TextEditingController> mycontroller =
       List.generate(10, (i) => TextEditingController());
+  // Create a controller and get the value for textformfield
   List<TextEditingController> batchstudentctrlr =
       List.generate(10, (i) => TextEditingController());
   List<Batchs> get getbatches => batches;
@@ -21,26 +23,14 @@ class BatchListProvider extends ChangeNotifier {
   String selectedTiming = '4pm to 5pm';
   List<bool> checkboxValues = List.generate(7, (index) => false);
   DateTime currenttime = DateTime.now();
+  // FocusNode nameFocusNode = FocusNode();
   // FocusNode descriptionFocusNode = FocusNode();
   // FocusNode feesFocusNode = FocusNode();
   final pageController = PageController(initialPage: 0);
   final studentcurrentTime = TimeOfDay.now();
+  // FocusNode studentIntakeFocusNode = FocusNode();
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
-  List<Batchs> filteredBatches = [];
-
-  void updateFilteredBatches(String query) {
-    if (query.isEmpty) {
-      filteredBatches = batches;
-    } else {
-      filteredBatches = batches
-          .where((batch) =>
-              batch.name.toLowerCase().contains(query.toLowerCase()) ||
-              batch.description.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    }
-    notifyListeners();
-  }
 
   init() {
     clearAll();
@@ -107,7 +97,6 @@ class BatchListProvider extends ChangeNotifier {
   Future<void> fetchBatchess() async {
     final Database db = (await DBHelper.getInstance())!;
     batches = await DBOperation.fetchBatches(db);
-    filteredBatches = batches;
     log('Batch length::::${batches.length}');
     notifyListeners();
   }
@@ -122,7 +111,9 @@ class BatchListProvider extends ChangeNotifier {
       for (Addstudent student in studentsToDelete) {
         await DBOperation.deleteStudent(db!, student.id!);
       }
+
       await DBOperation.deleteBatch(db!, batchToDelete.id!);
+
       await fetchBatchess();
     }
   }
@@ -141,9 +132,9 @@ class BatchListProvider extends ChangeNotifier {
           id: studentMaps[index][AddstudentColumns.id],
           batchname: studentMaps[index][AddstudentColumns.batchname],
           studentname: studentMaps[index][AddstudentColumns.studentname],
-          studentmobilenumber: studentMaps[index] [AddstudentColumns.studentmobilenumber],
+          studentmobilenumber: studentMaps[index][AddstudentColumns.studentmobilenumber],
           fathername: studentMaps[index][AddstudentColumns.fathername],
-          fathermobilenumber: studentMaps[index] [AddstudentColumns.fathermobilenumber],
+          fathermobilenumber: studentMaps[index][AddstudentColumns.fathermobilenumber],
           mothername: studentMaps[index][AddstudentColumns.mothername],
           mothermobilenumber: studentMaps[index] [AddstudentColumns.mothermobilenumber],
           fees: studentMaps[index][AddstudentColumns.fees],

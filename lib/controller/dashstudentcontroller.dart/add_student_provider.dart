@@ -36,6 +36,11 @@ class AddStudentProvider with ChangeNotifier {
     studentcontroller = List.generate(10, (i) => TextEditingController());
   }
 
+  // void addStudent(Addstudent addstudent) {
+  //   addstudents.add(addstudent);
+  //   notifyListeners();
+  // }
+
   Future<void> toggleStudentActive(context, int id) async {
     final Database? db = await DBHelper.getInstance();
     await DBOperation.changeActToInAct(db!, id);
@@ -128,7 +133,7 @@ class AddStudentProvider with ChangeNotifier {
             fees: addstudents[i].fees));
         notifyListeners();
       }
-
+      // inActAddstudents = await DBOperation.fetchInactiveStudents(db);
       notifyListeners();
     }
     log('isActAddstudents length::${isActAddstudents.length}');
@@ -147,6 +152,7 @@ class AddStudentProvider with ChangeNotifier {
       addstudents[i].mothermobilenumber = int.parse(studentcontroller[5].text);
       addstudents[i].currenttime =
           '${studentcurrentTime.hour}:${studentcurrentTime.minute}';
+      // addstudents[i].currenttime = studentcurrentTime;
       addstudents[i].fees = double.parse(studentcontroller[6].text);
       addstudents[i].dateOfBirth = studentcontroller[7].text;
       addstudents[i].batchname = selectedBatch.toString();
@@ -201,7 +207,6 @@ class AddStudentProvider with ChangeNotifier {
   // }
 
   // DateTime? dob;
-
   batchList() async {
     batchItem = [];
     final Database db = (await DBHelper.getInstance())!;

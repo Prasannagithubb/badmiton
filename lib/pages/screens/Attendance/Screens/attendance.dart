@@ -43,9 +43,11 @@ class _AttendancePageState extends State<AttendancePage> {
         print('Selected date is in the past. Attendance is locked.');
         isAttendanceLocked = true;
       } else {
-        print('Selected date is today or in the future. Attendance is unlocked.');
+        print(
+            'Selected date is today or in the future. Attendance is unlocked.');
         isAttendanceLocked = false;
       }
+
       print('Selected date: $selectedDate');
     });
   }

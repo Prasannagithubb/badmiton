@@ -267,7 +267,7 @@ class _FeesTabState extends State<FeesTab> {
                                     Icons.check_circle,
                                     color: Colors.green,
                                     size: 40,
-                                    key: ValueKey('Paid'),
+                                    key: ValueKey('paid'),
                                   )
                                 : const SizedBox.shrink(),
                           ),
@@ -306,7 +306,15 @@ class _OthersTabState extends State<OthersTab> {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
+                    // color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black.withOpacity(0.2),
+                    //     blurRadius: 10,
+                    //     spreadRadius: 5,
+                    //   ),
+                    // ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -398,18 +406,21 @@ class _OthersTabState extends State<OthersTab> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: TextField(
                                   cursorColor: Colors.green,
                                   decoration: InputDecoration(
                                     focusColor: Colors.green,
                                     labelText: 'Remarks',
-                                    labelStyle: const TextStyle(color: Colors.grey),
+                                    labelStyle:
+                                        const TextStyle(color: Colors.grey),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.green),
+                                      borderSide:
+                                          BorderSide(color: Colors.green),
                                     ),
                                   ),
                                   maxLines: 1,

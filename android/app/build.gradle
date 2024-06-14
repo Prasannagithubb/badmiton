@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.example.badmiton_app"
+    namespace "com.sparklers.batmitonapp"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -47,11 +47,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.badmiton_app"
+        applicationId "com.sparklers.batmitonapp"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName "1.0.0"
     }
 
     signingConfigs {

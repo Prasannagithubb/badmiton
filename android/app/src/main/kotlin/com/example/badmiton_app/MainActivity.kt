@@ -1,4 +1,4 @@
-package com.example.badmiton_app
+package com.sparklers.batmitonapp
 
 import io.flutter.embedding.android.FlutterActivity
 

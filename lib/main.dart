@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import 'Themes/theme_manager.dart';
 import 'constant/AllRoutes.dart';
 import 'controller/dashboardcontroller.dart/dash_board_provider.dart';

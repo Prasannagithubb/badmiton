@@ -19,7 +19,7 @@ class StudentScreen extends StatefulWidget {
 class _StudentScreenState extends State<StudentScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final TextEditingController _searchController = TextEditingController();
+  TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
   @override
@@ -93,6 +93,7 @@ class _StudentScreenState extends State<StudentScreen>
             ),
             onPressed: () {
               context.read<AddStudentProvider>().clearAll();
+              // Navigator.push(
               context.read<AddStudentProvider>().studentcondition = true;
               Get.toNamed(ConstantRoutes.addstudent1);
             }),
@@ -124,15 +125,11 @@ class _StudentScreenState extends State<StudentScreen>
                   width: Screens.width(context) * 0.80,
                   child: TextFormField(
                     controller: _searchController,
-                    cursorColor: Colors.green,
                     decoration: const InputDecoration(
-                      focusColor: Colors.green,
-                      focusedBorder: OutlineInputBorder(),
                       labelText: 'Search students',
-                      labelStyle: TextStyle(color: Colors.black),
-                      suffixIcon: Icon(Icons.search), // Using a filter icon
-                      border:
-                          OutlineInputBorder(), // Adds a border to the TextFormField
+                      suffixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                      ),
                     ),
                   ),
                 ),
