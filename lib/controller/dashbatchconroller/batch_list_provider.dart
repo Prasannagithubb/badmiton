@@ -23,12 +23,8 @@ class BatchListProvider extends ChangeNotifier {
   String selectedTiming = '4pm to 5pm';
   List<bool> checkboxValues = List.generate(7, (index) => false);
   DateTime currenttime = DateTime.now();
-  // FocusNode nameFocusNode = FocusNode();
-  // FocusNode descriptionFocusNode = FocusNode();
-  // FocusNode feesFocusNode = FocusNode();
   final pageController = PageController(initialPage: 0);
   final studentcurrentTime = TimeOfDay.now();
-  // FocusNode studentIntakeFocusNode = FocusNode();
   String? selectedBatch;
   List<Addstudent> batchaddstudents = [];
 
@@ -111,9 +107,7 @@ class BatchListProvider extends ChangeNotifier {
       for (Addstudent student in studentsToDelete) {
         await DBOperation.deleteStudent(db!, student.id!);
       }
-
       await DBOperation.deleteBatch(db!, batchToDelete.id!);
-
       await fetchBatchess();
     }
   }

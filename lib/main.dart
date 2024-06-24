@@ -58,20 +58,11 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: Colors.green.shade800,
             useMaterial3: true,
-            // textTheme: GoogleFonts.nunitoSansTextTheme(),
+          
             colorScheme: ColorScheme.fromSeed(
                     secondary: Colors.blue, seedColor: const Color(0xFF0A1172))
                 .copyWith(),
           ),
-          // theme: themes.selectedTheme == 'yellow'
-          //     ? yellowTheme(context)
-          //     : themes.selectedTheme == 'blue'
-          //         ? blueTheme(context)
-          //         : themes.selectedTheme == 'green'
-          //             ? greenTheme(context)
-          //             : themes.selectedTheme == 'red'
-          //                 ? redTheme(context)
-          //                 : roseTheme(context),
           home: const ConfigurationPage(),
         );
       }),

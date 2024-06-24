@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../controller/dashboardcontroller.dart/dash_board_provider.dart';
 
 class DashBoard extends StatefulWidget {
@@ -19,40 +18,6 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // floatingActionButton: Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.end,
-        //     children: [
-        //       FloatingActionButton(
-        //         foregroundColor: Colors.white,
-        //         backgroundColor: Colors.green,
-        //         onPressed: () {
-        //           print('add batch pressed');
-        //         },
-        //         child: const Icon(Icons.add),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // appBar: AppBar(
-        //   elevation: 6.0,
-        //   shadowColor: Colors.black,
-        //   centerTitle: true,
-        //   leading: const Icon(Icons.menu, color: Colors.white),
-        //   title: const Text('Dashboard', style: TextStyle(color: Colors.white)),
-        //   actions: [
-        //     Padding(
-        //       padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
-        //       child: const Icon(Icons.search, color: Colors.white),
-        //     ),
-        //     Padding(
-        //       padding: EdgeInsets.all(Screens.bodyheight(context) * 0.02),
-        //       child: const Icon(Icons.notifications, color: Colors.white),
-        //     ),
-        //   ],
-        //   backgroundColor: Theme.of(context).primaryColor,
-        // ),
         body: Center(
           child: context
               .watch<DashboardProvider>()

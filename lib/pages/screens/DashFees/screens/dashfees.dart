@@ -220,8 +220,7 @@ class _FeesTabState extends State<FeesTab> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.green),
+                                borderSide: const BorderSide(color: Colors.green),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
@@ -267,7 +266,7 @@ class _FeesTabState extends State<FeesTab> {
                                     Icons.check_circle,
                                     color: Colors.green,
                                     size: 40,
-                                    key: ValueKey('paid'),
+                                    key: ValueKey('Paid'),
                                   )
                                 : const SizedBox.shrink(),
                           ),
@@ -306,15 +305,7 @@ class _OthersTabState extends State<OthersTab> {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    // color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black.withOpacity(0.2),
-                    //     blurRadius: 10,
-                    //     spreadRadius: 5,
-                    //   ),
-                    // ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -391,14 +382,12 @@ class _OthersTabState extends State<OthersTab> {
                                   controller: _amountController,
                                   decoration: InputDecoration(
                                     labelText: 'Amount',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.grey),
+                                    labelStyle: const TextStyle(color: Colors.grey),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          const BorderSide(color: Colors.green),
+                                      borderSide: const BorderSide(color: Colors.green),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
@@ -413,18 +402,16 @@ class _OthersTabState extends State<OthersTab> {
                                   decoration: InputDecoration(
                                     focusColor: Colors.green,
                                     labelText: 'Remarks',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.grey),
+                                    labelStyle:  const TextStyle(color: Colors.grey),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.green),
+                                      borderSide: BorderSide(color: Colors.green),
                                     ),
                                   ),
                                   maxLines: 1,
-                                ),
+                                  ),
                               ),
                               const SizedBox(
                                 height: 14,
@@ -469,7 +456,7 @@ class _OthersTabState extends State<OthersTab> {
                                           Icons.check_circle,
                                           color: Colors.green,
                                           size: 40,
-                                          key: ValueKey('paid'),
+                                          key: ValueKey('Paid'),
                                         )
                                       : const SizedBox.shrink(),
                                 ),

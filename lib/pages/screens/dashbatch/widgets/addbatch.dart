@@ -324,19 +324,6 @@ class _AddBatchState extends State<AddBatch> {
                         Expanded(
                           child: Row(
                             children: [
-                              // Radio<String>(
-                              //   value: 'from',
-                              //   groupValue: selectedTime,
-                              //   onChanged: (String? value) {
-                              //     if (value != null) {
-                              //       setState(() {
-                              //         selectedTime = value;
-                              //       });
-                              //     }
-                              //   },
-                              // ),
-                              // const Text('From'),
-                              // const SizedBox(width: 10),
                               Expanded(
                                 child: TextFormField(
                                   readOnly: true,
@@ -346,8 +333,7 @@ class _AddBatchState extends State<AddBatch> {
                                   },
                                   decoration: const InputDecoration(
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
+                                      borderSide: BorderSide(color: Colors.blue),
                                     ),
                                     suffixIcon: Icon(Icons.timer_sharp),
                                     labelText: 'From Time',
@@ -363,19 +349,6 @@ class _AddBatchState extends State<AddBatch> {
                         Expanded(
                           child: Row(
                             children: [
-                              // Radio<String>(
-                              //   value: 'to',
-                              //   groupValue: selectedTime,
-                              //   onChanged: (String? value) {
-                              //     if (value != null) {
-                              //       setState(() {
-                              //         selectedTime = value;
-                              //       });
-                              //     }
-                              //   },
-                              // ),
-                              // const Text('To'),
-                              // const SizedBox(width: 10),
                               Expanded(
                                 child: TextFormField(
                                   readOnly: true,
@@ -451,9 +424,7 @@ class _AddBatchState extends State<AddBatch> {
                                     .checkboxValues[0],
                                 onChanged: (bool? newValue) {
                                   setState(() {
-                                    context
-                                        .read<BatchListProvider>()
-                                        .checkboxValues[0] = newValue ?? false;
+                                    context .read<BatchListProvider>() .checkboxValues[0] = newValue ?? false;
                                   });
                                 },
                               ),
@@ -486,9 +457,7 @@ class _AddBatchState extends State<AddBatch> {
                                     .checkboxValues[2],
                                 onChanged: (bool? newValue) {
                                   setState(() {
-                                    context
-                                        .read<BatchListProvider>()
-                                        .checkboxValues[2] = newValue ?? false;
+                                    context.read<BatchListProvider>().checkboxValues[2] = newValue ?? false;
                                   });
                                 },
                               ),
@@ -499,9 +468,7 @@ class _AddBatchState extends State<AddBatch> {
                               formdategap(context),
                               Checkbox(
                                 activeColor: Colors.blue,
-                                value: context
-                                    .read<BatchListProvider>()
-                                    .checkboxValues[3],
+                                value: context.read<BatchListProvider>().checkboxValues[3],
                                 onChanged: (bool? newValue) {
                                   setState(() {
                                     context
@@ -572,16 +539,6 @@ class _AddBatchState extends State<AddBatch> {
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
                 ),
-
-                // TextFormField(
-                //   controller: studentIntakeController,
-                //   keyboardType: TextInputType.number,
-                //   decoration: const InputDecoration(
-                //     hintText: 'Enter the maximum number of students',
-                //     hintStyle: TextStyle(color: Colors.grey),
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
 
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,

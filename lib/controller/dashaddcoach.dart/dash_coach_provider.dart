@@ -44,7 +44,6 @@ class DashCoachProvider extends ChangeNotifier {
       if (db != null && coaches[index].id != null) {
         await DBOperation.deleteCoach(db, coaches[index].id!);
         fetchCoaches();
-        // coaches.removeAt(index);
         notifyListeners();
       }
       notifyListeners();

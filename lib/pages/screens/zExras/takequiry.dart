@@ -19,11 +19,11 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'Welcome to Signin',
-                  style: TextStyle(
+                  style:  TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -48,10 +48,10 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextField(
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.lock, color: Colors.green.shade800),
@@ -63,11 +63,11 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
                         // Handle login
@@ -77,9 +77,9 @@ class LoginScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 80),
+                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 80),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Login',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),

@@ -45,8 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: Screens.width(context) * 0.2,
               child: LinearProgressIndicator(
                 backgroundColor: Colors.grey[300], // Background color
-                valueColor: const AlwaysStoppedAnimation<Color>(
-                    Colors.red), // Red color for the progress indicator
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.red), // Red color for the progress indicator
               ),
             ),
           ),

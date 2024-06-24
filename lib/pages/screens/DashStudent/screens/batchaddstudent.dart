@@ -4,6 +4,7 @@ import 'package:badmiton_app/constant/Screen.dart';
 import 'package:badmiton_app/controller/dashbatchconroller/batch_list_provider.dart';
 // import 'package:badmiton_app/controller/dashstudentcontroller.dart/add_student_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -160,11 +161,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           Icons.batch_prediction_outlined,
                           color: Colors.blue,
                         ),
-                        // Remove border
-                        // border: InputBorder.none,
-                        // filled: true,
-                        // fillColor: Colors.white,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       value: context.read<BatchListProvider>().selectedBatch,
                       icon:
@@ -189,10 +185,9 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           .watch<BatchListProvider>()
                           .batchstudentctrlr[0],
                       cursorColor: Colors.blue,
-                      // controller: context.read<BatchListProvider>().mycontroller[2],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the Student name';
+                          return 'Please enter the student name';
                         }
                         return null;
                       },
@@ -223,7 +218,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           .batchstudentctrlr[1],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the Mobile number';
+                          return 'Please Enter the name of mobile number';
                         }
                         return null;
                       },
@@ -236,14 +231,11 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         prefixIcon:
                             Icon(Icons.phone_android, color: Colors.blue),
                         // hintText: "Enter your Name",
                         hintStyle: TextStyle(color: Colors.blue),
-                        // filled: true,
-                        // fillColor: Colors.lightBlue.shade50.withOpacity(0.4),
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -263,14 +255,11 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                       decoration: const InputDecoration(
                         labelText: 'Father name',
                         labelStyle: TextStyle(color: Colors.grey),
-
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         prefixIcon: Icon(Icons.person, color: Colors.blue),
                         // hintText: "Enter your Name",
@@ -279,7 +268,6 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                       keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 15),
-
                     TextFormField(
                       cursorColor: Colors.blue,
                       controller: context
@@ -287,7 +275,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           .batchstudentctrlr[3],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the Father mobile';
+                          return 'Please enter the father mobile number';
                         }
                         return null;
                       },
@@ -312,12 +300,11 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                     const SizedBox(height: 15),
                     TextFormField(
                       cursorColor: Colors.blue,
-                      controller: context
-                          .watch<BatchListProvider>()
+                      controller: context.watch()<BatchListProvider>()
                           .batchstudentctrlr[4],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the Mother name';
+                          return 'Please enter the Mother name ';
                         }
                         return null;
                       },
@@ -326,11 +313,9 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         labelStyle: TextStyle(color: Colors.grey),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         prefixIcon: Icon(Icons.person, color: Colors.blue),
                         // hintText: "Enter your Name",
@@ -355,13 +340,11 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         labelStyle: TextStyle(color: Colors.grey),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        prefixIcon:
-                            Icon(Icons.phone_android, color: Colors.blue),
+                        prefixIcon: Icon(Icons.phone_android, color: Colors.blue),
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
                       keyboardType: TextInputType.number,
@@ -372,7 +355,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                       controller: context.watch<BatchListProvider>().batchstudentctrlr[7],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the Date of Birth';
+                          return 'Please enter the date of Birth';
                         }
                         return null;
                       },
@@ -385,8 +368,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        prefixIcon:
-                            Icon(Icons.calendar_today, color: Colors.blue),
+                        prefixIcon: Icon(Icons.calendar_today, color: Colors.blue),
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
                       onTap: () async {
@@ -397,14 +379,9 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                           lastDate: DateTime.now(),
                         );
                         if (pickedDate != null) {
-                          // Format the selected date to display only the date part
                           final formattedDate =
                               DateFormat('dd-MM-yyyy').format(pickedDate);
-                          // Update the controller with the formatted date
-                          context
-                              .read<BatchListProvider>()
-                              .batchstudentctrlr[7]
-                              .text = formattedDate;
+                          context.read<BatchListProvider>().batchstudentctrlr[7].text = formattedDate;
                         }
                       },
                       readOnly:
@@ -423,21 +400,16 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        prefixIcon:
-                            Icon(Icons.calendar_today, color: Colors.blue),
+                        prefixIcon: Icon(Icons.calendar_today, color: Colors.blue),
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
-                      onTap: () =>
-                          _selectDate(context), // Show the date picker on tap
+                      onTap: () => _selectDate(context), // Show the date picker on tap
                       keyboardType: TextInputType.datetime,
                     ),
                     const SizedBox(height: 15),
-                    // const SizedBox(height: 15),
                     TextFormField(
                       cursorColor: Colors.blue,
-                      controller: context
-                          .read<BatchListProvider>()
-                          .batchstudentctrlr[6],
+                      controller: context.read<BatchListProvider>().batchstudentctrlr[6],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter the Fees amount';
@@ -445,19 +417,15 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
                         return null;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'Fees amount',
+                        labelText: 'Fees Amount',
                         labelStyle: TextStyle(color: Colors.grey),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
-                          // borderRadius: BorderRadius.circular(5.5),
                         ),
-                        prefixIcon:
-                            Icon(Icons.currency_rupee, color: Colors.blue),
-                        // hintText: "Enter your Name",
+                        prefixIcon: Icon(Icons.currency_rupee, color: Colors.blue),
                         hintStyle: TextStyle(color: Colors.blue),
                       ),
                       keyboardType: TextInputType.number,
@@ -469,9 +437,7 @@ class _BatchAddStudentState extends State<BatchAddStudent> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    context
-                        .read<BatchListProvider>()
-                        .batchaddstudentlist(context);
+                    context.read<BatchListProvider>().batchaddstudentlist(context);
                   });
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:badmiton_app/constant/ConstantRoutes.dart';
 import 'package:badmiton_app/constant/Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../controller/dashbatchconroller/batch_list_provider.dart';
 import '../../../../controller/dashboardcontroller.dart/dash_board_provider.dart';
 import '../../DashStudent/screens/batchaddstudent.dart';
@@ -46,7 +44,6 @@ class DashBatchState extends State<DashBatch> {
                 });
                 context.read<BatchListProvider>().clearAll();
                 Get.toNamed(ConstantRoutes.addbatch);
-
                 print('add batch pressed');
               },
               child: const Icon(Icons.add),
@@ -126,7 +123,6 @@ class DashBatchState extends State<DashBatch> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -200,10 +196,8 @@ class DashBatchState extends State<DashBatch> {
                                                 .batches[index]
                                                 .name;
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const BatchAddStudent(),
+                                          context,MaterialPageRoute(
+                                            builder: (context) => const BatchAddStudent(),
                                           ),
                                         );
                                       },

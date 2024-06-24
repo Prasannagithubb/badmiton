@@ -48,8 +48,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
         shadowColor: Colors.black,
         centerTitle: true,
         leading: const Icon(Icons.menu, color: Colors.white),
-        title: const Text('Coach',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: const Text('Coach',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         actions: const [],
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -58,6 +57,7 @@ class _CoachListScreenState extends State<CoachListScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            
             SizedBox(height: Screens.bodyheight(context) * 0.01),
             dashCoachProvider.coaches.isEmpty
                 ? Column(
@@ -165,12 +165,10 @@ class _CoachListScreenState extends State<CoachListScreen> {
                                   .length
                                   .toString());
                               setState(() {
-                                context.read<DashCoachProvider>().editCoach(
-                                    context.read<DashCoachProvider>().coaches[index],
+                                context.read<DashCoachProvider>().editCoach(context.read()<DashCoachProvider>().coaches[index],
                                     index);
                               });
-                              context.read<DashCoachProvider>().coachCondition =
-                                  false;
+                              context.read<DashCoachProvider>().coachCondition = false;
                               Get.toNamed(ConstantRoutes.addCoachform);
                             },
                           ),
